@@ -1,0 +1,35 @@
+.brands{
+    padding: 3px;
+}
+.profile_info{
+    text-align: right;
+    float: left;
+    display: flex;
+    flex-flow: row nowrap;;        
+}
+@font-face{
+    font-family: 'BLKCHCRY';
+    src: url('../font/BLKCHCRY.TTF')
+}
+.brand{
+    float:left;
+    font-family: BLKCHCRY;
+}
+.navdiv{
+    display: flex;
+    flex-flow: row nowrap;;
+}
+.top_p{
+    margin: 0 auto;
+    padding:12px;
+    max-width: 90px;
+}
+.header_font{
+    color:orange;
+    margin: 0 auto;
+    
+    font-size: 30px;
+}
+
+
+
