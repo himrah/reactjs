@@ -90,9 +90,9 @@ import $ from 'jquery';
     
 
 
-      var fix = $('.main').offset().top;
+      //var fix = $('.main').offset().top;
       //var fix = $('.main').offset()
-      //var fix = $('.main')
+      var fix = $('.main')
       $(window).scroll(function(){
 
           var currentScroll = $(window).scrollTop();

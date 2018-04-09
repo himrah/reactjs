@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import './Nav.css';
 //import Link from 'next/link'
 //import Style from 'react-style-tag'
@@ -26,7 +26,7 @@ import Loadable from 'react-loadable'
 const Loading = () => <div>Loading...</div>;
 
 const Main = Loadable({
-    loader: () => import('./Comb'),
+    loader: () => import('./Main'),
     loading : Loading
 })
 
@@ -99,12 +99,12 @@ class Nav extends React.Component{
                     <div className="navdiv">
                         <div className="brand">
                             <span className="header_font">            
-                                <Link to="/"><span style={{color:'black'}}><b>Fasigner</b></span> </Link>
+                                <Link to="/"><span style={{color:'black'}}>Fasigner</span> </Link>
                             </span>
                         </div>
                     { token ? (
                         <div className="profile_info">         
-                        <span className="top_p"><Link to='/user/ajay'><img className="logo" style={style} src={profile} alt="sdf"  /> </Link></span>
+                        <span className="top_p"><Link to='/ajay'><img className="logo" style={style} src={profile} alt="sdf"  /> </Link></span>
                         <span className="top_p"><Link to="/message"><img src={msg} alt="sdf" className="logo" style={style} /> </Link></span>
                         <span className="top_p"><Link to="/notify/"><img src={notify} alt="sdf" className="logo" style={style} /> </Link></span>
                         <span className="top_p"><Link to="#" onClick={this.logout} ><img src={logout} alt="sdf" className="logo" style={style} /> </Link></span>
@@ -119,15 +119,16 @@ class Nav extends React.Component{
     {/*                    <span className="top_p"><Link to="/logout">Logout</Link></span>
                         <span className="top_p"><Link to="/login">Login</Link></span>*/}
                     </div>
-                </nav>            
+                </nav>          
+            <Switch>      
             <Route exact path="/" component={Main}/>
             <Route path="/notify/" component={Interest}/>
             <Route path="/logout" component={Logout}/>
             <Route path="/message/" component={Msg}/>
-            <Route path="/user/:userName" component={Profile}/>
+            <Route path="/:userName" component={Profile}/>
             
             <Route path="/registration" component={Registration} />
-            }
+            </Switch>
         </span>   
         </Router>
         )

@@ -101,6 +101,8 @@ padding: 0;
     width: 100%;
     background: white;
     border-bottom: 1px solid rgb(243, 242, 240);
+    /*border-bottom: 1px solid rgba(0,0,0,.09);*/
+    /*box-shadow: 0 1px 4px rgba(0,0,0,.04);*/
     align-items: center;
     padding: 9px;
     /*border-radius: 10px 10px 0px 0px;*/
@@ -116,6 +118,8 @@ inputs:focus{
 }
 .img_footer{
     border-top: 1px solid rgb(243, 242, 240);
+    /*border: 1px solid rgba(0,0,0,.09);*/
+    /*box-shadow: 0 1px 4px rgba(0,0,0,.04);*/
     background: white;
     height: auto;
     transition: 0.3s ease-out;
@@ -170,7 +174,12 @@ h4,p{
 
 .article{
     max-width: 600px;
-    border: 1px solid rgb(243, 242, 240);
+/*    border: 1px solid rgb(243, 242, 240);*/
+    border: 1px solid rgba(0,0,0,.09);
+    /*box-shadow: 0 2px 6px rgba(0,0,0,.04);*/
+    box-shadow: 5px 10px 8px rgba(0,0,0,0.04);
+    margin-bottom: 30px;
+    /*box-shadow: 0 1px 4px rgba(0,0,0,.04);
     margin-bottom: 30px;
     /*border-radius: 10px 10px 10px 10px;*/
 }
@@ -193,7 +202,8 @@ h4,p{
 
 .main{
     width: 100%;
-    background: #f7f9fc;
+    /*background: #f7f9fc;*/
+    background-color: #fafafa;
     -webkit-box-flex: 1;
     -webkit-flex-grow: 1;
     -ms-flex-positive: 1;
@@ -326,7 +336,8 @@ height: 50px;
 
 body{
     font-family: Arial, Helvetica, sans-serif; font-size:12pt; 
-    background: #f7f9fc;
+    /*background: #f7f9fc;*/
+    background: #fafafa;
 } 
 .btn{
     margin-top: 12px;

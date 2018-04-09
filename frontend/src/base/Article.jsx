@@ -165,9 +165,9 @@ class Articles extends React.Component{
                         {/*<Link to={this.props.p.uploadBy.username}><h4>{this.props.p.uploadBy.username}</h4></Link>
                         */}
                         <div className="_pt">
-                        <Link to={this.props.p.uploadBy.username}><h4>{this.props.p.uploadBy.username}</h4></Link>
+                        <Link to={this.props.p.uploadBy.username}><span className="user">{this.props.p.uploadBy.firstName}</span></Link>
                         <img src={prf} alt="prf" className="prf" title={this.props.p.uploadBy.username}/>
-                        <div>{ctime}</div>
+                        {/*<div>{ctime}</div>*/}
                         </div>
                         </div>
                         
@@ -252,8 +252,9 @@ const MY_QUERY = gql`query allPhotos{
               comment
               commentTime
               commentBy{
-                username
                 id
+                username
+                
               }
             }
           }
@@ -261,7 +262,10 @@ const MY_QUERY = gql`query allPhotos{
         uploadBy {
           id
           username
+          firstName
+          lastName
           profilePic{
+            id
             profileThumbs
           }
         }

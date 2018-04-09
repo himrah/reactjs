@@ -5,47 +5,6 @@ import gql from 'graphql-tag'
 import  { post, put } from 'axios';
 import {Helmet} from 'react-helmet'
 import './profile.css'
-//var a=this.props.match.params.userName
-
-/*const upload = gql`mutation abc(){
-  img(
-    )
-  {
-    formErrors
-  }
-}
-`*/
-
-/*
-const query = gql`query user($username:String!){
-    users(username:$username){
-      id,
-      username
-      firstName,
-      lastName
-      photos{
-        edges{
-          node{
-            id,
-            thumbs
-            photo
-            originalPhoto
-          }
-        }
-      }
-      profile{
-        id
-        birthDay
-        profilePic{
-          id
-          profileThumbs
-        }
-      }
-    }
-  }
-
-
-*/
 
 const query = gql`query user($username:String!)
 {
@@ -69,8 +28,10 @@ const query = gql`query user($username:String!)
       }
       edges{
         node{
+          id
           originalPhoto
           photo
+          thumbs
         }
       }
     }
@@ -108,6 +69,21 @@ const query = gql`query user($username:String!)
       }
       }`
 */
+
+
+class Thumb extends React.Component{
+  render()
+  {
+    //console.log(this.props)
+    let img = "http://localhost:8000/"+this.props.photo.node.thumbs
+    return(
+        
+          <img className="thumbimg" src={img} alt="pho" />
+        
+    )
+  }
+}
+
 
 
 class Profile extends React.Component{
@@ -200,7 +176,8 @@ profileupdate(file){
         const style={
           'borderRadius': '50%',
         }
-       
+        const profile_photos = this.props.data.users.photos.edges;
+        console.log(profile_photos)
         return(
           <main className="main">      
           <Helmet>
@@ -219,9 +196,7 @@ profileupdate(file){
                   <input type="file" className="in" name="profile_pic" onChange={this.onChangePost}/>
                 </div>
               ) 
-              
-              }  
-
+              }
               </div>
               <div className="info">
                     { data.users.profile ?(
@@ -243,7 +218,6 @@ profileupdate(file){
                     }
 
                 <div className="input">
-
                   <form ref={ref=>(this.this=ref)} onSubmit={e=>this.onSubmit(e)} id="formUpload">
                   <input type="file" name="in" onChange={this.onChange}/>
                   <input type="submit" name="post" value="upload" />
@@ -252,6 +226,19 @@ profileupdate(file){
                 
                 </div>
             </div>
+            </section>
+
+            <section className="slide">
+                    slide bar
+            </section>
+            <section className="bottom">
+              <div className="box">
+              <div className="group">
+                
+                {profile_photos.map(p=><Thumb key={p.id} photo={p} />)}
+              
+              </div>
+              </div>
             </section>
           
           </main>
@@ -286,3 +273,44 @@ export default compose(
   //graphql(upload)
 )(Profile)
 
+//var a=this.props.match.params.userName
+
+/*const upload = gql`mutation abc(){
+  img(
+    )
+  {
+    formErrors
+  }
+}
+`*/
+
+/*
+const query = gql`query user($username:String!){
+    users(username:$username){
+      id,
+      username
+      firstName,
+      lastName
+      photos{
+        edges{
+          node{
+            id,
+            thumbs
+            photo
+            originalPhoto
+          }
+        }
+      }
+      profile{
+        id
+        birthDay
+        profilePic{
+          id
+          profileThumbs
+        }
+      }
+    }
+  }
+
+
+*/
