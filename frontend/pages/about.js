@@ -1,6 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
-import Layout from '../component/layout';
+//import Layout from '../component/layout';
 /*
 export default () =>
   <div>
@@ -14,15 +14,12 @@ export default () =>
 class About extends React.Component{
     render(){
         return(
-            <Layout>
-                <h1>about us</h1>
-            </Layout>
-/*            <div>
+            <div>
                 <Link href="/">
                 <a>Home</a>
                 </Link>
                 to Back home
-            </div>*/
+            </div>
         )
     }
 }

@@ -40,8 +40,8 @@ module.exports = {
     // We ship a few polyfills by default:
     require.resolve('./polyfills'),
     
-    //require.resolve('webpack-dev-server/client') + '?http://localhost:3000',
-    require.resolve('webpack-dev-server/client') + '?http://'+require("os").hostname()+':3000/',
+    require.resolve('webpack-dev-server/client') + '?http://localhost:3000',
+    //require.resolve('webpack-dev-server/client') + '?http://'+require("os").hostname()+':3000/',
     //'webpack-dev-server/client?http://' + require("os").hostname() + ':9090/',
     require.resolve('webpack/hot/dev-server'),
     // Include an alternative client for WebpackDevServer. A client's job is to

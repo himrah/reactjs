@@ -2,4 +2,4 @@ frontend/node_modules/
 backend/photos/
 backend/photoss/
 frontend/src/photos/
-
+frontend/.next/
