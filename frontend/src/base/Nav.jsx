@@ -52,10 +52,11 @@ const Msg = Loadable({
 //const Main = () => <Async load={import('./Main')}/>
 
 //const Login = () => <Async load={import('./Login')}/>
-const Login = Loadable({
+
+/*const Login = Loadable({
     loader:() => import('./Login'),
     loading : Loading
-})
+})*/
 
 //const Registration = () => <Async load={import('./Registration')}/>
 const Registration = Loadable({

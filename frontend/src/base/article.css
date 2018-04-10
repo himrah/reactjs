@@ -6,7 +6,7 @@
     box-shadow: 0 1px 4px rgba(0,0,0,.04);*/
 }
 .show_comments{
-    padding: 5px;
+    padding: 12px;
     font-variant:initial;
     font-family:monospace;
     font-size:14px;
@@ -27,6 +27,10 @@
     font-weight: bold;
 }
 
+
+.cmt_section{
+    background: rgb(241, 241, 241);
+}
 ._cmt_box{
     padding: 5px;
     font-family: Arial, Helvetica, sans-serif;
@@ -57,6 +61,9 @@ textarea{
     font-family: Arial, Helvetica, sans-serif;
 }
 .comment_box{
+    padding-left: 12px;
+    padding-right: 12px;
+    padding-top:12px;
     height: auto;
     flex-flow: row nowrap;
 }

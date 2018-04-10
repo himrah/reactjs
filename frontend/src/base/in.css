@@ -124,7 +124,7 @@ inputs:focus{
     height: auto;
     transition: 0.3s ease-out;
     /*border-radius: 0px 0px 10px 10px;*/
-    padding: 9px;
+    /*padding: 9px;*/
     margin: 0;
 }
 
@@ -177,7 +177,8 @@ h4,p{
 /*    border: 1px solid rgb(243, 242, 240);*/
     border: 1px solid rgba(0,0,0,.09);
     /*box-shadow: 0 2px 6px rgba(0,0,0,.04);*/
-    box-shadow: 5px 10px 8px rgba(0,0,0,0.04);
+/*    box-shadow: 5px 10px 8px rgba(0,0,0,0.04);*/
+    box-shadow: 0 1px 5px 3px rgba(0,0,0,0.04);
     margin-bottom: 30px;
     /*box-shadow: 0 1px 4px rgba(0,0,0,.04);
     margin-bottom: 30px;

@@ -3,7 +3,7 @@ import React from 'react';
 import Left from './Left';
 import Right from './Right';
 //import $ from 'jquery'
-import Async from 'react-code-splitting'
+//import Async from 'react-code-splitting'
 import Middle from './Middle';
 
 

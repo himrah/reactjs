@@ -50,7 +50,7 @@ class Comments extends React.Component {
 }
 
 
-
+/*
 
 class CreateComment extends React.Component {
     render(){
@@ -70,7 +70,7 @@ class CreateComment extends React.Component {
                             {this.props.d.comment} 
                         </span>
                         <span className="_cmt_time" style={{color:'rgb(83, 83, 83)',fontSize:'12px',fontStyle:'inherit',marginLeft:'2px'}}>
-                        {/*:- {ctime.format(new Date(de))}*/}
+                        
                         <span>:- {timeAgo.format(new Date(ctime)-60*1000,'time')}</span>
                         </span>
                     </span>
@@ -78,7 +78,7 @@ class CreateComment extends React.Component {
         )
     }
 }
-
+*/
 
 const Ac =()=>{
     return(
@@ -146,14 +146,15 @@ class Articles extends React.Component{
         this.setState({inputcomment: e.target.value,keyset:key})
     }
     render(){
+        /*
         const style={
             'height':'30px',
             'maxWidth':'30px',
             'minWidth':'30px'
-        }        
+        } */       
         //console.log(this.props)
-        var ctime = this.props.p.createdDate,
-        cdate = (new Date(ctime)).toDateString()// .toString();
+        //var ctime = this.props.p.createdDate;
+        //cdate = (new Date(ctime)).toDateString()// .toString();
         let img = "http://localhost:8000/"+this.props.p.photo
         let prf ="http://localhost:8000/photos/"+this.props.p.uploadBy.profilePic.profileThumbs
         return(
@@ -185,8 +186,10 @@ class Articles extends React.Component{
                     <div className="rating">
                     <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
                     </div>
+                    <div className="cmt_section">
                     <div className="show_comments">
                         {this.props.p.comments.edges.map(c=><Comments key={c.node.id} cmt={c}  />)}
+                    </div>
                     </div>
                         <div className="comment_box">
                         <form ref={ref=>(this.this=ref)} onSubmit={e=>this.handleSubmit(e)}>
