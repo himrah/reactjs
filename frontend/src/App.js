@@ -17,8 +17,8 @@ const Nav = () => <Async load={import('./base/Nav')}/>
 
 class Container extends Component{
   render() {
-    var token=localStorage.getItem('token')
-    
+    //var token=localStorage.getItem('token')
+    var token=true
     //console.log(localStorage)
     //console.log(token)
     /*if(token==null){

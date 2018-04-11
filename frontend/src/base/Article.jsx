@@ -17,6 +17,33 @@ import './jv.js'
 // TimeAgo.locale(en)
 // "standard": "^11.0.0",
 
+class ReplayComment extends React.Component{
+    render(){
+        console.log(this.props)
+        /*if (this.props){
+            const cmt = this.props.cmt.node.comment
+            console.log(this.props.cmt.node.comment)
+            const time = this.props.cmt.node.commentTime
+            const by = this.props.cmt.node.commentBy.username
+            }
+        else{
+            const cmt="n"
+        }*/
+        return(
+            <span className="_uname">
+                <span className="_cmt">{this.props.cmt.node.comment} </span>
+                <Link to={this.props.cmt.node.commentBy.username}>
+                    <span style={{color:'black',fontWeight:'bold',marginRight:'3px'}}>
+                        {this.props.cmt.node.commentBy.firstName}
+                    </span>    
+                </Link>
+            </span>
+        )
+    }
+}
+
+
+
 class Comments extends React.Component {
     render(){
         //console.log(this.props.cmt)
@@ -28,6 +55,8 @@ class Comments extends React.Component {
         var ctime = this.props.cmt.node.commentTime
         //ctime = (new Date(ctime)).toDateString()// .toString();
         //timeAgo.format(new Date(de))
+        let reply = this.props.cmt.node.replycomment.edges
+        //console.log(reply)
         return(
             <div className="_cmt_box">
                     <span className="_uname">
@@ -43,6 +72,9 @@ class Comments extends React.Component {
                         {/* :- {ctime.format(new Date(de))}*/}
                         <span>:- {timeAgo.format(new Date(ctime)-60*1000,'time')}</span>
                         </span>
+                        <div className="reply">   
+                        { reply.map(c=><ReplayComment key={c.node.id} cmt={c}  />)}
+                        </div>
                     </span>
             </div>
         )
@@ -155,8 +187,12 @@ class Articles extends React.Component{
         //console.log(this.props)
         //var ctime = this.props.p.createdDate;
         //cdate = (new Date(ctime)).toDateString()// .toString();
+        
         let img = "http://localhost:8000/"+this.props.p.photo
         let prf ="http://localhost:8000/photos/"+this.props.p.uploadBy.profilePic.profileThumbs
+        //let img = "http://e99b0979.ngrok.io/"+this.props.p.photo
+        //let prf ="http://e99b0979.ngrok.io/photos/"+this.props.p.uploadBy.profilePic.profileThumbs
+        
         return(
             <article className="article">
                     
@@ -176,9 +212,11 @@ class Articles extends React.Component{
                     <Router>        
                     <Link to="#">
                     <div className="img_content">
+                    <Link to={img}>
                     <div className="main_img">
-                        <img alt="smile" src={img} className="m_img" />
+                        <img alt="smile" src={img} className="m_img" />                        
                     </div>
+                    </Link>
                     </div>
                     </Link>
                     </Router> 
@@ -248,12 +286,27 @@ const MY_QUERY = gql`query allPhotos{
         id
         photo
         createdDate
-        comments {
+        comments(first:6) {
           edges {
             node {
               id
               comment
               commentTime
+              replycomment{
+                  edges{
+                      node{
+                          id
+                          comment
+                          commentTime
+                          commentBy{
+                              id
+                              username
+                              firstName
+                              lastName
+                          }
+                      }
+                  }
+              }
               commentBy{
                 id
                 username

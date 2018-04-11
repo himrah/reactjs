@@ -70,12 +70,14 @@ const query = gql`query user($username:String!)
       }`
 */
 
-
+//const server = "http://localhost:8000/"
+const server = "http://e99b0979.ngrok.io/"
 class Thumb extends React.Component{
   render()
   {
     //console.log(this.props)
-    let img = "http://localhost:8000/"+this.props.photo.node.thumbs
+    let img = server+this.props.photo.node.thumbs
+    //let img = "http://localhost:8000/"+this.props.photo.node.thumbs
     return(
         
           <img className="thumbimg" src={img} alt="pho" />
@@ -191,7 +193,10 @@ profileupdate(file){
               <div>sdfds</div>
               ) : (
                 <div className="container">
+                  {/*}
                   <img style={style} src={ "http://localhost:8000/photos/"+data.users.profilePic.profileThumbs} alt="profile"/>
+                  */}
+                  <img style={style} src={ server+data.users.profilePic.profileThumbs} alt="profile"/>
                   <div className="overlay"></div>
                   <input type="file" className="in" name="profile_pic" onChange={this.onChangePost}/>
                 </div>

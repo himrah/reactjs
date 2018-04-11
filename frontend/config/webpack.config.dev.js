@@ -16,6 +16,9 @@ const paths = require('./paths');
 // Webpack uses `publicPath` to determine where the app is being served from.
 // In development, we always serve from the root. This makes config easier.
 //const publicPath = '/';
+
+//const publicPath = 'https://fasigner.pagekite.me/'
+//const publicUrl = "https://fasigner.pagekite.me/"
 const publicPath = 'http://localhost:3000/';
 const publicUrl = 'http://localhost:3000/';
 // `publicUrl` is just like `publicPath`, but we will provide it to our app
@@ -41,6 +44,7 @@ module.exports = {
     require.resolve('./polyfills'),
     
     require.resolve('webpack-dev-server/client') + '?http://localhost:3000',
+    //require.resolve('webpack-dev-server/client') + '?https://fasigner.pagekite.me/',
     //require.resolve('webpack-dev-server/client') + '?http://'+require("os").hostname()+':3000/',
     //'webpack-dev-server/client?http://' + require("os").hostname() + ':9090/',
     require.resolve('webpack/hot/dev-server'),

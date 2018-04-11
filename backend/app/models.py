@@ -112,6 +112,7 @@ def del_IMG(sender,instance,**kwargs):
 """
 
 class Photos(models.Model):
+    caption = models.TextField(null=True)
     original_photo=models.ImageField(upload_to='photos/original')
     thumbs = models.ImageField(upload_to='photos/thumbs/')
     photo = models.ImageField(upload_to='photos/photo')
@@ -160,7 +161,16 @@ class Comments(models.Model):
     comment = models.TextField()
     def __str__(self):
         return str(self.photo_id)+' : '+str(self.comment_by)
+
+class ReplyComments(models.Model):
+    comment_id = models.ForeignKey(Comments,on_delete=models.CASCADE,null=True,related_name='replycomment')
+    comment_time = models.DateTimeField(default=datetime.now,null=True)
+    comment_by = models.ForeignKey(User,on_delete=models.CASCADE,null=True)
+    comment = models.TextField()
+    def __str__(self):
+        return str(self.comment)
     
+
 class Connection(models.Model):
     follower = models.ForeignKey(User,on_delete=models.CASCADE,null=True,related_name="follower")
     following = models.ForeignKey(User,on_delete=models.CASCADE,null=True,related_name="following")

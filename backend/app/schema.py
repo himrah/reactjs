@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User,Group
 import graphene
 #import graphql_jwt
-from .models import Comments,Photos,Profile,Profile_pic, IMG,Interest
+from .models import Comments,Photos,Profile,Profile_pic, IMG,Interest,ReplyComments
 #from graphene import ObjectType,Node,Schema,List,Field,relay,AbstractType
 from graphene_django.fields import DjangoConnectionField
 from graphene_django.types import DjangoObjectType
@@ -12,6 +12,11 @@ from graphql_relay.node.node import from_global_id
 class PhotoType(DjangoObjectType):
     class Meta:
         model = Photos
+        interfaces = (graphene.Node, )
+
+class ReplyCommentType(DjangoObjectType):
+    class Meta:
+        model = ReplyComments
         interfaces = (graphene.Node, )
 
 class ImgType(DjangoObjectType):
@@ -123,6 +128,8 @@ class Query(graphene.AbstractType):
     all_img = graphene.List(ImgType)
     photos = graphene.Field(ImgType,id=graphene.Int())
     
+    all_reply_comment = graphene.List(ReplyCommentType)
+
     all_photos = graphene.List(PhotoType)
     photos = graphene.Field(PhotoType,id=graphene.Int())
 
@@ -138,6 +145,9 @@ class Query(graphene.AbstractType):
 
     def resolve_all_img(self, info, **kwargs):
         return IMG.objects.all()
+
+    def resolve_all_reply_comments(self,info,**kwargs):
+        return ReplyComments.objects.all()
 
     def resolve_current_user(self, info, **kwargs):
         if not info.context.user.is_authenticated():
