@@ -1,12 +1,38 @@
 import React from 'react';
 //import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import Left from './Left';
-import Right from './Right';
+//import Left from './Left';
+//import Right from './Right';
+
+
+
 //import $ from 'jquery'
 //import Async from 'react-code-splitting'
-import Middle from './Middle';
+//import Middle from './Middle';
 
+import Loadable from 'react-loadable'
+import Loading from '../loading'
+//import Main from './Main'
+//import { Comb } from './Comb';
 
+//const Profile = () => <Async load={import('./Profile')}/>
+
+//const Main = () => <Async load={import('./Comb')}/>
+//const Loading = () => <div>Loading...</div>;
+
+const Right = Loadable({
+    loader: () => import('./Right'),
+    loading : Loading
+})
+
+const Left = Loadable({
+    loader: () => import('./Left'),
+    loading : Loading
+})
+
+const Middle = Loadable({
+    loader: () => import('./Middle'),
+    loading : Loading
+})
 //const Left = () => <Async load={import('./Left')}/>
 //const Right = () => <Async load={import('./Right')}/>
 //const Middle = () => <Async load={import('./Middle')}/>

@@ -9,13 +9,22 @@ import About from './About';
 import Home from './Home'*/
 //import Graph from './Graph'
 //import Routes from './routes';
-import App from './App'
+//import App from './App'
 import React from 'react';
 import ReactDOM from 'react-dom';
 import registerServiceWorker from './registerServiceWorker';
 //import Async from 'react-code-splitting'
 import { ApolloProvider } from 'react-apollo'
 import client from './connection'
+import './base/in.css';
+import Loading from './loading'
+import Loadable from 'react-loadable'
+
+
+const App = Loadable({
+    loader: () => import('./App'),
+    loading : Loading
+})
 //import About from './About'
 //import About from './About'
 //import LoginView from './LoginView'
@@ -26,7 +35,7 @@ import { InMemoryCache } from 'apollo-cache-inmemory';*/
 
 //import './base/jv.js'
 //import Nav from './base/Nav';
-import './base/in.css';
+
 
 
 //const Nav = () => <Async load={import('./base/Nav')}/>
@@ -97,6 +106,11 @@ class Form extends React.Component{
     }
 }*/
 
+const Home = () =>(
+    <div>
+    Home page
+    </div>
+);
 
 
 ReactDOM.render((

@@ -286,7 +286,7 @@ const MY_QUERY = gql`query allPhotos{
         id
         photo
         createdDate
-        comments(first:6) {
+        comments(first:5) {
           edges {
             node {
               id

@@ -5,6 +5,8 @@ const autoprefixer = require('autoprefixer');
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+//const HtmlWebpackPlugin = require('webpack-plugin')
+//const CompressionPlugin = require("plugin")
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
@@ -113,6 +115,7 @@ module.exports = {
       new BundleTracker({path: paths.statsRoot, filename: 'webpack-stats.dev.json'}),
       
       new ModuleScopePlugin(paths.appSrc, [paths.appPackageJson]),
+        
     ],
   },
   module: {
@@ -261,6 +264,38 @@ module.exports = {
     // https://github.com/jmblog/how-to-optimize-momentjs-with-webpack
     // You can remove this if you don't use Moment.js:
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+/*      new webpack.optimize.UglifyJsPlugin({
+        mangle : true,
+        compress :{
+          warnings: false, // Suppress uglification warnings
+          pure_getters: true,
+          unsafe: true,
+          unsafe_comps: true,
+          screw_ie8: true,
+          conditionals: true,
+          unused: true,
+          comparisons: true,
+          sequences: true,
+          dead_code: true,
+          evaluate: true,
+          if_return: true,
+          join_vars: true          
+        },
+        output:{
+          comments:false,
+        },
+        exclude: [/\.min\.js$/gi] // skip pre-minified libs
+      }),*/
+      //new webpack.IgnorePlugin(/^\.\/locale$/, [/moment$/]),
+      
+/*      new CompressionPlugin({
+        asset: "[path].gz[query]",
+        algorithm: "gzip",
+        test: /\.js$|\.css$|\.html$/,
+        threshold: 10240,
+        minRatio: 0
+      })*/
+
   ],
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.

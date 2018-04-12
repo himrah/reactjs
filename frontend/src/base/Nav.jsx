@@ -17,13 +17,14 @@ import logout from  './Images/logout.png'
 import { Helmet } from 'react-helmet'
 import Loadable from 'react-loadable'
 
+import Loading from '../loading'
 //import Main from './Main'
 //import { Comb } from './Comb';
 
 //const Profile = () => <Async load={import('./Profile')}/>
 
 //const Main = () => <Async load={import('./Comb')}/>
-const Loading = () => <div>Loading...</div>;
+//const Loading = () => <div>Loading...</div>;
 
 const Main = Loadable({
     loader: () => import('./Main'),

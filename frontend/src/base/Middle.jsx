@@ -6,6 +6,7 @@ import Article from './Article';
 
 //const Article = () => <Async load={import('./Article')}/>
 
+
 class Middle extends React.Component{
     render(){
         return(

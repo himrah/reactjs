@@ -1,9 +1,20 @@
 import React, { Component } from 'react';
-import Async from 'react-code-splitting'
+//import Async from 'react-code-splitting'
 //import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import Loadable from 'react-loadable'
+//const Login = () => <Async load={import('./base/Login')}/>
+//const Nav = () => <Async load={import('./base/Nav')}/>
+import Loading from './loading'
 
-const Login = () => <Async load={import('./base/Login')}/>
-const Nav = () => <Async load={import('./base/Nav')}/>
+const Login = Loadable({
+  loader: () => import('./base/Login'),
+  loading : Loading
+})
+
+const Nav = Loadable({
+  loader: () => import('./base/Nav'),
+  loading : Loading
+})
 
 /*class P extends Component{
   render() {
@@ -17,8 +28,8 @@ const Nav = () => <Async load={import('./base/Nav')}/>
 
 class Container extends Component{
   render() {
-    //var token=localStorage.getItem('token')
-    var token=true
+    var token=localStorage.getItem('token')
+    //var token=true
     //console.log(localStorage)
     //console.log(token)
     /*if(token==null){
