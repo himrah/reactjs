@@ -2,7 +2,7 @@ import React from 'react'
 //import { BrowserRouter as Link } from "react-router-dom"
 import { graphql, compose } from 'react-apollo'
 import gql from 'graphql-tag'
-import  { post, put } from 'axios';
+import  axios, { post, put } from 'axios';
 import {Helmet} from 'react-helmet'
 import './profile.css'
 
@@ -70,8 +70,8 @@ const query = gql`query user($username:String!)
       }`
 */
 
-//const server = "http://localhost:8000/"
-const server = "http://e99b0979.ngrok.io/"
+const server = "http://localhost:8000/"
+//const server = "http://e99b0979.ngrok.io/"
 class Thumb extends React.Component{
   render()
   {
@@ -94,31 +94,85 @@ class Profile extends React.Component{
     this.state ={
       file:null
     }
-//    this.onSubmit = this.onSubmit.bind(this)
+    this.fileSubmit = this.fileSubmit.bind(this)
     this.onChange = this.onChange.bind(this)
-//    this.fileUpload = this.fileUpload.bind(this)
-}
-
-
-  onSubmit(e){
+    this.fileUpload = this.fileUpload.bind(this)
+  }
+    
+  
+  
+  fileSubmit(e){
     e.preventDefault()
-    console.log(this.props)
-    //const url = 'http://localhost:8000/api/post/';
-    //const formData = new FormData();
-    //formData.append('file',file)    
-    /*const config = {
-      headers: {
-          'content-type': 'multipart/form-data'
-      }
-  }   */ 
     this.fileUpload(this.state.file).then((response)=>{
       console.log(response.data);
-    })    
+    }).catch(function(error){
+      console.log(error) 
+    })   
   }
 
 
   fileUpload(file){
     const url = 'http://localhost:8000/api/post/';
+    //const url = 'http://example.com/file-upload';
+    const formData = new FormData();
+    formData.append('file',file)
+    console.log(file)
+    const token = localStorage.getItem('token')
+    const config = {
+        headers: {
+            'content-type': 'multipart/form-data',
+            'authorization': `JWT ${token}`, 
+        }
+    }
+    return  post(url, formData,config)
+}
+
+  onChange(e){
+    this.setState({file:e.target.files[0]})
+  }
+
+
+/*  onSubmit(e){
+    e.preventDefault()
+    //console.log(this.props)
+    //const url = 'http://localhost:8000/api/post/';
+    //const formData = new FormData();
+    //formData.append('file',file)    
+    this.fileUpload(this.state.file).then((response)=>{
+      console.log(response.data);
+    }).catch(function(error){
+      console.log(error)
+    })    
+  }
+*/
+
+/*
+  fileUpload(file){
+    //console.log(file)
+    const url = 'http://localhost:8000/api/post/';
+    let formData = new FormData();
+    //formData.append('original_photo',file)
+    formData.append('file',file)
+    //formData.get("original_photo")
+    const token = localStorage.getItem('token')
+    const config = {
+        headers: {
+            'content-type': 'multipart/form-data',
+            'authorization': `JWT ${token}`, 
+            'Accept': 'application/json'
+        }
+    }
+    //console.log(formData.get("original_photo"))
+    return  post(url, formData.get('file'),config)
+    //return  post(url, formData.get("original_photo"),config)
+  }
+
+
+
+*/
+
+  /*profileupdate(file){
+    const url = 'http://localhost:8000/api/profilepic/';
     const formData = new FormData();
     formData.append('original_photo',file)
     const token = localStorage.getItem('token')
@@ -128,30 +182,16 @@ class Profile extends React.Component{
             'authorization': `JWT ${token}` 
         }
     }
-    return  post(url, formData,config)
-}
-
-profileupdate(file){
-  const url = 'http://localhost:8000/api/profilepic/';
-  const formData = new FormData();
-  formData.append('original_photo',file)
-  const token = localStorage.getItem('token')
-  const config = {
-      headers: {
-          'content-type': 'multipart/form-data',
-          'authorization': `JWT ${token}` 
-      }
-  }
-  return  put(url, formData,config)
-}
+    return  put(url, formData,config)
+  }*/
 
 
-
+/*
   onChange(e){
     this.setState({file:e.target.files[0]})
   }
-
-  onChangePost(e){
+*/
+/*  onChangePost(e){
     //this.setState({file:e.target.files[0]})
     let file = e.target.files[0]
     console.log(file)
@@ -165,9 +205,10 @@ profileupdate(file){
             'authorization': `JWT ${token}` 
         }
     }
-    return  put(url, formData,config)    
-    
-  }
+    return  put(url, formData,config)
+  }*/
+
+
   render(){
         let { data } = this.props
         console.log(data)
@@ -179,7 +220,7 @@ profileupdate(file){
           'borderRadius': '50%',
         }
         const profile_photos = this.props.data.users.photos.edges;
-        console.log(profile_photos)
+        //console.log(profile_photos)
         return(
           <main className="main">      
           <Helmet>
@@ -198,7 +239,11 @@ profileupdate(file){
                   */}
                   <img style={style} src={ server+data.users.profilePic.profileThumbs} alt="profile"/>
                   <div className="overlay"></div>
+                  {
+                  /*
                   <input type="file" className="in" name="profile_pic" onChange={this.onChangePost}/>
+                  */
+                  }
                 </div>
               ) 
               }
@@ -223,9 +268,9 @@ profileupdate(file){
                     }
 
                 <div className="input">
-                  <form ref={ref=>(this.this=ref)} onSubmit={e=>this.onSubmit(e)} id="formUpload">
-                  <input type="file" name="in" onChange={this.onChange}/>
-                  <input type="submit" name="post" value="upload" />
+                  <form onSubmit={this.fileSubmit} id="formUpload">
+                    <input type="file" name="in" onChange={this.onChange}/>
+                    <input type="submit" name="post" value="upload" />
                   </form>
                 
                 

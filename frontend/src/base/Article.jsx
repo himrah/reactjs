@@ -19,7 +19,7 @@ import './jv.js'
 
 class ReplayComment extends React.Component{
     render(){
-        console.log(this.props)
+        //console.log(this.props)
         /*if (this.props){
             const cmt = this.props.cmt.node.comment
             console.log(this.props.cmt.node.comment)
@@ -247,11 +247,11 @@ class Articles extends React.Component{
 
 class Article extends React.Component{
     render(){
-        console.log(this.props)
+        //console.log(this.props)
         if(this.props.data.loading){
             return (<div>Loading...</div>)   
         }
-        console.log(this.props)
+        //console.log(this.props)
         //console.log(localStorage)
         const photos = this.props.data.allPhotos;
         const mu = this.props;

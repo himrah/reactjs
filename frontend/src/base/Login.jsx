@@ -40,7 +40,7 @@ class Login extends React.Component{
             console.log(res.token)
             localStorage.setItem('token', res.token)
             //localStorage.setItem('userid',)
-            window.location.replace('/auth')
+            window.location.replace('/')
             //fetch('')
             //window.location.replace
             //console.log(res.token)
