@@ -189,7 +189,7 @@ class Articles extends React.Component{
         //cdate = (new Date(ctime)).toDateString()// .toString();
         
         let img = "http://localhost:8000/"+this.props.p.photo
-        let prf ="http://localhost:8000/photos/"+this.props.p.uploadBy.profilePic.profileThumbs
+        let prf ="http://localhost:8000/"+this.props.p.uploadBy.profilePic.profileThumbs
         //let img = "http://e99b0979.ngrok.io/"+this.props.p.photo
         //let prf ="http://e99b0979.ngrok.io/photos/"+this.props.p.uploadBy.profilePic.profileThumbs
         

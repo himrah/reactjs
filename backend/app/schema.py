@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User,Group
 import graphene
 #import graphql_jwt
-from .models import Comments,Photos,Profile,Profile_pic, IMG,Interest,ReplyComments
+from .models import Comments,Photos,Profile,Profile_pic, IMG,Interest,ReplyComments,Connection
 #from graphene import ObjectType,Node,Schema,List,Field,relay,AbstractType
 from graphene_django.fields import DjangoConnectionField
 from graphene_django.types import DjangoObjectType
@@ -130,6 +130,8 @@ class Query(graphene.AbstractType):
     
     all_reply_comment = graphene.List(ReplyCommentType)
 
+    all_by_users = graphene.List(PhotoType,id=graphene.Int())
+
     all_photos = graphene.List(PhotoType)
     photos = graphene.Field(PhotoType,id=graphene.Int())
 
@@ -169,6 +171,16 @@ class Query(graphene.AbstractType):
     def resolve_all_users(self, info, **kwargs):
         return User.objects.select_related('photo_id').all()
         #return User.objects.all()
+
+
+    def resolve_all_by_users(self,info,**kwargs):
+        user_id = kwargs.get('id')
+        print(user_id)
+        following = Connection.objects.filter(follower_id=user_id)
+        if following is not None:
+            fd = [i.following_id for i in following]
+            query = Photos.objects.filter(upload_by_id__in=fd)
+            return query
 
 
     def resolve_photos(self, info, **kwargs):
