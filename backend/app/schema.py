@@ -162,8 +162,8 @@ class Query(graphene.AbstractType):
 
     def resolve_all_photos(self, info, **kwargs):
         #print(info.context.user.id)
-        #return Photos.objects.all().order_by('-created_date')
-        return Photos.objects.all()
+        return Photos.objects.all().order_by('-created_date')
+        #return Photos.objects.all()
 
     def resolve_all_comments(self, info, **kwargs):
         return Comments.objects.select_related('c_image').all()   

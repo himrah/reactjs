@@ -16,7 +16,7 @@ import logout from  './Images/logout.png'
 //import Profile from './Profile'
 import { Helmet } from 'react-helmet'
 import Loadable from 'react-loadable'
-
+import $ from 'jquery'
 import Loading from '../loading'
 //import Main from './Main'
 //import { Comb } from './Comb';

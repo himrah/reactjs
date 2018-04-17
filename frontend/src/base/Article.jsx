@@ -4,8 +4,9 @@ import './article.css'
 import TimeAgo from 'javascript-time-ago'
 import { graphql, compose } from 'react-apollo'
 import gql from 'graphql-tag'
+//import $ from 'jquery';
 import en from 'javascript-time-ago/locale/en'
-import './jv.js'
+//import './jv.js'
 //import option from './Images/option.png'
 //import appendReactDOM from 'append-react-dom';
 //import Async from 'react-code-splitting'
@@ -121,6 +122,8 @@ const Ac =()=>{
 
 
 class Articles extends React.Component{
+
+
     constructor(props){
         super(props);
         
@@ -141,8 +144,8 @@ class Articles extends React.Component{
         let el = document.querySelector('.show_comments')
         //appendReactDOM.bind
         //console.log(el)
-        var d = {comment:"this is comment",commentTime:"2018-01-28T17:05:56+00:00",username:'ajay',commentBy:1}
-        console.log(d)
+        //var d = {comment:"this is comment",commentTime:"2018-01-28T17:05:56+00:00",username:'ajay',commentBy:1}
+        //console.log(d)
         el.append(<Ac/>)
         //el.appendChild("jlkjsdlkjlksdf")
 
@@ -187,45 +190,59 @@ class Articles extends React.Component{
         //console.log(this.props)
         //var ctime = this.props.p.createdDate;
         //cdate = (new Date(ctime)).toDateString()// .toString();
-        
+        TimeAgo.locale(en)
+        const timeAgo = new TimeAgo('en-US')
         let img = "http://localhost:8000/"+this.props.p.photo
         let prf ="http://localhost:8000/"+this.props.p.uploadBy.profilePic.profileThumbs
         //let img = "http://e99b0979.ngrok.io/"+this.props.p.photo
         //let prf ="http://e99b0979.ngrok.io/photos/"+this.props.p.uploadBy.profilePic.profileThumbs
-        
+        //let s='/'+this.props.p.photo
         return(
             <article className="article">
                     
                     <header className="img_header">
                         <div className="img_header_title">
                         
-                        {/*<Link to={this.props.p.uploadBy.username}><h4>{this.props.p.uploadBy.username}</h4></Link>
-                        */}
-                        <div className="_pt">
-                        <Link to={this.props.p.uploadBy.username}><span className="user">{this.props.p.uploadBy.firstName}</span></Link>
-                        <img src={prf} alt="prf" className="prf" title={this.props.p.uploadBy.username}/>
-                        {/*<div>{ctime}</div>*/}
-                        </div>
-                        </div>
-                        
+                            {/*<Link to={this.props.p.uploadBy.username}><h4>{this.props.p.uploadBy.username}</h4></Link>
+                            */}
+                            
+                            <div className="_pt">
+                                {/*<Link to={this.props.p.uploadBy.username}><span className="user">{this.props.p.uploadBy.firstName}</span></Link>*/}
+                                <img src={prf} alt="prf" className="prf" title={this.props.p.uploadBy.username}/>
+                                {/*<div>{ctime}</div>*/}
+                                <div className="_name">
+                                    <Link to={this.props.p.uploadBy.username}><span className="user">{this.props.p.uploadBy.firstName}</span></Link>
+                                    <div className="_time">
+                                    <span className="time">{timeAgo.format(new Date(this.props.p.createdDate)-60*1000,'time')} ago</span>
+                                    {/*<span className="time" >{this.props.p.createdDate}</span>*/}
+                                    </div>
+                                </div>
+                            
+                            </div>
+                            <div className="_info">
+                                <div className="caption">
+                                    <span>{this.props.p.caption}</span>
+                                </div>
+                            </div>                            
+                        </div>                        
                     </header>
-                    <Router>        
-                    <Link to="#">
+                    <Router>
+                    
                     <div className="img_content">
-                    <Link to={img}>
-                    <div className="main_img">
-                        <img alt="smile" src={img} className="m_img" />                        
+                    <a target="_blank" href={img}>
+                        <div className="main_img">
+                            <img alt="smile" src={img} className="m_img" />                      
+                        </div>
+                    </a>
                     </div>
-                    </Link>
-                    </div>
-                    </Link>
+                    
                     </Router> 
                     <div className="img_footer">
                     <div className="rating">
                     <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
                     </div>
-                    <div className="cmt_section">
-                    <div className="show_comments">
+                    <div className="cmt_section">                        
+                        <div className="show_comments">
                         {this.props.p.comments.edges.map(c=><Comments key={c.node.id} cmt={c}  />)}
                     </div>
                     </div>
@@ -286,6 +303,7 @@ const MY_QUERY = gql`query allPhotos{
         id
         photo
         createdDate
+        caption
         comments(first:5) {
           edges {
             node {

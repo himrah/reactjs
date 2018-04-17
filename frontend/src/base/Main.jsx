@@ -5,7 +5,6 @@ import React from 'react';
 
 
 
-//import $ from 'jquery'
 //import Async from 'react-code-splitting'
 //import Middle from './Middle';
 
