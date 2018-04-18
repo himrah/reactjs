@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User,Group
 import graphene
 #import graphql_jwt
+from django.db.models import Q
 from .models import Comments,Photos,Profile,Profile_pic, IMG,Interest,ReplyComments,Connection
 #from graphene import ObjectType,Node,Schema,List,Field,relay,AbstractType
 from graphene_django.fields import DjangoConnectionField
@@ -8,11 +9,45 @@ from graphene_django.types import DjangoObjectType
 from graphene_django.filter import DjangoFilterConnectionField
 from graphene_django.debug import DjangoDebug
 from graphql_relay.node.node import from_global_id
+from graphene import relay
+
+"""
+class Feeds(graphene.ObjectType):
+    class Meta:
+        interfaces = (relay.Node,)
+
+    @classmethod
+    def get_node(cls,info,id):
+        return get_feed(id)
+
+class FeedConnection(relay.Connection):
+    class Meta:
+        node = Photos
+
+
+
+class GetFeeds(graphene.ObjectType):
+    #class Meta:
+    #   interfaces = (relay.Node,)
+
+    feeds = relay.ConnectionField(FeedConnection)
+    def resolve_feeds(self,info,**kwargs):
+        return [get_feed(i) for i in self.feeds]
+"""
+
 
 class PhotoType(DjangoObjectType):
     class Meta:
         model = Photos
-        interfaces = (graphene.Node, )
+        #interfaces = (relay.Node, )
+
+
+class PhotoNode(DjangoObjectType):
+    class Meta:
+        model = Photos
+        filter_fields = ['caption']
+        interfaces = (relay.Node, )
+
 
 class ReplyCommentType(DjangoObjectType):
     class Meta:
@@ -130,10 +165,18 @@ class Query(graphene.AbstractType):
     
     all_reply_comment = graphene.List(ReplyCommentType)
 
-    all_by_users = graphene.List(PhotoType,id=graphene.Int())
+    all_by_users = graphene.List(PhotoNode,id=graphene.Int())
 
     all_photos = graphene.List(PhotoType)
     photos = graphene.Field(PhotoType,id=graphene.Int())
+
+    all_feeds = graphene.List(
+        PhotoType,
+        search = graphene.String(),
+        first = graphene.Int(),
+        skip =  graphene.Int(),
+        )
+
 
     all_comments = graphene.List(CommentType)
     comments = graphene.Field(CommentType,id=graphene.Int(),comment = graphene.String())
@@ -145,6 +188,27 @@ class Query(graphene.AbstractType):
 
     all_interest = graphene.Field(InterestType,username=graphene.String())
 
+
+    all_context = DjangoFilterConnectionField(PhotoNode)
+
+
+    def resolve_all_context(self,info,**kwargs):
+        print(info.context.user)
+        print(info.context.user.is_authenticated)
+        if info.context.user.is_authenticated:
+            print("sdfjkhjsdklfjlksdf")
+            return Photos.objects.all().order_by('-created_date')
+        else:    
+            print("nonnonono")
+            #return Photos.objects.none()
+            #return None
+            #return {"fail"}
+            #return Photos.objects.all().order_by('-created_date')
+
+        #return info.context.user        
+        
+        
+
     def resolve_all_img(self, info, **kwargs):
         return IMG.objects.all()
 
@@ -152,6 +216,7 @@ class Query(graphene.AbstractType):
         return ReplyComments.objects.all()
 
     def resolve_current_user(self, info, **kwargs):
+        print(info)
         if not info.context.user.is_authenticated():
             return None
         return info.context.user
@@ -164,6 +229,22 @@ class Query(graphene.AbstractType):
         #print(info.context.user.id)
         return Photos.objects.all().order_by('-created_date')
         #return Photos.objects.all()
+
+    def resolve_all_feeds(self,info,search=None,first=None, skip = None, **kwargs):
+        qs = Photos.objects.all().order_by('-created_date')
+        if search : 
+            filter = (
+                Q(caption__icontains = search)
+            )
+            qs = qs.filter(filter)
+    
+        if skip :
+            qs =  qs[skip::]
+
+        if first :
+            qs = qs[:first]
+
+        return qs
 
     def resolve_all_comments(self, info, **kwargs):
         return Comments.objects.select_related('c_image').all()   

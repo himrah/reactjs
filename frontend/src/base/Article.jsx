@@ -270,7 +270,8 @@ class Article extends React.Component{
         }
         //console.log(this.props)
         //console.log(localStorage)
-        const photos = this.props.data.allPhotos;
+        //const photos = this.props.data.allPhotos;
+        const photos = this.props.data.allFeeds;
         const mu = this.props;
         //console.log(photos)
         return(
@@ -299,7 +300,7 @@ class Article extends React.Component{
   }`
 */
 const MY_QUERY = gql`query allPhotos{
-    allPhotos {
+    allFeeds(first:10) {
         id
         photo
         createdDate
