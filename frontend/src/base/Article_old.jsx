@@ -4,17 +4,39 @@ import './article.css'
 import TimeAgo from 'javascript-time-ago'
 import { graphql, compose } from 'react-apollo'
 import gql from 'graphql-tag'
+//import $ from 'jquery';
 import en from 'javascript-time-ago/locale/en'
+//import './jv.js'
+//import option from './Images/option.png'
+//import appendReactDOM from 'append-react-dom';
+//import Async from 'react-code-splitting'
+//import Middle from './Middle';
+
+//const Left = () => <Async load={import('./Left')}/>
+
+// import image from './Images/IMG_20170325_131958207.jpg'
+// TimeAgo.locale(en)
+// "standard": "^11.0.0",
 
 class ReplayComment extends React.Component{
     render(){
+        //console.log(this.props)
+        /*if (this.props){
+            const cmt = this.props.cmt.node.comment
+            console.log(this.props.cmt.node.comment)
+            const time = this.props.cmt.node.commentTime
+            const by = this.props.cmt.node.commentBy.username
+            }
+        else{
+            const cmt="n"
+        }*/
         return(
             <span className="_uname">
                 <span className="_cmt">{this.props.cmt.node.comment} </span>
                 <Link to={this.props.cmt.node.commentBy.username}>
                     <span style={{color:'black',fontWeight:'bold',marginRight:'3px'}}>
                         {this.props.cmt.node.commentBy.firstName}
-                    </span>
+                    </span>    
                 </Link>
             </span>
         )
@@ -25,11 +47,17 @@ class ReplayComment extends React.Component{
 
 class Comments extends React.Component {
     render(){
+        //console.log(this.props.cmt)
         TimeAgo.locale(en)
+        //TimeAgo.locale(en)
         const timeAgo = new TimeAgo('en-US')
         
+        //ctime = new TimeAgo('en-US')
         var ctime = this.props.cmt.node.commentTime
+        //ctime = (new Date(ctime)).toDateString()// .toString();
+        //timeAgo.format(new Date(de))
         let reply = this.props.cmt.node.replycomment.edges
+        //console.log(reply)
         return(
             <div className="_cmt_box">
                     <span className="_uname">
@@ -54,6 +82,37 @@ class Comments extends React.Component {
     }
 }
 
+
+/*
+
+class CreateComment extends React.Component {
+    render(){
+        TimeAgo.locale(en)
+        const timeAgo = new TimeAgo('en-US')
+        var ctime = this.props.d.commentTime
+        return(
+            <div className="_cmt_box">
+                    <span className="_uname">
+                        <Router>  
+                        {                                
+                            <Link to={this.props.d.username} key={this.props.d.commentBy}><span style={{color:'black',fontWeight:'bold',marginRight:'3px'}}>{this.props.d.username}</span></Link>
+
+                        }
+                        </Router>
+                        <span className="_cmt" style={{fontweight:'normal'}}>
+                            {this.props.d.comment} 
+                        </span>
+                        <span className="_cmt_time" style={{color:'rgb(83, 83, 83)',fontSize:'12px',fontStyle:'inherit',marginLeft:'2px'}}>
+                        
+                        <span>:- {timeAgo.format(new Date(ctime)-60*1000,'time')}</span>
+                        </span>
+                    </span>
+            </div>
+        )
+    }
+}
+*/
+
 const Ac =()=>{
     return(
     <div>sdfsdf</div>
@@ -71,23 +130,23 @@ class Articles extends React.Component{
         this.state = {
             inputcomment : '',
             keyset : '',
-            //hasNextPage : this.props.pageInfo.hasNextPage,
-            //cursor : this.props.pageInfo.endCursor,
             //uid : localStorage.token
         }
         this.updateInput = this.updateInput.bind(this);
         this.handleClick = this.handleClick.bind(this);
     }
-    
 
     handleSubmit(e){
         e.preventDefault()
         console.log(this.props)
         let formData = new FormData(this.form)
-        //console.log(formData)
-        console.log(this.state.inputcomment)
+        console.log(formData)
         let el = document.querySelector('.show_comments')
-        el.append(this.state.inputcomment)
+        //appendReactDOM.bind
+        //console.log(el)
+        //var d = {comment:"this is comment",commentTime:"2018-01-28T17:05:56+00:00",username:'ajay',commentBy:1}
+        //console.log(d)
+        el.append(<Ac/>)
         //el.appendChild("jlkjsdlkjlksdf")
 
        /* 
@@ -113,6 +172,8 @@ class Articles extends React.Component{
 
 
     handleClick(){
+        //console.log("here");
+        //console.log(this)
         console.log(this.state.keyset)
         console.log(this.state.inputcomment)
     }
@@ -120,15 +181,22 @@ class Articles extends React.Component{
         this.setState({inputcomment: e.target.value,keyset:key})
     }
     render(){
+        /*
+        const style={
+            'height':'30px',
+            'maxWidth':'30px',
+            'minWidth':'30px'
+        } */       
+        //console.log(this.props)
+        //var ctime = this.props.p.createdDate;
+        //cdate = (new Date(ctime)).toDateString()// .toString();
         TimeAgo.locale(en)
         const timeAgo = new TimeAgo('en-US')
-        let post = this.props.p.node
-        let img = "http://localhost:8000/"+post.photo
-        let prf ="http://localhost:8000/"+post.uploadBy.profilePic.profileThumbs
-        //let pageInfo = this.props.pageInfo
-        //console.log(pageInfo)
-        //this.setState({cursor:pageInfo.endCursor})
-        //console.log(this.state)
+        let img = "http://localhost:8000/"+this.props.p.photo
+        let prf ="http://localhost:8000/"+this.props.p.uploadBy.profilePic.profileThumbs
+        //let img = "http://e99b0979.ngrok.io/"+this.props.p.photo
+        //let prf ="http://e99b0979.ngrok.io/photos/"+this.props.p.uploadBy.profilePic.profileThumbs
+        //let s='/'+this.props.p.photo
         return(
             <article className="article">
                     
@@ -140,19 +208,20 @@ class Articles extends React.Component{
                             
                             <div className="_pt">
                                 {/*<Link to={this.props.p.uploadBy.username}><span className="user">{this.props.p.uploadBy.firstName}</span></Link>*/}
-                                <img src={prf} alt="prf" className="prf" title={post.uploadBy.username}/>
+                                <img src={prf} alt="prf" className="prf" title={this.props.p.uploadBy.username}/>
                                 {/*<div>{ctime}</div>*/}
                                 <div className="_name">
-                                    <Link to={post.uploadBy.username}><span className="user">{post.uploadBy.firstName}</span></Link>
+                                    <Link to={this.props.p.uploadBy.username}><span className="user">{this.props.p.uploadBy.firstName}</span></Link>
                                     <div className="_time">
-                                    <span className="time">{timeAgo.format(new Date(post.createdDate)-60*1000,'time')} ago</span>
+                                    <span className="time">{timeAgo.format(new Date(this.props.p.createdDate)-60*1000,'time')} ago</span>
                                     {/*<span className="time" >{this.props.p.createdDate}</span>*/}
                                     </div>
-                                </div>                            
+                                </div>
+                            
                             </div>
                             <div className="_info">
                                 <div className="caption">
-                                    <span>{post.caption}</span>
+                                    <span>{this.props.p.caption}</span>
                                 </div>
                             </div>                            
                         </div>                        
@@ -174,13 +243,13 @@ class Articles extends React.Component{
                     </div>
                     <div className="cmt_section">                        
                         <div className="show_comments">
-                        {post.comments.edges.map(c=><Comments key={c.node.id} cmt={c}  />)}
+                        {this.props.p.comments.edges.map(c=><Comments key={c.node.id} cmt={c}  />)}
                     </div>
                     </div>
                         <div className="comment_box">
                         <form ref={ref=>(this.this=ref)} onSubmit={e=>this.handleSubmit(e)}>
                             <div className="_cmt_btn">
-                                <textarea className="form-control" placeholder="Comment here" onChange={(e)=> this.updateInput(e,post.id)} key={post.id}  ></textarea>
+                                <textarea className="form-control" placeholder="Comment here" onChange={(e)=> this.updateInput(e,this.props.p.id)} key={this.props.p.id}  ></textarea>
                                 <input type="submit" value="post"  className="pstbtn" />
                             </div>
                         </form>
@@ -194,29 +263,7 @@ class Articles extends React.Component{
 
 
 class Article extends React.Component{
-    constructor(props){
-        super(props);
-        this.state = {
-            hasNextPage :'',
-            cursor : '',
-            //uid : localStorage.token
-        }
-    }
-    updateStat(pageInfo){
-        this.setState({hasNextPage:pageInfo.hasNextPage,cursor:pageInfo.endCursor})
-    }
-    
-    componentWillReceiveProps(){
-        
-        if(this.props.data.loading){
-            //return (<div>sdf</div>)
-            console.log(this.props)
-        }
-        console.log(this.props)
-    }
-
     render(){
-
         //console.log(this.props)
         if(this.props.data.loading){
             return (<div>Loading...</div>)   
@@ -224,151 +271,78 @@ class Article extends React.Component{
         //console.log(this.props)
         //console.log(localStorage)
         //const photos = this.props.data.allPhotos;
-        let pageInfo=this.props.data.allContext.pageInfo
-        
-        /*this.setState((pageInfo)=>{
-            return {hasNextPage:pageInfo.hasNextPage,cursor:pageInfo.endCursor};
-        })*/
-
-        //console.log(this.props.data.allContext.pageInfo.hasNextPage)
-        //this.setState({hasNextPage:pageInfo.hasNextPage,cursor:pageInfo.endCursor})
-        const photos = this.props.data.allContext.edges;
-        //const pageInfo = this.props.data.allContext.pageInfo
+        const photos = this.props.data.allFeeds;
         const mu = this.props;
         //console.log(photos)
-        //console.log(this.state)
-        //this.updateStat(pageInfo)
-        return( 
-                <div> {photos.map(p=><Articles key={p.node.id} p={p} m={mu}/>)}</div>
+        return(
+                <div>{photos.map(p=><Articles key={p.id} p={p} m={mu} />)}</div>
         );
     }
 }
 
 
-
-
-
-const MoreArticle = gql`query allPhotos($after:String!){
-    allContext(first:10,after:$after) {
-        pageInfo{
-            hasNextPage
-            endCursor
+//const PhotoQuery=gql `query {allPhotos{id,photo}}`
+//const PhotoQuery = gql` query{allPhotos{ id photo } }`
+/*const MY_QUERY = gql`query allPhotos{
+    allPhotos {
+      id
+      photo
+      comments{
+          edges{
+              node{
+                  id
+                  comment
+                  commentTime
+              }
           }
-        edges{ 
-            cursor
-            node{
-                id
-                photo
-                createdDate
-                caption
-                comments(first:5) {
-                edges {
-                    node {
-                    id
-                    comment
-                    commentTime
-                    replycomment{
-                        edges{
-                            node{
-                                id
-                                comment
-                                commentTime
-                                commentBy{
-                                    id
-                                    username
-                                    firstName
-                                    lastName
-                                }
-                            }
-                        }
-                    }
-                    commentBy{
-                        id
-                        username
-                        
-                    }
-                    }
-                }
-                }
-                uploadBy {
-                id
-                username
-                firstName
-                lastName
-                profilePic{
-                    id
-                    profileThumbs
-                }
-                }
-            }
-        }
       }
-      }`
-
-
-const queryOptions = {
-options: props => ({
-    variables: {
-    after:props.endCursor
-    },
-}),
-}
-
-
-
+    }
+  }`
+*/
 const MY_QUERY = gql`query allPhotos{
-    allContext(first:10) {
-        pageInfo{
-            hasNextPage
-            endCursor
-          }
-        edges{ 
-            cursor
-            node{
-                id
-                photo
-                createdDate
-                caption
-                comments(first:5) {
-                edges {
-                    node {
-                    id
-                    comment
-                    commentTime
-                    replycomment{
-                        edges{
-                            node{
-                                id
-                                comment
-                                commentTime
-                                commentBy{
-                                    id
-                                    username
-                                    firstName
-                                    lastName
-                                }
-                            }
-                        }
-                    }
-                    commentBy{
-                        id
-                        username
-                        
-                    }
-                    }
-                }
-                }
-                uploadBy {
+    allFeeds(first:10) {
+        id
+        photo
+        createdDate
+        caption
+        comments(first:5) {
+          edges {
+            node {
+              id
+              comment
+              commentTime
+              replycomment{
+                  edges{
+                      node{
+                          id
+                          comment
+                          commentTime
+                          commentBy{
+                              id
+                              username
+                              firstName
+                              lastName
+                          }
+                      }
+                  }
+              }
+              commentBy{
                 id
                 username
-                firstName
-                lastName
-                profilePic{
-                    id
-                    profileThumbs
-                }
-                }
+                
+              }
             }
+          }
+        }
+        uploadBy {
+          id
+          username
+          firstName
+          lastName
+          profilePic{
+            id
+            profileThumbs
+          }
         }
       }
       }`
@@ -394,6 +368,13 @@ const UpdateComment = gql`mutation create($comment:String!,$photoid:ID!,$userid:
   }`
 
 
+/*const MY_QUERY = gql`
+  query getWorkouts {
+     workouts { title, date, time, location, author, contentSnippet, tags, day, image, avatar, id } 
+  }
+`;*/
+
+//export default graphql(MY_QUERY)(Article)
 export default compose(
     graphql(MY_QUERY),
     graphql(UpdateComment)

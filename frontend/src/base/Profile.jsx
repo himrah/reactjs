@@ -79,12 +79,11 @@ class Thumb extends React.Component{
     let img = server+this.props.photo.node.thumbs
     //let img = "http://localhost:8000/"+this.props.photo.node.thumbs
     return(
-        
-          <img className="thumbimg" src={img} alt="pho" />
-        
+        <img className="thumbimg" src={img} alt="pho" />   
     )
   }
 }
+
 
 
 
@@ -94,42 +93,44 @@ class Profile extends React.Component{
     this.state ={
       file:null
     }
-    this.fileSubmit = this.fileSubmit.bind(this)
+    this.onFormSubmit = this.onFormSubmit.bind(this)
     this.onChange = this.onChange.bind(this)
     this.fileUpload = this.fileUpload.bind(this)
   }
     
-  
-  
-  fileSubmit(e){
+  onFormSubmit(e){
     e.preventDefault()
     this.fileUpload(this.state.file).then((response)=>{
       console.log(response.data);
     }).catch(function(error){
       console.log(error) 
-    })   
+    })
   }
-
-
-  fileUpload(file){
-    const url = 'http://localhost:8000/api/post/';
-    //const url = 'http://example.com/file-upload';
-    const formData = new FormData();
-    formData.append('file',file)
-    console.log(file)
-    const token = localStorage.getItem('token')
-    const config = {
-        headers: {
-            'content-type': 'multipart/form-data',
-            'authorization': `JWT ${token}`, 
-        }
-    }
-    return  post(url, formData,config)
-}
 
   onChange(e){
     this.setState({file:e.target.files[0]})
   }
+  
+  fileUpload(file){
+    const url = 'http://localhost:8000/api/post/';
+    //const url = 'http://example.com/file-upload';
+    const formData = new FormData();
+    formData.append('original_photo',file)
+    //console.log(file)
+    const token = localStorage.getItem('token')
+    const config = {
+        headers: {
+            'content-type': 'multipart/form-data',
+            'authorization': `JWT ${token}`,
+            
+            //'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+            //'validateStatus':201,
+          }
+    }
+    //console.log(formData)
+    return  post(url, formData,config)
+}
+
 
 
 /*  onSubmit(e){
@@ -268,9 +269,12 @@ class Profile extends React.Component{
                     }
 
                 <div className="input">
-                  <form onSubmit={this.fileSubmit} id="formUpload">
-                    <input type="file" name="in" onChange={this.onChange}/>
+                  <form onSubmit={this.onFormSubmit}>
+                    <input type="file" onChange={this.onChange}/>
+                    <button type="submit">Upload</button>
+                 {/*   
                     <input type="submit" name="post" value="upload" />
+                 */}
                   </form>
                 
                 
