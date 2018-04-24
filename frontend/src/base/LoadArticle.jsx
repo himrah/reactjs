@@ -1,13 +1,10 @@
 import React from 'react'
-import InfiniteScroll from 'react-infinite-scroll-component';
 import { BrowserRouter as Router, Link } from "react-router-dom"
 import './article.css'
 import TimeAgo from 'javascript-time-ago'
-import LoadArticle from './LoadArticle'
 import { graphql, compose } from 'react-apollo'
 import gql from 'graphql-tag'
 import en from 'javascript-time-ago/locale/en'
-
 class ReplayComment extends React.Component{
     render(){
         return(
@@ -56,20 +53,11 @@ class Comments extends React.Component {
     }
 }
 
-const Ac =()=>{
-    return(
-    <div>sdfsdf</div>
-    )
-}
-
 
 
 class Articles extends React.Component{
-
-
     constructor(props){
         super(props);
-        
         this.state = {
             inputcomment : '',
             keyset : '',
@@ -107,11 +95,7 @@ class Articles extends React.Component{
         .catch(err=>{
             console.log('Network error!')
         })
-
-
-        
     }
-
 
     handleClick(){
         console.log(this.state.keyset)
@@ -191,10 +175,9 @@ class Articles extends React.Component{
         )
     }
 }
-//export default Article;
 
 
-class Article extends React.Component{
+class LoadArticle extends React.Component{
     constructor(props){
         super(props);
         this.state = {
@@ -207,7 +190,7 @@ class Article extends React.Component{
         this.setState({hasNextPage:pageInfo.hasNextPage,cursor:pageInfo.endCursor})
     }
     
-    componentWillReceiveProps(){
+/*    componentWillReceiveProps(){
         
         if(this.props.data.loading){
             //return (<div>sdf</div>)
@@ -215,10 +198,10 @@ class Article extends React.Component{
         }
         console.log(this.props)
     }
-
+*/
     render(){
 
-        //console.log(this.props)
+        console.log(this.props)
         if(this.props.data.loading){
             return (<div>Loading...</div>)   
         }
@@ -230,6 +213,7 @@ class Article extends React.Component{
         /*this.setState((pageInfo)=>{
             return {hasNextPage:pageInfo.hasNextPage,cursor:pageInfo.endCursor};
         })*/
+        
 
         //console.log(this.props.data.allContext.pageInfo.hasNextPage)
         //this.setState({hasNextPage:pageInfo.hasNextPage,cursor:pageInfo.endCursor})
@@ -240,30 +224,19 @@ class Article extends React.Component{
         //console.log(this.state)
         //this.updateStat(pageInfo)
         return( 
-                <div> 
-                {photos.map(p=><Articles key={p.node.id} p={p} m={mu}/>)}
-                <InfiniteScroll
-                dataLength={10}
-                pullDownToRefreshContent={
-                <h3 style={{textAlign: 'center'}}>&#8595; Pull down to refresh</h3>
-                }
-                releaseToRefreshContent={
-                <h3 style={{textAlign: 'center'}}>&#8593; Release to refresh</h3>
-                }
-                //refreshFunction={}
-                next = {<LoadArticle endCursor={pageInfo.endCursor}/>}
-                hasMore = {pageInfo.hasNextPage}
-                loader = {<h4>Loading|||</h4>}
-                endMessage = {
-                    <h4>ending</h4>
-                }
-                />
-                </div>
+                <div> {photos.map(p=><Articles key={p.node.id} p={p} m={mu}/>)}</div>
         );
     }
 }
 
-
+const queryOptions = {
+    
+    options: props => ({
+        variables: {
+            after:props.endCursor
+        },
+    }),
+    }
 
 
 
@@ -321,99 +294,8 @@ const MoreArticle = gql`query allPhotos($after:String!){
                 }
             }
         }
-      }
-      }`
-
-
-const queryOptions = {
-options: props => ({
-    variables: {
-    after:props.endCursor
-    },
-}),
-}
-
-
-
-const MY_QUERY = gql`query allPhotos{
-    allContext(first:10) {
-        pageInfo{
-            hasNextPage
-            endCursor
-          }
-        edges{ 
-            cursor
-            node{
-                id
-                photo
-                createdDate
-                caption
-                comments(first:5) {
-                edges {
-                    node {
-                    id
-                    comment
-                    commentTime
-                    replycomment{
-                        edges{
-                            node{
-                                id
-                                comment
-                                commentTime
-                                commentBy{
-                                    id
-                                    username
-                                    firstName
-                                    lastName
-                                }
-                            }
-                        }
-                    }
-                    commentBy{
-                        id
-                        username
-                        
-                    }
-                    }
-                }
-                }
-                uploadBy {
-                id
-                username
-                firstName
-                lastName
-                profilePic{
-                    id
-                    profileThumbs
-                }
-                }
-            }
-        }
-      }
-      }`
-
-const UpdateComment = gql`mutation create($comment:String!,$photoid:ID!,$userid:ID!){
-    postComment(
-      comment:$comment
-      photoid:$photoid
-      uid:$userid
-    ) 
-    {
-        formErrors
-        comment {
-          id
-          comment
-          commentTime
-          commentBy {
-            id
-            username
-          }
-        }
     }
-  }`
-
-
-export default compose(
-    graphql(MY_QUERY),
-    graphql(UpdateComment)
-)(Article)
+}`
+//graphql(query, queryOptions),
+LoadArticle = graphql(MoreArticle)(LoadArticle)
+export default LoadArticle
