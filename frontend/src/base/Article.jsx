@@ -207,15 +207,35 @@ class Article extends React.Component{
         this.setState({hasNextPage:pageInfo.hasNextPage,cursor:pageInfo.endCursor})
     }
     
-    componentWillReceiveProps(){
+/*    componentWillReceiveProps(){
         
         if(this.props.data.loading){
             //return (<div>sdf</div>)
             console.log(this.props)
         }
         console.log(this.props)
-    }
+    }*/
 
+    loadMore(){
+        let { data, location } = this.props
+        data.fetchMore({
+            query : MoreArticle,
+            variables :{
+                after:data.allContext.pageInfo.endCursor,
+            },
+            updateQuery:(prev,next)=>{
+                const newEdges = next.fetchMoreResult.allContext.edges
+                const pageInfo = next.fetchMoreResult.allContext.pageInfo
+                return{
+                    allContext : {
+                        __typename:prev.allContext.___typename,
+                        edges:[...prev.allContext.edges,...newEdges],
+                        pageInfo
+                    }
+                }
+            }
+        })
+    }
     render(){
 
         //console.log(this.props)
@@ -226,7 +246,7 @@ class Article extends React.Component{
         //console.log(localStorage)
         //const photos = this.props.data.allPhotos;
         let pageInfo=this.props.data.allContext.pageInfo
-        
+        //console.log(pageInfo.hasNextPage)
         /*this.setState((pageInfo)=>{
             return {hasNextPage:pageInfo.hasNextPage,cursor:pageInfo.endCursor};
         })*/
@@ -239,9 +259,10 @@ class Article extends React.Component{
         //console.log(photos)
         //console.log(this.state)
         //this.updateStat(pageInfo)
+        console.log(photos)
         return( 
                 <div> 
-                {photos.map(p=><Articles key={p.node.id} p={p} m={mu}/>)}
+                 {/* {photos.map(p=><Articles key={p.node.id} p={p} m={mu}/>)}*/}
                 <InfiniteScroll
                 dataLength={10}
                 pullDownToRefreshContent={
@@ -251,13 +272,16 @@ class Article extends React.Component{
                 <h3 style={{textAlign: 'center'}}>&#8593; Release to refresh</h3>
                 }
                 //refreshFunction={}
-                next = {<LoadArticle endCursor={pageInfo.endCursor}/>}
+                
+                next = {this.loadMore}
                 hasMore = {pageInfo.hasNextPage}
+                
                 loader = {<h4>Loading|||</h4>}
                 endMessage = {
                     <h4>ending</h4>
                 }
                 />
+                {photos.map(p=><Articles key={p.node.id} p={p} m={mu}/>)}
                 </div>
         );
     }
@@ -274,6 +298,7 @@ const MoreArticle = gql`query allPhotos($after:String!){
             endCursor
           }
         edges{ 
+            __typename
             cursor
             node{
                 id

@@ -199,30 +199,36 @@ class LoadArticle extends React.Component{
         console.log(this.props)
     }
 */
+    loadMore(){
+        let { data, location } = this.props
+        data.fetchMore({
+            query : MoreArticle,
+            variables :{
+                after:data.allContext.pageInfo.endCursor,
+            },
+            updateQuery:(prev,next)=>{
+                const newEdges = next.fetchMoreResult.allContext.edges
+                const pageInfo = next.fetchMoreResult.allContext.pageInfo
+                return{
+                    allContext : {
+                        edges:[...prev.allContext.edges,...newEdges],
+                        pageInfo
+                    }
+                }
+            }
+        })
+    }
+
     render(){
 
         console.log(this.props)
         if(this.props.data.loading){
             return (<div>Loading...</div>)   
         }
-        //console.log(this.props)
-        //console.log(localStorage)
-        //const photos = this.props.data.allPhotos;
         let pageInfo=this.props.data.allContext.pageInfo
-        
-        /*this.setState((pageInfo)=>{
-            return {hasNextPage:pageInfo.hasNextPage,cursor:pageInfo.endCursor};
-        })*/
-        
-
-        //console.log(this.props.data.allContext.pageInfo.hasNextPage)
-        //this.setState({hasNextPage:pageInfo.hasNextPage,cursor:pageInfo.endCursor})
         const photos = this.props.data.allContext.edges;
-        //const pageInfo = this.props.data.allContext.pageInfo
         const mu = this.props;
-        //console.log(photos)
-        //console.log(this.state)
-        //this.updateStat(pageInfo)
+
         return( 
                 <div> {photos.map(p=><Articles key={p.node.id} p={p} m={mu}/>)}</div>
         );
@@ -299,3 +305,10 @@ const MoreArticle = gql`query allPhotos($after:String!){
 //graphql(query, queryOptions),
 LoadArticle = graphql(MoreArticle)(LoadArticle)
 export default LoadArticle
+
+
+
+
+
+
+
