@@ -216,7 +216,7 @@ class Article extends React.Component{
         console.log(this.props)
     }*/
 
-    loadMore(){
+    loadMore=()=>{
         let { data, location } = this.props
         data.fetchMore({
             query : MoreArticle,
@@ -260,29 +260,38 @@ class Article extends React.Component{
         //console.log(this.state)
         //this.updateStat(pageInfo)
         console.log(photos)
-        return( 
-                <div> 
-                 {/* {photos.map(p=><Articles key={p.node.id} p={p} m={mu}/>)}*/}
-                <InfiniteScroll
-                dataLength={10}
-                pullDownToRefreshContent={
+
+        var items=[]
+        items.push(photos.map(p=><Articles key={p.node.id} p={p} m={mu}/>))
+
+        var loader = <div>Loading</div>
+        var ending = <div>ending</div>
+
+        /*
+            pullDownToRefreshContent={
                 <h3 style={{textAlign: 'center'}}>&#8595; Pull down to refresh</h3>
                 }
                 releaseToRefreshContent={
                 <h3 style={{textAlign: 'center'}}>&#8593; Release to refresh</h3>
                 }
-                //refreshFunction={}
-                
-                next = {this.loadMore}
-                hasMore = {pageInfo.hasNextPage}
-                
-                loader = {<h4>Loading|||</h4>}
-                endMessage = {
-                    <h4>ending</h4>
-                }
-                />
-                {photos.map(p=><Articles key={p.node.id} p={p} m={mu}/>)}
-                </div>
+
+        */
+        return(
+                <div>
+                 {/* {photos.map(p=><Articles key={p.node.id} p={p} m={mu}/>)}*/}
+                 
+                <InfiniteScroll
+                    pageStart = {0}
+                    //next = {this.loadMore}
+                    next = {this.loadMore.bind(this)}
+                    hasMore = {true}
+                    loader = {loader}
+                    endMessage = {ending}>
+                    <div>
+                        {items}
+                    </div>
+                </InfiniteScroll>      
+            </div>
         );
     }
 }
@@ -292,7 +301,7 @@ class Article extends React.Component{
 
 
 const MoreArticle = gql`query allPhotos($after:String!){
-    allContext(first:10,after:$after) {
+    allContext(first:5,after:$after) {
         pageInfo{
             hasNextPage
             endCursor
@@ -361,7 +370,7 @@ options: props => ({
 
 
 const MY_QUERY = gql`query allPhotos{
-    allContext(first:10) {
+    allContext(first:5) {
         pageInfo{
             hasNextPage
             endCursor
