@@ -85,7 +85,7 @@ textarea{
     
 }
 ._pt{
-    margin: auto;
+    /*margin: auto;*/
     display: flex;
     flex-flow: row;
     text-align: left;

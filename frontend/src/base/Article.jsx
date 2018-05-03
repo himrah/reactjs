@@ -1,5 +1,6 @@
 import React from 'react'
 import InfiniteScroll from 'react-infinite-scroller';
+//import InfiniteScroll from 'react-infinite-scroll-component'; 
 import { BrowserRouter as Router, Link } from "react-router-dom"
 import './article.css'
 import TimeAgo from 'javascript-time-ago'
@@ -219,28 +220,30 @@ class Article extends React.Component{
     }*/
 
     loadItems(){
-        let { data, location } = this.props
-        console.log(data.allContext.pageInfo.endCursor)
-        //if (data.allContext.pagInfo.hasNextPage){
-            data.fetchMore({
-                query : MoreArticle,
-                variables :{
-                    after:data.allContext.pageInfo.endCursor,
-                },
-                updateQuery:(prev,next)=>{
-                    console.log(next.fetchMoreResult.allContext.edges)
-                    const newEdges = next.fetchMoreResult.allContext.edges
-                    const pageInfo = next.fetchMoreResult.allContext.pageInfo
-                    this.setState({'hasNextPage':pageInfo.hasNextPage})
-                    return{
-                        allContext : {
-                            __typename:prev.allContext.___typename,
-                            edges:[...prev.allContext.edges,...newEdges],
-                            pageInfo
+        setTimeout(()=>{
+                let { data, location } = this.props
+                console.log(data.allContext.pageInfo.endCursor)
+                //if (data.allContext.pagInfo.hasNextPage){
+                    data.fetchMore({
+                        query : MoreArticle,
+                        variables :{
+                            after:data.allContext.pageInfo.endCursor,
                         },
-                    }
-                },
-        })
+                        updateQuery:(prev,next)=>{
+                            console.log(next.fetchMoreResult.allContext.edges)
+                            const newEdges = next.fetchMoreResult.allContext.edges
+                            const pageInfo = next.fetchMoreResult.allContext.pageInfo
+                            this.setState({'hasNextPage':pageInfo.hasNextPage})
+                            return{
+                                allContext : {
+                                    __typename:prev.allContext.___typename,
+                                    edges:[...prev.allContext.edges,...newEdges],
+                                    pageInfo
+                                },
+                            }
+                        },
+                })
+            },500);
     }
 
     handlescroll =() =>{
@@ -318,13 +321,15 @@ class Article extends React.Component{
                  {/* {photos.map(p=><Articles key={p.node.id} p={p} m={mu}/>)}*/}
                  
                 {<InfiniteScroll
-                    pageStart = {0}
+                    //pageStart = {0}
                     //next = {this.loadMore}
                     //hasMore = {this.state.hasNextPage}
-                    dataLength = {100}
+                    //useWindow = {true}
+                    //dataLength = {5}
                     hasMore = {this.state.hasNextPage}
                     loadMore = {this.loadItems.bind(this)}
-                    loader = {loader}
+                    loader={<h1 className='loader-section'> Loading.... </h1>}
+                    threshold = {1200}
                     //endMessage = {ending}
                     >
                     <div>{photos.map(p=><Articles key={p.id} p={p} m={mu} />)}</div>
@@ -344,7 +349,7 @@ allContext(first:5,after:$after) {
             hasNextPage
             endCursor
           }
-        edges{ 
+        edges{
             __typename
             cursor
             node{
