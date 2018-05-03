@@ -4,3 +4,4 @@ backend/media/
 backend/photoss/
 frontend/src/photos/
 frontend/.next/
+/node_modules/

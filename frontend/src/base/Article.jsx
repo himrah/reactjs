@@ -1,5 +1,5 @@
 import React from 'react'
-import InfiniteScroll from 'react-infinite-scroll-component';
+import InfiniteScroll from 'react-infinite-scroller';
 import { BrowserRouter as Router, Link } from "react-router-dom"
 import './article.css'
 import TimeAgo from 'javascript-time-ago'
@@ -120,6 +120,7 @@ class Articles extends React.Component{
     updateInput(e,key){
         this.setState({inputcomment: e.target.value,keyset:key})
     }
+
     render(){
         TimeAgo.locale(en)
         const timeAgo = new TimeAgo('en-US')
@@ -198,8 +199,9 @@ class Article extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            hasNextPage :'',
+            hasNextPage :true,
             cursor : '',
+            count : 0
             //uid : localStorage.token
         }
     }
@@ -216,28 +218,57 @@ class Article extends React.Component{
         console.log(this.props)
     }*/
 
-    loadMore=()=>{
+    loadItems(){
         let { data, location } = this.props
-        data.fetchMore({
-            query : MoreArticle,
-            variables :{
-                after:data.allContext.pageInfo.endCursor,
-            },
-            updateQuery:(prev,next)=>{
-                const newEdges = next.fetchMoreResult.allContext.edges
-                const pageInfo = next.fetchMoreResult.allContext.pageInfo
-                return{
+        console.log(data.allContext.pageInfo.endCursor)
+        //if (data.allContext.pagInfo.hasNextPage){
+            data.fetchMore({
+                query : MoreArticle,
+                variables :{
+                    after:data.allContext.pageInfo.endCursor,
+                },
+                updateQuery:(prev,next)=>{
+                    console.log(next.fetchMoreResult.allContext.edges)
+                    const newEdges = next.fetchMoreResult.allContext.edges
+                    const pageInfo = next.fetchMoreResult.allContext.pageInfo
+                    this.setState({'hasNextPage':pageInfo.hasNextPage})
+                    return{
+                        allContext : {
+                            __typename:prev.allContext.___typename,
+                            edges:[...prev.allContext.edges,...newEdges],
+                            pageInfo
+                        },
+                    }
+                },
+        })
+    }
+
+    handlescroll =() =>{
+        let {data,location} = this.props
+        //console.log("hklhjldkf")
+        //if (this.scroller && this.scroller.scrollTop < 100){
+            data.fetchMore({
+                query:MoreArticle,
+                variables:{
+                    after:data.allContext.pageInfo.endCursor
+                },
+                updateQuery:(prev,next)=>{
+                    const newEdges = next.fetchMoreResult.allContext.edges
+                    const pageInfo = next.fetchMoreResult.allContext.pageInfo
+                    return{
                     allContext : {
                         __typename:prev.allContext.___typename,
                         edges:[...prev.allContext.edges,...newEdges],
                         pageInfo
-                    }
+                    },
+                }                    
                 }
-            }
-        })
+            })
+       // }
     }
     render(){
 
+        
         //console.log(this.props)
         if(this.props.data.loading){
             return (<div>Loading...</div>)   
@@ -245,7 +276,7 @@ class Article extends React.Component{
         //console.log(this.props)
         //console.log(localStorage)
         //const photos = this.props.data.allPhotos;
-        let pageInfo=this.props.data.allContext.pageInfo
+        //let pageInfo=this.props.data.allContext.pageInfo
         //console.log(pageInfo.hasNextPage)
         /*this.setState((pageInfo)=>{
             return {hasNextPage:pageInfo.hasNextPage,cursor:pageInfo.endCursor};
@@ -256,17 +287,19 @@ class Article extends React.Component{
         const photos = this.props.data.allContext.edges;
         //const pageInfo = this.props.data.allContext.pageInfo
         const mu = this.props;
+        //console.log(photos.length)
         //console.log(photos)
         //console.log(this.state)
         //this.updateStat(pageInfo)
-        console.log(photos)
+        //console.log(photos)
 
-        var items=[]
-        items.push(photos.map(p=><Articles key={p.node.id} p={p} m={mu}/>))
+        //var items=[]
+        //items.push(photos.map(p=><Articles key={p.node.id} p={p} m={mu}/>))
 
         var loader = <div>Loading</div>
         var ending = <div>ending</div>
-
+        //console.log("new")
+        //console.log(this.count)
         /*
             pullDownToRefreshContent={
                 <h3 style={{textAlign: 'center'}}>&#8595; Pull down to refresh</h3>
@@ -276,21 +309,26 @@ class Article extends React.Component{
                 }
 
         */
+       //var item=[]
+       //item.push(photos.map(p=><Articles key={p.id} p={p} m={mu} />))
+       //console.log(photos)
         return(
+
                 <div>
                  {/* {photos.map(p=><Articles key={p.node.id} p={p} m={mu}/>)}*/}
                  
-                <InfiniteScroll
+                {<InfiniteScroll
                     pageStart = {0}
                     //next = {this.loadMore}
-                    next = {this.loadMore.bind(this)}
-                    hasMore = {true}
+                    //hasMore = {this.state.hasNextPage}
+                    dataLength = {100}
+                    hasMore = {this.state.hasNextPage}
+                    loadMore = {this.loadItems.bind(this)}
                     loader = {loader}
-                    endMessage = {ending}>
-                    <div>
-                        {items}
-                    </div>
-                </InfiniteScroll>      
+                    //endMessage = {ending}
+                    >
+                    <div>{photos.map(p=><Articles key={p.id} p={p} m={mu} />)}</div>
+                </InfiniteScroll>}
             </div>
         );
     }
@@ -301,7 +339,7 @@ class Article extends React.Component{
 
 
 const MoreArticle = gql`query allPhotos($after:String!){
-    allContext(first:5,after:$after) {
+allContext(first:5,after:$after) {
         pageInfo{
             hasNextPage
             endCursor
@@ -362,7 +400,7 @@ const MoreArticle = gql`query allPhotos($after:String!){
 const queryOptions = {
 options: props => ({
     variables: {
-    after:props.endCursor
+    after:null
     },
 }),
 }
@@ -448,6 +486,6 @@ const UpdateComment = gql`mutation create($comment:String!,$photoid:ID!,$userid:
 
 
 export default compose(
-    graphql(MY_QUERY),
+    graphql(MY_QUERY,queryOptions),
     graphql(UpdateComment)
 )(Article)
