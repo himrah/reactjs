@@ -234,18 +234,25 @@ class Profile extends React.Component{
               { data.users.profile ?(
               <div>sdfds</div>
               ) : (
-                <div className="container">
-                  {/*}
-                  <img style={style} src={ "http://localhost:8000/photos/"+data.users.profilePic.profileThumbs} alt="profile"/>
-                  */}
-                  <img style={style} src={ server+data.users.profilePic.profileThumbs} alt="profile"/>
-                  <div className="overlay"></div>
-                  {
-                  /*
-                  <input type="file" className="in" name="profile_pic" onChange={this.onChangePost}/>
-                  */
-                  }
-                </div>
+                <span className="fl_rw">
+                  <div className="information">
+                    <h2>Wolverine</h2>
+                  </div>
+                  <div className="container">
+                    {/*}
+                    <img style={style} src={ "http://localhost:8000/photos/"+data.users.profilePic.profileThumbs} alt="profile"/>
+                    */}
+                    <div className="uprf">
+                    <img style={style} src={ server+data.users.profilePic.profileThumbs} alt="profile"/>
+                    </div>
+                    <div className="overlay"></div>
+                    {
+                    /*
+                    <input type="file" className="in" name="profile_pic" onChange={this.onChangePost}/>
+                    */
+                    }
+                  </div>
+                </span>
               ) 
               }
               </div>

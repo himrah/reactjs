@@ -264,7 +264,7 @@ class Article extends React.Component{
                         edges:[...prev.allContext.edges,...newEdges],
                         pageInfo
                     },
-                }                    
+                }
                 }
             })
        // }
