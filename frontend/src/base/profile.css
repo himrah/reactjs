@@ -6,7 +6,7 @@
   }
 
   .uprf{
-    padding-right: 10px;
+    /*padding-right: 10px;*/
   }
   .information{
     align-content: center;
@@ -96,3 +96,71 @@
     display: none;
     visibility: none;
   }
+
+  .pfile{
+    max-width: 777px;
+    align-self: center;
+    padding: 10px;
+  }
+  .unm{
+    font-weight: bold;
+    font-size: 20px;
+  }
+  ._un{
+    margin: auto 0;
+  }
+
+  ._about{
+    font-size: 17px;
+  }
+ 
+  @media (max-width:600px){
+    .unm{
+        font-weight: bold;
+        font-size: 17px;
+/*        border-bottom: 1px solid rgb(243, 242, 240);
+        border-top: 1px solid rgb(243, 242, 240);            
+  */
+    }
+    ._about{
+      font-size: 15px;
+    }
+}
+
+.slide{
+  overflow-y: scroll;
+}
+
+.ul{
+  flex: row;
+
+}
+li{
+  width: 10px;
+}
+
+.sl_sec{
+ /* background: grey;*/
+  background: grey;
+  height: 30px;  
+
+}
+
+.sl_sec>div{
+  
+  width: 20%;
+  text-align: center;
+  margin: auto;
+}
+
+.li{
+  cursor: pointer;
+  font-size: 20px;
+  background: white;
+  width: 98%;
+  -ms-flex-item-align: center;
+  align-self: center;
+  -webkit-border-radius: 5px;
+  font-size: 16px;
+
+}

@@ -10,6 +10,9 @@ const query = gql`query user($username:String!)
 {
   users(username:$username){
     id
+    username
+    firstName
+    lastName
     profile{
       id
       about,
@@ -226,37 +229,49 @@ class Profile extends React.Component{
           <main className="main">      
           <Helmet>
           <title>Profile</title>
-          </Helmet>
-          <div>This is profile  {this.props.match.params.userName}</div>
+          </Helmet>  
             <section className="top">
-
               <div className="profile">
-              { data.users.profile ?(
-              <div>sdfds</div>
-              ) : (
-                <span className="fl_rw">
-                  <div className="information">
-                    <h2>Wolverine</h2>
+              <div className="pfile">
+                  <span className="fl_rw">
+                    <div className="information">
+                    { data.users.profile ?(
+                      <div className="personal">
+                          
+                          <div className="fl_rw">
+                            <span className="unm">{data.users.firstName + " " +data.users.lastName}</span>
+                            <span className="_un">(@{data.users.username})</span>
+                          </div>
+                          <div className="_about">
+                            {data.users.profile.about}
+                          </div>          
+                      </div>
+                    ) : (
+                      <div className="p">
+                      </div>
+                    )
+                    }
+                  
                   </div>
                   <div className="container">
-                    {/*}
-                    <img style={style} src={ "http://localhost:8000/photos/"+data.users.profilePic.profileThumbs} alt="profile"/>
-                    */}
-                    <div className="uprf">
-                    <img style={style} src={ server+data.users.profilePic.profileThumbs} alt="profile"/>
-                    </div>
-                    <div className="overlay"></div>
-                    {
-                    /*
-                    <input type="file" className="in" name="profile_pic" onChange={this.onChangePost}/>
-                    */
-                    }
+                      {/*}
+                      <img style={style} src={ "http://localhost:8000/photos/"+data.users.profilePic.profileThumbs} alt="profile"/>
+                      */}
+                      <div className="uprf">
+                      <img style={style} src={ server+data.users.profilePic.profileThumbs} alt="profile"/>
+                      <div className="overlay"></div>
+                      </div>
+                      {
+                      /*
+                      <input type="file" className="in" name="profile_pic" onChange={this.onChangePost}/>
+                      */
+                      }
+                    </div>                  
+                  </span>                  
                   </div>
-                </span>
-              ) 
-              }
               </div>
-              <div className="info">
+
+{/*}              <div className="info">
                     { data.users.profile ?(
                       <div className="personal">
                           <div>
@@ -272,25 +287,29 @@ class Profile extends React.Component{
                     ) : (
                       <div className="personal">
                       </div>
-                    )      
+                    )
                     }
-
+                  
                 <div className="input">
                   <form onSubmit={this.onFormSubmit}>
                     <input type="file" onChange={this.onChange}/>
                     <button type="submit">Upload</button>
-                 {/*   
-                    <input type="submit" name="post" value="upload" />
-                 */}
                   </form>
-                
-                
-                </div>
+                </div>  
             </div>
+   */}
+
+
             </section>
 
             <section className="slide">
-                    slide bar
+                    <div class="fl_rw sl_sec">
+                      <div><span  className="li" >Photos</span></div>
+                      <div><span  className="li" >Blogs</span></div>
+                      <div><span  className="li" >Documents</span></div>
+                      <div><span  className="li" >Videos</span></div>
+                      <div><span  className="li" >Presentations</span></div>
+                    </div>
             </section>
             <section className="bottom">
               <div className="box">
