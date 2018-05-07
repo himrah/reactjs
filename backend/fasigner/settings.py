@@ -25,7 +25,7 @@ SECRET_KEY = '(ooujzn7_7m3=ws^mdn#nxk9#ixb_68o20(+jh5!by7*+6xg*y'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost','e99b0979.ngrok.io']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost','069324ea.ngrok.io','c89ad18e.ngrok.io']
 
 MEDIA_URL = '/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

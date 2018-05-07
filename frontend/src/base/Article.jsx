@@ -126,8 +126,12 @@ class Articles extends React.Component{
         TimeAgo.locale(en)
         const timeAgo = new TimeAgo('en-US')
         let post = this.props.p.node
-        let img = "http://localhost:8000/"+post.photo
-        let prf ="http://localhost:8000/"+post.uploadBy.profilePic.profileThumbs
+        
+        //let img = "http://localhost:8000/"+post.photo
+        //let prf ="http://localhost:8000/"+post.uploadBy.profilePic.profileThumbs
+        
+        let img = "http://c89ad18e.ngrok.io/"+post.photo
+        let prf ="http://c89ad18e.ngrok.io/"+post.uploadBy.profilePic.profileThumbs
         //let pageInfo = this.props.pageInfo
         //console.log(pageInfo)
         //this.setState({cursor:pageInfo.endCursor})

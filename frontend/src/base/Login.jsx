@@ -3,7 +3,7 @@ import React from 'react';
 //import {  Link } from "react-router-dom";
 //import '../static/logincss.css'
 import './logincss.css'
-
+import {post} from 'axios'
 import { graphql } from 'react-apollo'
 import gql from 'graphql-tag'
 //import About from '../About'
@@ -18,6 +18,18 @@ const query = gql`query user{
   }`
 
 class Login extends React.Component{
+    
+    constructor(props){
+        super(props);
+        this.state = {
+            username :'',
+            password :'',
+            //count : 0
+            //uid : localStorage.token
+        }
+    }    
+
+
     componentWillUpdate(nextProps) {
         //console.log(localStorage)
         console.log(nextProps)
@@ -27,24 +39,41 @@ class Login extends React.Component{
         }
       }    
 
+    updateInput = (e) => {
+        this.setState({
+            [e.target.id]:e.target.value
+        })
+    } 
+ 
+
   handleSubmit(e) {
+    //alert("workd")
+    //e.preventDefault()
+    //alert(this.state.username+this.state.password)
+  
+
     e.preventDefault()
-    let data = new FormData(this.form)
+    //let data = {'username':this.state.username,'password':this.state.password}
+    //alert(data)
+    //console.log(data)
     fetch('http://localhost:8000/api-token-auth/', {
       method: 'POST',
-      body: data,
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({username: this.state.username, password: this.state.password})
+      //body:`username${this.state.username}&password${this.state.password}`
+      //username: this.state.username,
+      //password: this.state.password
     })
       .then(res => {
+        alert(res)
         res.json().then(res => {
           if (res.token) {
             console.log(res.token)
             localStorage.setItem('token', res.token)
-            //localStorage.setItem('userid',)
-            window.location.replace('/')
-            //fetch('')
-            //window.location.replace
-            //console.log(res.token)
-            
+            window.location.replace('/')            
           }
           else{
               alert('Username or Password is wrong')
@@ -54,20 +83,9 @@ class Login extends React.Component{
       .catch(err => {
         console.log('Network error')
       })
+       
     
-      /*
-      fetch('http://localhost:8000/gql',{
-        method:'POST',
-        body:query,
-    })
-    .then(res=>{
-        res.json().then(res=>{
-            console.log(res)
-        })
-    })
-    */
     }
-
     render(){
         return(
         <main className="main-login">
@@ -75,10 +93,10 @@ class Login extends React.Component{
             <div className="login_box">
                 <form ref={ref => (this.form = ref)}  onSubmit={e => this.handleSubmit(e)}>
                         <div>
-                            <input type="text" name="username" placeholder="Username" className="form-control" id="username"/>
+                            <input type="text"  value={this.state.userame}  name="username" placeholder="Username" className="form-control" id="username"    onChange={this.updateInput}/>
                         </div>
                         <div>
-                        <input type="password" name="password" placeholder="Password" className="form-control" id="password"/>
+                        <input type="password" value={this.state.password} name="password" placeholder="Password" className="form-control" id="password"  onChange={this.updateInput}/>
                         </div>
                         <input type="submit" className="btn" value="login"/>
                         

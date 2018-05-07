@@ -91,12 +91,19 @@
     flex-flow: row nowrap;
 /*    overflow: auto;*/
     white-space: nowrap;
-  }
-  .group::-webkit-scrollbar{
-    display: none;
-    visibility: none;
+    overflow: auto;
+    margin-bottom: -50px;
+    padding-bottom: 50px;
   }
 
+.box ::-webkit-scrollbar {
+      /* remove scrollbar space */
+    width: 0 !important;
+    height: 0 ! important;
+    background: transparent;  /* optional: just make scrollbar invisible */
+  }
+
+  
   .pfile{
     max-width: 777px;
     align-self: center;
@@ -129,6 +136,7 @@
 
 .slide{
   overflow-y: scroll;
+  overflow: hidden;
 }
 
 .ul{
@@ -141,26 +149,37 @@ li{
 
 .sl_sec{
  /* background: grey;*/
-  background: grey;
-  height: 30px;  
+ height: 50px;
+ overflow: auto;
+ margin-bottom: -20px;
+ padding-bottom: 20px;
 
 }
 
 .sl_sec>div{
   
-  width: 20%;
-  text-align: center;
-  margin: auto;
+/*  width: 30%;*/
+
+width: 30%;
+text-align: center;
+margin: auto;
+    margin-right: auto;
+    margin-left: auto;
+min-width: 100px;
+margin-left: 3px;
+margin-right: 3px;
+height: 100%;
 }
+
+
 
 .li{
   cursor: pointer;
   font-size: 20px;
-  background: white;
   width: 98%;
   -ms-flex-item-align: center;
   align-self: center;
-  -webkit-border-radius: 5px;
-  font-size: 16px;
+  font-size: 15px;
+  margin: auto;
 
 }
