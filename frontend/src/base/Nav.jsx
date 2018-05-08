@@ -85,8 +85,9 @@ class Nav extends React.Component{
         window.location.replace('/')
     }
     render(){
-        var token=localStorage.getItem('token')
-        //var token=true
+        //var token=localStorage.getItem('token')
+        
+        var token=true
         const style={
             'height':'20px',
             'maxWidth':'20px',

@@ -32,7 +32,7 @@ class Login extends React.Component{
 
     componentWillUpdate(nextProps) {
         //console.log(localStorage)
-        console.log(nextProps)
+        //console.log(nextProps)
         if (!nextProps.data.loading && nextProps.data.currentUser === null) {
           localStorage.setItem("user",nextProps.data.currentUser)
           //window.location.replace('/login/')
@@ -53,35 +53,34 @@ class Login extends React.Component{
   
 
     e.preventDefault()
-    //let data = {'username':this.state.username,'password':this.state.password}
-    //alert(data)
-    //console.log(data)
-    fetch('http://localhost:8000/api-token-auth/', {
+   /* fetch('http://localhost:8000/api-token-auth/', {
       method: 'POST',
       headers: {
-        'Accept': 'application/json, text/plain, */*',
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({username: this.state.username, password: this.state.password})
-      //body:`username${this.state.username}&password${this.state.password}`
-      //username: this.state.username,
-      //password: this.state.password
-    })
-      .then(res => {
-        alert(res)
-        res.json().then(res => {
-          if (res.token) {
-            console.log(res.token)
-            localStorage.setItem('token', res.token)
+
+    })*/
+    const config={
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+        }
+    }
+    post('http://62c36a7f.ngrok.io/api-token-auth/',{username: this.state.username, password: this.state.password},config)
+    .then(res => {
+        //alert(res.data.token)
+          if (res.data.token) {
+            //console.log(res.data.token)
+            localStorage.setItem('token', res.data.token)
             window.location.replace('/')            
           }
           else{
               alert('Username or Password is wrong')
           }
         })
-      })
       .catch(err => {
-        console.log('Network error')
+        alert('Username or password is wrong')
       })
        
     

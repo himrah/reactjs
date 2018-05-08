@@ -19,8 +19,10 @@ const paths = require('./paths');
 // In development, we always serve from the root. This makes config easier.
 //const publicPath = '/';
 
-const publicPath = 'http://069324ea.ngrok.io/'
-const publicUrl = "http://069324ea.ngrok.io"
+const publicPath = 'http://839703f2.ngrok.io/'
+const publicUrl = "http://839703f2.ngrok.io/"
+//const publicPath = `http://${ require("os").hostname()}:3000`
+//const publicUrl = `http://${ require("os").hostname()}:3000`
 //const publicPath = 'http://localhost:3000/';
 //const publicUrl = 'http://localhost:3000/';
 // `publicUrl` is just like `publicPath`, but we will provide it to our app
@@ -46,7 +48,7 @@ module.exports = {
     require.resolve('./polyfills'),
     
     //require.resolve('webpack-dev-server/client') + '?http://localhost:3000',
-    require.resolve('webpack-dev-server/client') + '?http://069324ea.ngrok.io',
+    require.resolve('webpack-dev-server/client') + '?http://839703f2.ngrok.io',
     //require.resolve('webpack-dev-server/client') + '?http://'+require("os").hostname()+':3000/',
     //'webpack-dev-server/client?http://' + require("os").hostname() + ':9090/',
     require.resolve('webpack/hot/dev-server'),

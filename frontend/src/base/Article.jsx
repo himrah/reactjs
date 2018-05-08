@@ -130,8 +130,8 @@ class Articles extends React.Component{
         //let img = "http://localhost:8000/"+post.photo
         //let prf ="http://localhost:8000/"+post.uploadBy.profilePic.profileThumbs
         
-        let img = "http://c89ad18e.ngrok.io/"+post.photo
-        let prf ="http://c89ad18e.ngrok.io/"+post.uploadBy.profilePic.profileThumbs
+        let img = "http://62c36a7f.ngrok.io/"+post.photo
+        let prf = "http://62c36a7f.ngrok.io/"+post.uploadBy.profilePic.profileThumbs
         //let pageInfo = this.props.pageInfo
         //console.log(pageInfo)
         //this.setState({cursor:pageInfo.endCursor})
