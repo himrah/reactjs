@@ -95,7 +95,7 @@ class Nav extends React.Component{
         }
         return(
             <Router>
-                <span>  
+                <span className="m_con">  
                     <Helmet>
                         <title>Fasigner</title>
                     </Helmet>
@@ -107,7 +107,7 @@ class Nav extends React.Component{
                             </span>
                         </div>
                     { token ? (
-                        <div className="profile_info">         
+                        <div className="profile_info _on_top">         
                         <span className="top_p"><Link to='/ajay'><img className="logo" style={style} src={profile} alt="sdf"  /> </Link></span>
                         <span className="top_p"><Link to="/message"><img src={msg} alt="sdf" className="logo" style={style} /> </Link></span>
                         <span className="top_p"><Link to="/notify/"><img src={notify} alt="sdf" className="logo" style={style} /> </Link></span>
@@ -123,7 +123,7 @@ class Nav extends React.Component{
     {/*                    <span className="top_p"><Link to="/logout">Logout</Link></span>
                         <span className="top_p"><Link to="/login">Login</Link></span>*/}
                     </div>
-                </nav>          
+                </nav>  
             <Switch>      
             <Route exact path="/" component={Main}/>
             <Route path="/notify/" component={Interest}/>
@@ -133,6 +133,26 @@ class Nav extends React.Component{
             
             <Route path="/registration" component={Registration} />
             </Switch>
+            <nav className="btm_nav">
+                    <div className="btm_navdiv">
+                    { token ? (
+                        <div className="profile_info _on_bottom">         
+                        <span className="top_p"><Link to='/ajay'><img className="logo" style={style} src={profile} alt="sdf"  /> </Link></span>
+                        <span className="top_p"><Link to="/message"><img src={msg} alt="sdf" className="logo" style={style} /> </Link></span>
+                        <span className="top_p"><Link to="/notify/"><img src={notify} alt="sdf" className="logo" style={style} /> </Link></span>
+                        <span className="top_p"><Link to="#" onClick={this.logout} ><img src={logout} alt="sdf" className="logo" style={style} /> </Link></span>
+                        </div>
+                        ): (
+                            <div className="profile_info">                    
+                            <span className="top_p"><Link to="/login">Login</Link></span>
+                            </div>
+                        )
+
+                    }
+    {/*                    <span className="top_p"><Link to="/logout">Logout</Link></span>
+                        <span className="top_p"><Link to="/login">Login</Link></span>*/}
+                    </div>
+                </nav>            
         </span>   
         </Router>
         )

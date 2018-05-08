@@ -73,8 +73,8 @@ const query = gql`query user($username:String!)
       }`
 */
 
-//const server = "http://localhost:8000/"
-const server = "http://62c36a7f.ngrok.io/"
+const server = "http://localhost:8000/"
+//const server = "http://7a34e736.ngrok.io/"
 
 class Thumb extends React.Component{
   render()
@@ -304,12 +304,12 @@ class Profile extends React.Component{
             </section>
             <section className="slide">
                     <div class="fl_rw sl_sec">
-                    
-                        <div><span  className="li" >Photos</span></div>
-                        <div><span  className="li" >Blogs</span></div>
-                        <div><span  className="li" >Documents</span></div>
-                        <div><span  className="li" >Videos</span></div>
-                        <div><span  className="li" >Presentations</span></div>
+                        <div><span  className="li" >All(232)</span></div>
+                        <div><span  className="li" >Photos(44)</span></div>
+                        <div><span  className="li" >Blogs(5)</span></div>
+                        <div><span  className="li" >Documents(3)</span></div>
+                        <div><span  className="li" >Videos(10)</span></div>
+                        <div><span  className="li" >Presentations(1)</span></div>
                         <div><span  className="li" >Another</span></div>
                     
                     </div>

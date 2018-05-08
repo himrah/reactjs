@@ -61,19 +61,20 @@ class Login extends React.Component{
       body: JSON.stringify({username: this.state.username, password: this.state.password})
 
     })*/
+    var server = "http://localhost:8000/api-token-auth/"
     const config={
         headers: {
             'Accept': 'application/json, text/plain, */*',
             'Content-Type': 'application/json'
         }
     }
-    post('http://62c36a7f.ngrok.io/api-token-auth/',{username: this.state.username, password: this.state.password},config)
+    post(server,{username: this.state.username, password: this.state.password},config)
     .then(res => {
         //alert(res.data.token)
           if (res.data.token) {
             //console.log(res.data.token)
             localStorage.setItem('token', res.data.token)
-            window.location.replace('/')            
+            window.location.replace('/')
           }
           else{
               alert('Username or Password is wrong')
