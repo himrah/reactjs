@@ -68,7 +68,8 @@
     "nextstart": "next start",
     "nextbuild": "next build",
     "build": "node scripts/build.js",
-    "test": "node scripts/test.js --env=jsdom"
+    "test": "node scripts/test.js --env=jsdom",
+    "starts": "webpack --config webpack.config.js"
   },
   "jest": {
     "collectCoverageFrom": [
@@ -113,6 +114,9 @@
     "extends": "react-app"
   },
   "devDependencies": {
-    "webpack-bundle-tracker": "^0.2.1"
+    "compression-webpack-plugin": "^1.1.11",
+    "webpack-bundle-analyzer": "^2.11.1",
+    "webpack-bundle-tracker": "^0.2.1",
+    "webpack-cli": "^2.1.3"
   }
 }

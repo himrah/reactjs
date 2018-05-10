@@ -13,8 +13,8 @@
 }
 .brand{
     float:left;
-    font-family: initial;
-    /*font-family: BLKCHCRY;*/
+    /*font-family: initial;*/
+    font-family: BLKCHCRY;
 }
 .navdiv{
     display: flex;

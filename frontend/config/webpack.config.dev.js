@@ -14,13 +14,17 @@ const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const getClientEnvironment = require('./env');
 const paths = require('./paths');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const CompressionPlugin = require("compression-webpack-plugin")
+
+
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // In development, we always serve from the root. This makes config easier.
 //const publicPath = '/';
 
-//const publicPath = 'http://060a6626.ngrok.io/'
-//const publicUrl = "http://060a6626.ngrok.io/"
+//const publicPath = 'http://4e37a1e5.ngrok.io/'
+//const publicUrl = "http://4e37a1e5.ngrok.io/"
 //const publicPath = `http://${ require("os").hostname()}:3000`
 //const publicUrl = `http://${ require("os").hostname()}:3000`
 const publicPath = 'http://localhost:3000/';
@@ -48,7 +52,7 @@ module.exports = {
     require.resolve('./polyfills'),
     
     require.resolve('webpack-dev-server/client') + '?http://localhost:3000',
-    //require.resolve('webpack-dev-server/client') + '?http://060a6626.ngrok.io',
+    //require.resolve('webpack-dev-server/client') + '?http://4e37a1e5.ngrok.io',
     //require.resolve('webpack-dev-server/client') + '?http://'+require("os").hostname()+':3000/',
     //'webpack-dev-server/client?http://' + require("os").hostname() + ':9090/',
     require.resolve('webpack/hot/dev-server'),
@@ -265,7 +269,39 @@ module.exports = {
     // solution that requires the user to opt into importing specific locales.
     // https://github.com/jmblog/how-to-optimize-momentjs-with-webpack
     // You can remove this if you don't use Moment.js:
+    
+    
+    //new webpack.optimize.DedupePlugin(),
+/*
+    new webpack.optimize.UglifyJsPlugin({
+      mangle: true,
+      compress: {
+        warnings: false, // Suppress uglification warnings
+        pure_getters: true,
+        unsafe: true,
+        unsafe_comps: true,
+        screw_ie8: true
+      },
+      output: {
+        comments: false,
+      },
+      exclude: [/\.min\.js$/gi] // skip pre-minified libs
+    }),
+    */
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+    new webpack.NoErrorsPlugin(),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV':'"production"'
+    }),
+    new BundleAnalyzerPlugin(),
+    new CompressionPlugin({
+      asset: "[path].gz[query]",
+      algorithm: "gzip",
+      test: /\.js$|\.css$|\.jsx$|\.html$/,
+      threshold: 10240,
+      minRatio: 0
+})
+
 /*      new webpack.optimize.UglifyJsPlugin({
         mangle : true,
         compress :{

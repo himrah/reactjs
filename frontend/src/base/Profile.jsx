@@ -2,7 +2,7 @@ import React from 'react'
 //import { BrowserRouter as Link } from "react-router-dom"
 import { graphql, compose } from 'react-apollo'
 import gql from 'graphql-tag'
-import  axios, { post, put } from 'axios';
+import  { post } from 'axios';
 import {Helmet} from 'react-helmet'
 import './profile.css'
 
@@ -74,7 +74,7 @@ const query = gql`query user($username:String!)
 */
 
 const server = "http://localhost:8000/"
-//const server = "http://7a34e736.ngrok.io/"
+//const server = "http://2010663b.ngrok.io/"
 
 class Thumb extends React.Component{
   render()

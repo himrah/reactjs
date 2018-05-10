@@ -4,7 +4,7 @@ import ApolloClient, { createNetworkInterface } from 'apollo-client'
 import { InMemoryCache } from 'apollo-cache-inmemory';
 
 const server='http://localhost:8000/graphql/'
-//const server = "http://7a34e736.ngrok.io/graphql/"
+//const server = "http://2010663b.ngrok.io/graphql/"
 const networkinterface = createNetworkInterface({
     //uri:'http://localhost:8000/graphql/',
     uri:server,

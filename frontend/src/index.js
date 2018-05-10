@@ -106,13 +106,6 @@ class Form extends React.Component{
     }
 }*/
 
-const Home = () =>(
-    <div>
-    Home page
-    </div>
-);
-
-
 ReactDOM.render((
     <ApolloProvider client={client}>
       <App />

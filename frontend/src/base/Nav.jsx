@@ -16,7 +16,7 @@ import logout from  './Images/logout.png'
 //import Profile from './Profile'
 import { Helmet } from 'react-helmet'
 import Loadable from 'react-loadable'
-import $ from 'jquery'
+//import $ from 'jquery'
 import Loading from '../loading'
 //import Main from './Main'
 //import { Comb } from './Comb';
@@ -103,7 +103,7 @@ class Nav extends React.Component{
                     <div className="navdiv">
                         <div className="brand">
                             <span className="header_font">            
-                                <Link to="/"><span style={{color:'black'}}>Fasigner</span> </Link>
+                                <Link to="/"><span style={{color:'black'}}>NiXiS</span> </Link>
                             </span>
                         </div>
                     { token ? (

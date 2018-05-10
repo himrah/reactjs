@@ -4,7 +4,7 @@ import InfiniteScroll from 'react-infinite-scroller';
 import { BrowserRouter as Router, Link } from "react-router-dom"
 import './article.css'
 import TimeAgo from 'javascript-time-ago'
-import LoadArticle from './LoadArticle'
+//import LoadArticle from './LoadArticle'
 import { graphql, compose } from 'react-apollo'
 import gql from 'graphql-tag'
 import en from 'javascript-time-ago/locale/en'
@@ -57,12 +57,6 @@ class Comments extends React.Component {
     }
 }
 
-const Ac =()=>{
-    return(
-    <div>sdfsdf</div>
-    )
-}
-
 
 
 class Articles extends React.Component{
@@ -86,7 +80,7 @@ class Articles extends React.Component{
     handleSubmit(e){
         e.preventDefault()
         console.log(this.props)
-        let formData = new FormData(this.form)
+        //let formData = new FormData(this.form)
         //console.log(formData)
         console.log(this.state.inputcomment)
         //let el = document.querySelector('.show_comments')
@@ -127,11 +121,12 @@ class Articles extends React.Component{
         const timeAgo = new TimeAgo('en-US')
         let post = this.props.p.node
         
-        let img = "http://localhost:8000/"+post.photo
-        let prf ="http://localhost:8000/"+post.uploadBy.profilePic.profileThumbs
+        let server = "http://localhost:8000/"
+        let img = server+post.photo
+        let prf =server+post.uploadBy.profilePic.profileThumbs
         
-        //let img = "http://7a34e736.ngrok.io/"+post.photo
-        //let prf = "http://7a34e736.ngrok.io/"+post.uploadBy.profilePic.profileThumbs
+        //let img = "http://2010663b.ngrok.io/"+post.photo
+        //let prf = "http://2010663b.ngrok.io/"+post.uploadBy.profilePic.profileThumbs
         //let pageInfo = this.props.pageInfo
         //console.log(pageInfo)
         //this.setState({cursor:pageInfo.endCursor})
@@ -225,7 +220,8 @@ class Article extends React.Component{
 
     loadItems(){
         setTimeout(()=>{
-                let { data, location } = this.props
+                //let { data, location } = this.props
+                let { data, } = this.props
                 console.log(data.allContext.pageInfo.endCursor)
                 //if (data.allContext.pagInfo.hasNextPage){
                     data.fetchMore({
@@ -251,7 +247,8 @@ class Article extends React.Component{
     }
 
     handlescroll =() =>{
-        let {data,location} = this.props
+        //let {data,location} = this.props
+        let {data } = this.props
         //console.log("hklhjldkf")
         //if (this.scroller && this.scroller.scrollTop < 100){
             data.fetchMore({
@@ -303,8 +300,8 @@ class Article extends React.Component{
         //var items=[]
         //items.push(photos.map(p=><Articles key={p.node.id} p={p} m={mu}/>))
 
-        var loader = <div>Loading</div>
-        var ending = <div>ending</div>
+        //var loader = <div>Loading</div>
+        //var ending = <div>ending</div>
         //console.log("new")
         //console.log(this.count)
         /*
