@@ -247,7 +247,7 @@ class Query(graphene.AbstractType):
         return qs
 
     def resolve_all_comments(self, info, **kwargs):
-        return Comments.objects.select_related('c_image').all()   
+        return Comments.objects.select_related('photo_id').all()   
 
     def resolve_all_users(self, info, **kwargs):
         return User.objects.select_related('photo_id').all()

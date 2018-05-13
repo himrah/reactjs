@@ -4,8 +4,9 @@ import React from 'react';
 //import '../static/logincss.css'
 import './logincss.css'
 import {post} from 'axios'
-import { graphql } from 'react-apollo'
+import { graphql, Query } from 'react-apollo'
 import gql from 'graphql-tag'
+import client from '../connection'
 //import About from '../About'
 
 const query = gql`query user{
@@ -32,12 +33,21 @@ class Login extends React.Component{
 
     componentWillUpdate(nextProps) {
         //console.log(localStorage)
-        //console.log(nextProps)
+        console.log(`from cwp ${nextProps}`)
+        
+        
         if (!nextProps.data.loading && nextProps.data.currentUser === null) {
           localStorage.setItem("user",nextProps.data.currentUser)
           //window.location.replace('/login/')
         }
-      }    
+      }  
+
+/*        shouldComponentUpdate = (nextProps, nextState) => {
+        let shouldUpdate = this.props.sdata !== nextProps.data;
+          console.log(`next ${nextProps} and p ${nextState} `)
+        return shouldUpdate
+        }
+  */      
 
     updateInput = (e) => {
         this.setState({
@@ -71,17 +81,26 @@ class Login extends React.Component{
     post(server,{username: this.state.username, password: this.state.password},config)
     .then(res => {
         //alert(res.data.token)
-          if (res.data.token) {
+        console.log(res.data.token)  
+        if (res.data.token) {
             //console.log(res.data.token)
+            //localStorage.setItem('user',res.data)
+            client.query({
+                query:query
+            }).then(res=>
+            console.log(res))
+            console.log(res.data)
+            //graphql(query).then(console.log("sdf"))
+
             localStorage.setItem('token', res.data.token)
             window.location.replace('/')
           }
           else{
-              alert('Username or Password is wrong')
+              console.log('Username or Password is wrong')
           }
         })
       .catch(err => {
-        alert('Username or password is wrong')
+        console.log('wrong'+err)
       })
        
     

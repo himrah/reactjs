@@ -31,25 +31,34 @@ class Comments extends React.Component {
         TimeAgo.locale(en)
         const timeAgo = new TimeAgo('en-US')
         
-        var ctime = this.props.cmt.node.commentTime
-        let reply = this.props.cmt.node.replycomment.edges
+        //var ctime = this.props.cmt.node.commentTime
+        //let reply = this.props.cmt.node.replycomment.edges
+
+        var ctime = this.props.cmt.commentTime
+        let reply = this.props.cmt.replycomment ? this.props.cmt.replycomment.edges : []
+        //console.log(this.props)
         return(
             <div className="_cmt_box">
                     <span className="_uname">
                         <Router>  
-                        {
+                        {/*
                             <Link to={this.props.cmt.node.commentBy.username} key={this.props.cmt.node.commentBy.id}><span style={{color:'black',fontWeight:'bold',marginRight:'3px'}}>{this.props.cmt.node.commentBy.username}</span></Link>
+                            */
+                           <Link to={this.props.cmt.commentBy.username} key={this.props.cmt.commentBy.id}><span style={{color:'black',fontWeight:'bold',marginRight:'3px'}}>{this.props.cmt.commentBy.username}</span></Link>
+
                         }
                         </Router>
                         <span className="_cmt" style={{fontweight:'normal'}}>
-                            {this.props.cmt.node.comment}
+                            {this.props.cmt.comment}
                         </span>
                         <span className="_cmt_time" style={{color:'rgb(83, 83, 83)',fontSize:'12px',fontStyle:'inherit',marginLeft:'2px'}}>
                         {/* :- {ctime.format(new Date(de))}*/}
                         <span>:- {timeAgo.format(new Date(ctime)-60*1000,'time')}</span>
                         </span>
                         <div className="reply">   
-                        { reply.map(c=><ReplayComment key={c.node.id} cmt={c}  />)}
+                        { 
+                            reply.map(c=><ReplayComment key={c.node.id} cmt={c}  />)
+                        }
                         </div>
                     </span>
             </div>
@@ -68,6 +77,7 @@ class Articles extends React.Component{
         this.state = {
             inputcomment : '',
             keyset : '',
+            comments : []
             //hasNextPage : this.props.pageInfo.hasNextPage,
             //cursor : this.props.pageInfo.endCursor,
             //uid : localStorage.token
@@ -75,14 +85,20 @@ class Articles extends React.Component{
         this.updateInput = this.updateInput.bind(this);
         this.handleClick = this.handleClick.bind(this);
     }
+
+    
+    componentDidMount = () => {
+      let post=this.props.p.node
+      this.setState({comments:post.comments.edges.map(c=><Comments key={c.node.id} cmt={c.node}  />)})
+    }
     
 
     handleSubmit(e){
         e.preventDefault()
-        console.log(this.props)
+        //console.log(this.props)
         //let formData = new FormData(this.form)
         //console.log(formData)
-        console.log(this.state.inputcomment)
+        //console.log(this.state.inputcomment)
         //let el = document.querySelector('.show_comments')
         //el.append(this.state.inputcomment)
 
@@ -92,7 +108,19 @@ class Articles extends React.Component{
         this.props.m.mutate({variables:{comment:this.state.inputcomment,photoid:this.state.keyset,userid:localStorage.getItem('userid')}})
         .then(res=>{
             if (res.data.postComment.formErrors == null) {
-                alert("Your Comment is done!")
+                //alert("Your Comment is done!")
+                //console.log(res)
+
+                let post=res.data.postComment
+                //this.setState({comments:post.comment.edges.map(c=><Comments key={c.node.id} cmt={c}  />)})
+                //console.log(post)
+                this.setState({
+                    comments:[...this.state.comments,<Comments key={post.comment.id} cmt={post.comment}  />]
+                })
+                //this.setState({comments:})
+                //this.setState(prevState=>({
+                    //comments:[...prevState,res]
+                //}))
                 //console.log("done")
             }
             else(
@@ -100,7 +128,7 @@ class Articles extends React.Component{
             )
         })
         .catch(err=>{
-            console.log('Network error!')
+            console.log(err+' Network error!')
         })
 
 
@@ -109,8 +137,8 @@ class Articles extends React.Component{
 
 
     handleClick(){
-        console.log(this.state.keyset)
-        console.log(this.state.inputcomment)
+        //console.log(this.state.keyset)
+        //console.log(this.state.inputcomment)
     }
     updateInput(e,key){
         this.setState({inputcomment: e.target.value,keyset:key})
@@ -176,7 +204,14 @@ class Articles extends React.Component{
                     </div>
                     <div className="cmt_section">                        
                         <div className="show_comments">
+                         {
+                             this.state.comments
+                         }
+                         {/*       
                         {post.comments.edges.map(c=><Comments key={c.node.id} cmt={c}  />)}
+                         */}
+
+
                     </div>
                     </div>
                         <div className="comment_box">
@@ -201,7 +236,6 @@ class Article extends React.Component{
         this.state = {
             hasNextPage :true,
             cursor : '',
-            count : 0
             //uid : localStorage.token
         }
     }
@@ -222,7 +256,7 @@ class Article extends React.Component{
         setTimeout(()=>{
                 //let { data, location } = this.props
                 let { data, } = this.props
-                console.log(data.allContext.pageInfo.endCursor)
+                //console.log(data.allContext.pageInfo.endCursor)
                 //if (data.allContext.pagInfo.hasNextPage){
                     data.fetchMore({
                         query : MoreArticle,
@@ -271,8 +305,6 @@ class Article extends React.Component{
        // }
     }
     render(){
-
-        
         //console.log(this.props)
         if(this.props.data.loading){
             return (<div>Loading...</div>)   
@@ -469,7 +501,7 @@ const MY_QUERY = gql`query allPhotos{
         }
       }
       }`
-
+/*
 const UpdateComment = gql`mutation create($comment:String!,$photoid:ID!,$userid:ID!){
     postComment(
       comment:$comment
@@ -489,6 +521,47 @@ const UpdateComment = gql`mutation create($comment:String!,$photoid:ID!,$userid:
         }
     }
   }`
+
+*/
+
+const UpdateComment = gql`mutation create($comment:String!,$photoid:ID!,$userid:ID!){
+    postComment(
+        comment : $comment
+        photoid : $photoid
+        uid : $userid
+    )
+    {
+        formErrors
+        comment{
+            id
+            comment
+            commentTime
+            replycomment{
+                edges{
+                    node{
+                        id
+                        comment
+                        commentTime
+                        commentBy{
+                            id
+                            username
+                            firstName
+                            lastName
+                        }
+                    }
+                }
+            }
+            commentBy{
+                id
+                username
+            }
+        }
+    
+    }
+
+}
+    `
+
 
 
 export default compose(
