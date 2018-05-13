@@ -46,7 +46,8 @@
     width:100%;
     /*border-top: 1px solid orange;*/
     /*background: white;*/
-    background: rgb(78, 233, 228);
+    /*background: rgb(78, 233, 228);*/
+    background: rgb(224, 148, 5);
     box-shadow:0px 2px 10px 5px rgba(0,0,0,0.04);
     border-top: 1px solid gray;
 
@@ -87,7 +88,8 @@ html,body{
 .navdiv{
     position: fixed;
     /*background-color:white;*/
-    background: mediumturquoise;
+    /*background: rgb(78, 233, 228);*/
+    background: rgb(247, 187, 77);
     /*border-bottom: 1px solid orange;*/
     border-bottom: 1px solid gray;
     top: 0;
