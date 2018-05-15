@@ -37,6 +37,7 @@ class Comments extends React.Component {
         var ctime = this.props.cmt.commentTime
         let reply = this.props.cmt.replycomment ? this.props.cmt.replycomment.edges : []
         //console.log(this.props)
+        console.log(this.props.cmt)
         return(
             <div className="_cmt_box">
                     <span className="_uname">
@@ -77,7 +78,9 @@ class Articles extends React.Component{
         this.state = {
             inputcomment : '',
             keyset : '',
-            comments : []
+            comments : [],
+            cmt_endcursor:'',
+            hasNextPage:''
             //hasNextPage : this.props.pageInfo.hasNextPage,
             //cursor : this.props.pageInfo.endCursor,
             //uid : localStorage.token
@@ -89,6 +92,7 @@ class Articles extends React.Component{
     
     componentDidMount = () => {
       let post=this.props.p.node
+      this.setState({cmt_endcursor:post.comments.pageInfo.endCursor,hasNextPage:post.comments.pageInfo.hasNextPage})
       this.setState({comments:post.comments.edges.map(c=><Comments key={c.node.id} cmt={c.node}  />)})
     }
     
@@ -138,6 +142,52 @@ class Articles extends React.Component{
     }
     updateInput(e,key){
         this.setState({inputcomment: e.target.value,keyset:key})
+    }
+
+    loadItems=()=>{
+        setTimeout(()=>{
+                //let { data, location } = this.props
+                let { data, } = this.props.m
+                //console.log(this.props)
+                //console.log(data.allContext.pageInfo.endCursor)
+                //if (data.allContext.pagInfo.hasNextPage){
+                    data.fetchMore({
+                        query : LoadComment,
+                        variables :{
+                            id:"UGhvdG9Ob2RlOjE=",
+                            after:this.state.cmt_endcursor,
+                        },
+                        updateQuery:(prev,next)=>{
+                            const comment = next.fetchMoreResult.photos.comments
+                            this.setState({
+                                hasNextPage:next.fetchMoreResult.photos.comments.pageInfo.hasNextPage,
+                                cmt_endcursor:next.fetchMoreResult.photos.comments.pageInfo.endCursor
+                            })
+
+                            this.setState({
+                                comments:[...this.state.comments,
+                                comment.edges.map(cmt=> <Comments key={cmt.node.id} cmt={cmt.node}  />)
+                            ]
+                            })
+                            console.log(next.fetchMoreResult.photos.comments.edges)
+                            
+                        }
+                        /*
+                        updateQuery:(prev,next)=>{
+                            console.log(next.fetchMoreResult.allContext.edges)
+                            const newEdges = next.fetchMoreResult.allContext.edges
+                            const pageInfo = next.fetchMoreResult.allContext.pageInfo
+                            this.setState({'hasNextPage':pageInfo.hasNextPage})
+                            return{
+                                allContext : {
+                                    __typename:prev.allContext.___typename,
+                                    edges:[...prev.allContext.edges,...newEdges],
+                                    pageInfo
+                                },
+                            }
+                        },*/
+                })
+            },500);
     }
 
     render(){
@@ -201,12 +251,21 @@ class Articles extends React.Component{
                             {
                                 this.state.comments
                             }
+
                             {/*       
                             {post.comments.edges.map(c=><Comments key={c.node.id} cmt={c}  />)}
                             */}
-
-
+                            {    
+                             this.state.hasNextPage ? (   
+                                <div className="mcmt">
+                                    {/*<span onClick={(e)=>this.loadItems(post.id)}>More Comments</span>*/}
+                                    <span onClick={this.loadItems.bind(this)}>More Comment</span>
+                                </div>) : (
+                                    <span/>
+                                )
+                            }
                         </div>
+
                         </div>
                             <div className="comment_box">
                             <form ref={ref=>(this.this=ref)} onSubmit={e=>this.handleSubmit(e)}>
@@ -251,6 +310,7 @@ class Article extends React.Component{
         setTimeout(()=>{
                 //let { data, location } = this.props
                 let { data, } = this.props
+                console.log(this.props)
                 //console.log(data.allContext.pageInfo.endCursor)
                 //if (data.allContext.pagInfo.hasNextPage){
                     data.fetchMore({
@@ -386,12 +446,20 @@ allContext(first:5,after:$after) {
                 createdDate
                 caption
                 comments(first:5) {
+                pageInfo{
+                    hasNextPage
+                    endCursor
+                }    
                 edges {
                     node {
                     id
                     comment
                     commentTime
                     replycomment{
+                        pageInfo{
+                            hasNextPage
+                            endCursor
+                        }
                         edges{
                             node{
                                 id
@@ -438,7 +506,55 @@ options: props => ({
 }),
 }
 
-
+const LoadComment = gql`query loadcmt($id:ID!,$after:String!){
+  photos(id:$id){
+    comments(first:5,after:$after){
+      pageInfo{
+        endCursor
+        hasNextPage
+      }
+      edges{
+        node{
+          id
+          comment
+          commentTime
+          replycomment{
+            pageInfo{
+              hasNextPage
+              endCursor
+            }
+            edges{
+              node{
+                id
+                comment
+                commentTime
+                commentBy{
+                  id
+                  username
+                  firstName
+                  lastName
+                }
+              }
+            }
+          }
+          commentBy{
+            id
+            username
+            firstName
+            lastName
+          }
+          commentBy{
+            id
+            username
+            firstName
+            lastName     
+          }
+        }
+      }
+    }
+  }
+}
+`
 
 const MY_QUERY = gql`query allPhotos{
     allContext(first:5) {
@@ -446,7 +562,7 @@ const MY_QUERY = gql`query allPhotos{
             hasNextPage
             endCursor
           }
-        edges{ 
+        edges{
             cursor
             node{
                 id
@@ -454,12 +570,20 @@ const MY_QUERY = gql`query allPhotos{
                 createdDate
                 caption
                 comments(first:5) {
+                pageInfo{
+                  hasNextPage
+                  endCursor
+                }
                 edges {
                     node {
                     id
                     comment
                     commentTime
                     replycomment{
+                      pageInfo{
+                        hasNextPage
+                        endCursor
+                      }
                         edges{
                             node{
                                 id

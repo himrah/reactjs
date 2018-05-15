@@ -168,7 +168,7 @@ class Query(graphene.AbstractType):
     all_by_users = graphene.List(PhotoNode,id=graphene.Int())
 
     all_photos = graphene.List(PhotoType)
-    photos = graphene.Field(PhotoType,id=graphene.Int())
+    photos = graphene.Field(PhotoType,id=graphene.ID())
 
     all_feeds = graphene.List(
         PhotoType,
@@ -266,10 +266,10 @@ class Query(graphene.AbstractType):
 
     def resolve_photos(self, info, **kwargs):
         #print("dskfjkl dlkf sd flkj")
-        id = kwargs.get('id')
+        #id = kwargs.get('id')
         name = kwargs.get('name')
         #print("dskfjkl dlkf sd flkj")
-        #id = from_global_id(args.get('id'))[1]
+        id = from_global_id(kwargs.get('id'))[1]
         #print("jkhkjhjkljlkjl",id)
         if id is not None:
             return Photos.objects.get(pk=id)
