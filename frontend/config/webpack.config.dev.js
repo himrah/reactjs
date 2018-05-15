@@ -23,8 +23,8 @@ const CompressionPlugin = require("compression-webpack-plugin")
 // In development, we always serve from the root. This makes config easier.
 //const publicPath = '/';
 
-//const publicPath = 'http://4e37a1e5.ngrok.io/'
-//const publicUrl = "http://4e37a1e5.ngrok.io/"
+//const publicPath = 'http://3d0465aa.ngrok.io/'
+//const publicUrl = "http://3d0465aa.ngrok.io/"
 //const publicPath = `http://${ require("os").hostname()}:3000`
 //const publicUrl = `http://${ require("os").hostname()}:3000`
 const publicPath = 'http://localhost:3000/';
@@ -52,7 +52,7 @@ module.exports = {
     require.resolve('./polyfills'),
     
     require.resolve('webpack-dev-server/client') + '?http://localhost:3000',
-    //require.resolve('webpack-dev-server/client') + '?http://4e37a1e5.ngrok.io',
+    //require.resolve('webpack-dev-server/client') + '?http://3d0465aa.ngrok.io',
     //require.resolve('webpack-dev-server/client') + '?http://'+require("os").hostname()+':3000/',
     //'webpack-dev-server/client?http://' + require("os").hostname() + ':9090/',
     require.resolve('webpack/hot/dev-server'),

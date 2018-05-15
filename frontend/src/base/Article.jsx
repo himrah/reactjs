@@ -146,6 +146,7 @@ class Articles extends React.Component{
         let post = this.props.p.node
         
         let server = "http://localhost:8000/"
+        //let server = "http://994365fa.ngrok.io/"
         let img = server+post.photo
         let prf =server+post.uploadBy.profilePic.profileThumbs
         
@@ -157,13 +158,10 @@ class Articles extends React.Component{
         //console.log(this.state)
         return(
             <article className="article">
-                    
                     <header className="img_header">
                         <div className="img_header_title">
-                        
                             {/*<Link to={this.props.p.uploadBy.username}><h4>{this.props.p.uploadBy.username}</h4></Link>
-                            */}
-                            
+                            */}                            
                             <div className="_pt">
                                 {/*<Link to={this.props.p.uploadBy.username}><span className="user">{this.props.p.uploadBy.firstName}</span></Link>*/}
                                 <img src={prf} alt="prf" className="prf" title={post.uploadBy.username}/>
@@ -183,42 +181,43 @@ class Articles extends React.Component{
                             </div>                            
                         </div>                        
                     </header>
+                    <div className="scrl">
                     <Router>
-                    
-                    <div className="img_content">
-                    <a target="_blank" href={img}>
-                        <div className="main_img">
-                            <img alt="smile" src={img} className="m_img" />                      
-                        </div>
-                    </a>
-                    </div>
-                    
-                    </Router> 
-                    <div className="img_footer">
-                    <div className="rating">
-                    <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
-                    </div>
-                    <div className="cmt_section">                        
-                        <div className="show_comments">
-                         {
-                             this.state.comments
-                         }
-                         {/*       
-                        {post.comments.edges.map(c=><Comments key={c.node.id} cmt={c}  />)}
-                         */}
-
-
-                    </div>
-                    </div>
-                        <div className="comment_box">
-                        <form ref={ref=>(this.this=ref)} onSubmit={e=>this.handleSubmit(e)}>
-                            <div className="_cmt_btn">
-                                <textarea className="form-control" placeholder="Comment here" onChange={(e)=> this.updateInput(e,post.id)} key={post.id}  ></textarea>
-                                <input type="submit" value="post"  className="pstbtn" />
+                        <div className="img_content">
+                        <a target="_blank" href={img}>
+                            <div className="main_img">
+                                <img alt="smile" src={img} className="m_img" />                      
                             </div>
-                        </form>
-                        </div>            
-                    </div>
+                        </a>
+                        </div>
+                        
+                        </Router> 
+                        <div className="img_footer">
+                        <div className="rating">
+                        <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
+                        </div>
+                        <div className="cmt_section">                        
+                            <div className="show_comments">
+                            {
+                                this.state.comments
+                            }
+                            {/*       
+                            {post.comments.edges.map(c=><Comments key={c.node.id} cmt={c}  />)}
+                            */}
+
+
+                        </div>
+                        </div>
+                            <div className="comment_box">
+                            <form ref={ref=>(this.this=ref)} onSubmit={e=>this.handleSubmit(e)}>
+                                <div className="_cmt_btn">
+                                    <textarea className="form-control" placeholder="Comment here" onChange={(e)=> this.updateInput(e,post.id)} key={post.id}  ></textarea>
+                                    <input type="submit" value="post"  className="pstbtn" />
+                                </div>
+                            </form>
+                            </div>            
+                        </div>
+                        </div>
             </article>          
         )
     }

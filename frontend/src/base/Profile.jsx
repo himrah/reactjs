@@ -74,7 +74,7 @@ const query = gql`query user($username:String!)
 */
 
 const server = "http://localhost:8000/"
-//const server = "http://2010663b.ngrok.io/"
+//const server = "http://994365fa.ngrok.io/"
 
 class Thumb extends React.Component{
   constructor(props){
