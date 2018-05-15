@@ -129,12 +129,8 @@ class Articles extends React.Component{
         })
         .catch(err=>{
             console.log(err+' Network error!')
-        })
-
-
-        
+        })       
     }
-
 
     handleClick(){
         //console.log(this.state.keyset)

@@ -77,13 +77,28 @@ const server = "http://localhost:8000/"
 //const server = "http://2010663b.ngrok.io/"
 
 class Thumb extends React.Component{
+  constructor(props){
+    super(props);
+      this.state = {
+        maxWidth : '33.3%',
+        grid : 3,
+        //comments : []
+    }
+  }
   render()
   {
+    const style = {
+      'maxWidth':this.state.maxWidth,
+      'padding':'2px'
+    }
+  
     //console.log(this.props)
-    let img = server+this.props.photo.node.thumbs
+    let img = server+this.props.photo.thumbs
     //let img = "http://localhost:8000/"+this.props.photo.node.thumbs
     return(
+      <div className="thm" style={style}>
         <img className="thumbimg" src={img} alt="pho" />   
+      </div>
     )
   }
 }
@@ -134,6 +149,230 @@ class Profile extends React.Component{
     //console.log(formData)
     return  post(url, formData,config)
 }
+
+  render(){
+        let { data } = this.props
+        console.log(data)
+        if (data.loading || !data.users) {
+          return <div>Loading...</div>
+        }
+
+        const style={
+          'borderRadius': '50%',
+        }
+        const profile_photos = this.props.data.users.photos.edges;
+        //console.log(profile_photos)
+        //var l = []
+        var photo_list=[]
+        var counter =0
+        let l = profile_photos
+        while(counter<l.length){
+          var t=[]
+          l.slice(counter,counter+4).forEach(function(e){
+            t.push(e)
+          })
+          photo_list.push(t)
+          counter+=4
+        }
+        return(
+          <main className="main">      
+          <Helmet>
+          <title>Profile</title>
+          </Helmet>  
+            <section className="top">
+              <div className="profile">
+              <div className="pfile">
+                  <span className="fl_rw">
+                    <div className="information">
+                    { data.users.profile ?(
+                      <div className="personal">
+                          
+                          <div className="fl_rw">
+                            <span className="unm">{data.users.firstName + " " +data.users.lastName}</span>
+                            <span className="_un">(@{data.users.username})</span>
+                          </div>
+                          <div className="_about">
+                            {data.users.profile.about}
+                          </div>          
+                      </div>
+                    ) : (
+                      <div className="p">
+                      </div>
+                    )
+                    }
+                  
+                  </div>
+                  <div className="container">
+                      {/*}
+                      <img style={style} src={ "http://localhost:8000/photos/"+data.users.profilePic.profileThumbs} alt="profile"/>
+                      */}
+                      <div className="uprf">
+                      <img style={style} src={ server+data.users.profilePic.profileThumbs} alt="profile"/>
+                      <div className="overlay"></div>
+                      </div>
+                      {
+                      /*
+                      <input type="file" className="in" name="profile_pic" onChange={this.onChangePost}/>
+                      */
+                      }
+                    </div>                  
+                  </span>                  
+                  </div>
+              </div>
+
+{/*}              <div className="info">
+                    { data.users.profile ?(
+                      <div className="personal">
+                          <div>
+                            username : {data.users.username}
+                          </div>
+                          <div>
+                            Name : {data.users.firstName + " " +data.users.lastName}
+                          </div>
+                          <div>
+                            Birthday : {data.users.profile.birthDay}
+                          </div>                                
+                      </div>
+                    ) : (
+                      <div className="personal">
+                      </div>
+                    )
+                    }
+                  
+                <div className="input">
+                  <form onSubmit={this.onFormSubmit}>
+                    <input type="file" onChange={this.onChange}/>
+                    <button type="submit">Upload</button>
+                  </form>
+                </div>  
+            </div>
+   */}
+
+
+            </section>
+            <section className="slide">
+                    <div className="fl_rw sl_sec">
+                        <div><span  className="li" >All(232)</span></div>
+                        <div><span  className="li" >Photos(44)</span></div>
+                        <div><span  className="li" >Blogs(5)</span></div>
+                        <div><span  className="li" >Documents(3)</span></div>
+                        <div><span  className="li" >Videos(10)</span></div>
+                        <div><span  className="li" >Presentations(1)</span></div>
+                        <div><span  className="li" >Another</span></div>
+                    </div>
+            </section>
+            <section className="bottom">
+            {/*
+              <div className="box">
+                <div className="group">
+                  {profile_photos.map(p=><Thumb key={p.id} photo={p} />)}
+                </div>
+              </div>
+            */}
+            <div className="p_cont">
+            {   
+              <div className="_row">
+                {photo_list.map(p=><Group key={p[0].node.id} photo={p} />)}
+              </div>
+            }
+            </div>    
+            </section>
+          </main>
+        )
+    }
+}
+
+
+class Group extends React.Component{
+  render(){
+    console.log(this.props.photo)
+    return(
+      <div className="fl_rw _group">
+        {
+          this.props.photo.map(
+            p=><Thumb key={p.node.id} photo={p.node}/>
+          )
+        }
+      </div>
+    )
+  }  
+}
+
+const queryOptions = {
+  options: props => ({
+    variables: {
+      username: props.match.params.userName,
+    },
+  }),
+}
+
+export default compose(
+  graphql(query, queryOptions),
+  //graphql(upload)
+)(Profile)
+
+//var a=this.props.match.params.userName
+
+/*const upload = gql`mutation abc(){
+  img(
+    )
+  {
+    formErrors
+  }
+}
+`*/
+
+
+//DetailView = graphql(query, queryOptions)(DetailView)
+//export default DetailView
+
+
+
+/*
+export default compose(
+  graphql(MY_QUERY),
+  graphql(UpdateComment)
+)(Article)
+Profile = graphql(query)(Profile)
+export default Profile;
+*/
+
+
+
+
+/*
+const query = gql`query user($username:String!){
+    users(username:$username){
+      id,
+      username
+      firstName,
+      lastName
+      photos{
+        edges{
+          node{
+            id,
+            thumbs
+            photo
+            originalPhoto
+          }
+        }
+      }
+      profile{
+        id
+        birthDay
+        profilePic{
+          id
+          profileThumbs
+        }
+      }
+    }
+  }
+
+
+*/
+
+
+
 
 
 
@@ -213,186 +452,3 @@ class Profile extends React.Component{
     return  put(url, formData,config)
   }*/
 
-
-  render(){
-        let { data } = this.props
-        console.log(data)
-        if (data.loading || !data.users) {
-          return <div>Loading...</div>
-        }
-
-        const style={
-          'borderRadius': '50%',
-        }
-        const profile_photos = this.props.data.users.photos.edges;
-        //console.log(profile_photos)
-        return(
-          <main className="main">      
-          <Helmet>
-          <title>Profile</title>
-          </Helmet>  
-            <section className="top">
-              <div className="profile">
-              <div className="pfile">
-                  <span className="fl_rw">
-                    <div className="information">
-                    { data.users.profile ?(
-                      <div className="personal">
-                          
-                          <div className="fl_rw">
-                            <span className="unm">{data.users.firstName + " " +data.users.lastName}</span>
-                            <span className="_un">(@{data.users.username})</span>
-                          </div>
-                          <div className="_about">
-                            {data.users.profile.about}
-                          </div>          
-                      </div>
-                    ) : (
-                      <div className="p">
-                      </div>
-                    )
-                    }
-                  
-                  </div>
-                  <div className="container">
-                      {/*}
-                      <img style={style} src={ "http://localhost:8000/photos/"+data.users.profilePic.profileThumbs} alt="profile"/>
-                      */}
-                      <div className="uprf">
-                      <img style={style} src={ server+data.users.profilePic.profileThumbs} alt="profile"/>
-                      <div className="overlay"></div>
-                      </div>
-                      {
-                      /*
-                      <input type="file" className="in" name="profile_pic" onChange={this.onChangePost}/>
-                      */
-                      }
-                    </div>                  
-                  </span>                  
-                  </div>
-              </div>
-
-{/*}              <div className="info">
-                    { data.users.profile ?(
-                      <div className="personal">
-                          <div>
-                            username : {data.users.username}
-                          </div>
-                          <div>
-                            Name : {data.users.firstName + " " +data.users.lastName}
-                          </div>
-                          <div>
-                            Birthday : {data.users.profile.birthDay}
-                          </div>                                
-                      </div>
-                    ) : (
-                      <div className="personal">
-                      </div>
-                    )
-                    }
-                  
-                <div className="input">
-                  <form onSubmit={this.onFormSubmit}>
-                    <input type="file" onChange={this.onChange}/>
-                    <button type="submit">Upload</button>
-                  </form>
-                </div>  
-            </div>
-   */}
-
-
-            </section>
-            <section className="slide">
-                    <div class="fl_rw sl_sec">
-                        <div><span  className="li" >All(232)</span></div>
-                        <div><span  className="li" >Photos(44)</span></div>
-                        <div><span  className="li" >Blogs(5)</span></div>
-                        <div><span  className="li" >Documents(3)</span></div>
-                        <div><span  className="li" >Videos(10)</span></div>
-                        <div><span  className="li" >Presentations(1)</span></div>
-                        <div><span  className="li" >Another</span></div>
-                    
-                    </div>
-            </section>
-            <section className="bottom">
-              <div className="box">
-              <div className="group">
-                
-                {profile_photos.map(p=><Thumb key={p.id} photo={p} />)}
-              
-              </div>
-              </div>
-            </section>
-          </main>
-        )
-    }
-}
-
-
-const queryOptions = {
-  options: props => ({
-    variables: {
-      username: props.match.params.userName,
-    },
-  }),
-}
-
-//DetailView = graphql(query, queryOptions)(DetailView)
-//export default DetailView
-
-
-
-/*
-export default compose(
-  graphql(MY_QUERY),
-  graphql(UpdateComment)
-)(Article)
-Profile = graphql(query)(Profile)
-export default Profile;
-*/
-export default compose(
-  graphql(query, queryOptions),
-  //graphql(upload)
-)(Profile)
-
-//var a=this.props.match.params.userName
-
-/*const upload = gql`mutation abc(){
-  img(
-    )
-  {
-    formErrors
-  }
-}
-`*/
-
-/*
-const query = gql`query user($username:String!){
-    users(username:$username){
-      id,
-      username
-      firstName,
-      lastName
-      photos{
-        edges{
-          node{
-            id,
-            thumbs
-            photo
-            originalPhoto
-          }
-        }
-      }
-      profile{
-        id
-        birthDay
-        profilePic{
-          id
-          profileThumbs
-        }
-      }
-    }
-  }
-
-
-*/
