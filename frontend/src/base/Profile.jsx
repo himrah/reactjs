@@ -80,7 +80,7 @@ class Thumb extends React.Component{
   constructor(props){
     super(props);
       this.state = {
-        maxWidth : '33.3%',
+        //maxWidth : '33.3%',
         grid : 3,
         //comments : []
     }
@@ -88,7 +88,7 @@ class Thumb extends React.Component{
   render()
   {
     const style = {
-      'maxWidth':this.state.maxWidth,
+      'maxWidth':this.props.mw,
       'padding':'2px'
     }
   
@@ -110,7 +110,10 @@ class Profile extends React.Component{
   constructor(props) {
     super(props);
     this.state ={
-      file:null
+      //file:null
+      maxWidth:'33.3%',
+      grid:3
+      
     }
     this.onFormSubmit = this.onFormSubmit.bind(this)
     this.onChange = this.onChange.bind(this)
@@ -149,6 +152,10 @@ class Profile extends React.Component{
     //console.log(formData)
     return  post(url, formData,config)
 }
+changeWidth(e){
+//console.log(e)
+this.setState({'grid':e,'maxWidth':`${100/e}%`})
+}
 
   render(){
         let { data } = this.props
@@ -168,11 +175,11 @@ class Profile extends React.Component{
         let l = profile_photos
         while(counter<l.length){
           var t=[]
-          l.slice(counter,counter+4).forEach(function(e){
+          l.slice(counter,counter+this.state.grid).forEach(function(e){
             t.push(e)
           })
           photo_list.push(t)
-          counter+=4
+          counter+=this.state.grid
         }
         return(
           <main className="main">      
@@ -261,6 +268,13 @@ class Profile extends React.Component{
                         <div><span  className="li" >Another</span></div>
                     </div>
             </section>
+            <section className="slide">
+              <div className="fl_rw ch_op">
+                <span  onClick={(e)=>this.changeWidth(3)}>3</span>
+                <span  onClick={(e)=>this.changeWidth(4)}>4</span>
+                <span  onClick={(e)=>this.changeWidth(5)}>5</span>
+              </div>
+            </section>
             <section className="bottom">
             {/*
               <div className="box">
@@ -272,7 +286,7 @@ class Profile extends React.Component{
             <div className="p_cont">
             {   
               <div className="_row">
-                {photo_list.map(p=><Group key={p[0].node.id} photo={p} />)}
+                {photo_list.map(p=><Group key={p[0].node.id} maxWidth={this.state.maxWidth} photo={p} />)}
               </div>
             }
             </div>    
@@ -284,13 +298,20 @@ class Profile extends React.Component{
 
 
 class Group extends React.Component{
+  /*constructor(props){
+    super(props);
+    this.state={
+      'maxWidth':'33.3%'
+    }
+  }*/
   render(){
-    console.log(this.props.photo)
+    //console.log(this.props.photo)
+    //const mw = this.props.maxWidth
     return(
       <div className="fl_rw _group">
         {
           this.props.photo.map(
-            p=><Thumb key={p.node.id} photo={p.node}/>
+            p=><Thumb key={p.node.id} mw={this.props.maxWidth} photo={p.node}/>
           )
         }
       </div>

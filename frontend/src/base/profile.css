@@ -203,3 +203,8 @@ height: 100%;
   max-width: 25%;
   padding: 3px;
 }*/
+
+.ch_op>span{
+  padding: 10px;
+  cursor: pointer;
+}
