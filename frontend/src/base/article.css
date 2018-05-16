@@ -89,7 +89,7 @@ textarea{
     display: flex;
     flex-flow: row;
     text-align: left;
-    width: 150px;
+    width: 170px;
 }
 
 
@@ -169,4 +169,16 @@ padding: 5px;
     color: gray;
     cursor: pointer;
     font-size: 13px;
+}
+.option{
+    direction: rtl;
+}
+.dot{
+    width: 30px;
+    cursor: pointer;
+}
+.op:after{
+    content: '\2807';
+    font-size: 25px;
+    color: #656060
 }

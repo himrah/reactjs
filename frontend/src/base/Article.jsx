@@ -80,7 +80,8 @@ class Articles extends React.Component{
             keyset : '',
             comments : [],
             cmt_endcursor:'',
-            hasNextPage:''
+            hasNextPage:'',
+            id:''
             //hasNextPage : this.props.pageInfo.hasNextPage,
             //cursor : this.props.pageInfo.endCursor,
             //uid : localStorage.token
@@ -140,11 +141,12 @@ class Articles extends React.Component{
         //console.log(this.state.keyset)
         //console.log(this.state.inputcomment)
     }
+
     updateInput(e,key){
         this.setState({inputcomment: e.target.value,keyset:key})
     }
 
-    loadItems=()=>{
+    loadItems=(id)=>{
         setTimeout(()=>{
                 //let { data, location } = this.props
                 let { data, } = this.props.m
@@ -154,7 +156,7 @@ class Articles extends React.Component{
                     data.fetchMore({
                         query : LoadComment,
                         variables :{
-                            id:"UGhvdG9Ob2RlOjE=",
+                            id:id,
                             after:this.state.cmt_endcursor,
                         },
                         updateQuery:(prev,next)=>{
@@ -211,25 +213,34 @@ class Articles extends React.Component{
                     <header className="img_header">
                         <div className="img_header_title">
                             {/*<Link to={this.props.p.uploadBy.username}><h4>{this.props.p.uploadBy.username}</h4></Link>
-                            */}                            
-                            <div className="_pt">
-                                {/*<Link to={this.props.p.uploadBy.username}><span className="user">{this.props.p.uploadBy.firstName}</span></Link>*/}
-                                <img src={prf} alt="prf" className="prf" title={post.uploadBy.username}/>
-                                {/*<div>{ctime}</div>*/}
-                                <div className="_name">
-                                    <Link to={post.uploadBy.username}><span className="user">{post.uploadBy.firstName}</span></Link>
-                                    <div className="_time">
-                                    <span className="time">{timeAgo.format(new Date(post.createdDate)-60*1000,'time')} ago</span>
-                                    {/*<span className="time" >{this.props.p.createdDate}</span>*/}
+                            */}    
+                                <div className="fl_rw">
+                                        <div className="_pt">
+                                            {/*<Link to={this.props.p.uploadBy.username}><span className="user">{this.props.p.uploadBy.firstName}</span></Link>*/}
+                                            <img src={prf} alt="prf" className="prf" title={post.uploadBy.username}/>
+                                            {/*<div>{ctime}</div>*/}
+                                            <div className="_name">
+                                                <Link to={post.uploadBy.username}><span className="user">{post.uploadBy.firstName}</span></Link>
+                                                <div className="_time">
+                                                    <span className="time">{timeAgo.format(new Date(post.createdDate)-60*1000,'time')} ago</span>
+                                                    {/*<span className="time" >{this.props.p.createdDate}</span>*/}
+                                                </div>
+                                            </div>                            
+                                        </div>
+                                        <div className="option">
+                                            <div className="dot">    
+                                                <span class="op"></span>
+                                            </div>
+                                        </div>
+                                </div>        
+                                <div className="_info">
+                                    <div className="caption">
+                                        <span>{post.caption}</span>
                                     </div>
-                                </div>                            
-                            </div>
-                            <div className="_info">
-                                <div className="caption">
-                                    <span>{post.caption}</span>
                                 </div>
-                            </div>                            
-                        </div>                        
+                                                       
+                        </div>  
+          
                     </header>
                     <div className="scrl">
                     <Router>
@@ -259,7 +270,7 @@ class Articles extends React.Component{
                              this.state.hasNextPage ? (   
                                 <div className="mcmt">
                                     {/*<span onClick={(e)=>this.loadItems(post.id)}>More Comments</span>*/}
-                                    <span onClick={this.loadItems.bind(this)}>More Comment</span>
+                                    <span onClick={this.loadItems.bind(this,post.id)}>More Comment</span>
                                 </div>) : (
                                     <span/>
                                 )
