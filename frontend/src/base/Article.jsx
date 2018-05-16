@@ -197,7 +197,7 @@ class Articles extends React.Component{
         const timeAgo = new TimeAgo('en-US')
         let post = this.props.p.node
         
-        let server = "http://localhost:8000/"
+        let server = "http://cf792ff7.ngrok.io/"
         //let server = "http://994365fa.ngrok.io/"
         let img = server+post.photo
         let prf =server+post.uploadBy.profilePic.profileThumbs
@@ -231,6 +231,16 @@ class Articles extends React.Component{
                                             <div className="dot">    
                                                 <span class="op"></span>
                                             </div>
+                                            {/*
+                                            <div className="dropdown">
+                                                <ul>
+                                                    <li>Option 1</li>
+                                                    <li>Option 2</li>
+                                                    <li>Option 3</li>
+                                                    <li>Option 4</li>
+                                                </ul>
+                                            </div>*/
+                                            }
                                         </div>
                                 </div>        
                                 <div className="_info">
