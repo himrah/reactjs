@@ -89,7 +89,7 @@ textarea{
     display: flex;
     flex-flow: row;
     text-align: left;
-    width: 170px;
+   /* width: 175px;*/
 }
 
 
@@ -130,6 +130,7 @@ textarea{
 }
 ._name{
 padding: 5px;
+width: 100px;
 }
 ._time{
     color: gray;
@@ -169,6 +170,7 @@ padding: 5px;
     color: gray;
     cursor: pointer;
     font-size: 13px;
+    width: 100px;
 }
 .option{
     direction: rtl;
@@ -180,5 +182,30 @@ padding: 5px;
 .op:after{
     content: '\2807';
     font-size: 25px;
-    color: #656060
+    /*color: #656060*/
+    color: rgb(247, 187, 77);
+}
+
+.ops:after{
+    content: '\2843';
+    font-size: 25px;
+    /*color: #656060*/
+    color: rgb(247, 187, 77);
+}
+
+.op::hover{
+    color: black;
+}
+.dropdown-content{
+    /*display: initial;*/
+    position: absolute;
+    background-color: white;
+    min-width: 160px;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+.dropdown{
+    position: relative;
+    display: inline-block;
 }

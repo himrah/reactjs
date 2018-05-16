@@ -81,7 +81,9 @@ class Articles extends React.Component{
             comments : [],
             cmt_endcursor:'',
             hasNextPage:'',
-            id:''
+            id:'',
+            show:'none',
+            pcontent:'op'
             //hasNextPage : this.props.pageInfo.hasNextPage,
             //cursor : this.props.pageInfo.endCursor,
             //uid : localStorage.token
@@ -191,13 +193,25 @@ class Articles extends React.Component{
                 })
             },500);
     }
+    View=()=>{
+        if(this.state.show=='none'){
+            this.setState({show:'initial'})
+            this.setState({pcontent:'ops'})
+        }
+        else{
+            this.setState({'show':'none'})
+            this.setState({pcontent:'op'})
+        }
+
+
+        }
 
     render(){
         TimeAgo.locale(en)
         const timeAgo = new TimeAgo('en-US')
         let post = this.props.p.node
         
-        let server = "http://cf792ff7.ngrok.io/"
+        let server = "http://localhost:8000/"
         //let server = "http://994365fa.ngrok.io/"
         let img = server+post.photo
         let prf =server+post.uploadBy.profilePic.profileThumbs
@@ -229,18 +243,19 @@ class Articles extends React.Component{
                                         </div>
                                         <div className="option">
                                             <div className="dot">    
-                                                <span class="op"></span>
+                                                <span className={this.state.pcontent} onClick={this.View}></span>
                                             </div>
-                                            {/*
                                             <div className="dropdown">
-                                                <ul>
-                                                    <li>Option 1</li>
-                                                    <li>Option 2</li>
-                                                    <li>Option 3</li>
-                                                    <li>Option 4</li>
-                                                </ul>
-                                            </div>*/
-                                            }
+                                                <div className="dropdown-content" style={{display : this.state.show}}>
+                                                    <ul>
+                                                        <li>Option 1</li>
+                                                        <li>Option 2</li>
+                                                        <li>Option 3</li>
+                                                        <li>Option 4</li>
+                                                    </ul>
+                                                </div>    
+                                            </div>
+                                            
                                         </div>
                                 </div>        
                                 <div className="_info">
