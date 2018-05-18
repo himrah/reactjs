@@ -80,6 +80,26 @@ class Logout extends React.Component{
 
 
 class Nav extends React.Component{
+    constructor(props){
+        super(props);
+        
+        this.state = {
+            /*inputcomment : '',
+            keyset : '',
+            comments : [],
+            cmt_endcursor:'',
+            hasNextPage:'',
+            id:'',*/
+            show:'initial',
+            pcontent:'op'
+            //hasNextPage : this.props.pageInfo.hasNextPage,
+            //cursor : this.props.pageInfo.endCursor,
+            //uid : localStorage.token
+        }
+        //this.updateInput = this.updateInput.bind(this);
+        //this.handleClick = this.handleClick.bind(this);
+    }    
+    
     logout(){
         localStorage.removeItem('token')
         window.location.replace('/')
@@ -133,6 +153,15 @@ class Nav extends React.Component{
             
             <Route path="/registration" component={Registration} />
             </Switch>
+            <div className="dropdown">
+                <div className="dropdown-content" style={{display : this.state.show}}>
+                        <div>Share External</div>
+                        <div>Full size image</div>
+                        <div>Copy Link</div>
+                        <div>Report</div>
+                </div>    
+            </div>
+
             <nav className="btm_nav">
                     <div className="btm_navdiv">
                     { token ? (

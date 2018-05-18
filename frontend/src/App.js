@@ -5,6 +5,14 @@ import Loadable from 'react-loadable'
 //const Login = () => <Async load={import('./base/Login')}/>
 //const Nav = () => <Async load={import('./base/Nav')}/>
 import Loading from './loading'
+//import { Provider } from 'react-redux'
+import {reducer} from './reducers/reduce'
+import {
+  createStore,
+} from "redux"
+
+
+let store = createStore(reducer)
 
 const Login = Loadable({
   loader: () => import('./base/Login'),

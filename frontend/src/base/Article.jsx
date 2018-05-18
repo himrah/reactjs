@@ -1,12 +1,18 @@
 import React from 'react'
 import InfiniteScroll from 'react-infinite-scroller';
-//import InfiniteScroll from 'react-infinite-scroll-component'; 
+//import InfiniteScroll from 'react-infinite-scroll-component';
 import { BrowserRouter as Router, Link } from "react-router-dom"
 import './article.css'
 import TimeAgo from 'javascript-time-ago'
 //import LoadArticle from './LoadArticle'
 import { graphql, compose } from 'react-apollo'
 import gql from 'graphql-tag'
+//import {toggle} from '...'
+
+//import {toggle} from '.../actions'
+//import {toggle} from '../actions/reduceaction'
+
+
 import en from 'javascript-time-ago/locale/en'
 
 class ReplayComment extends React.Component{
@@ -30,7 +36,7 @@ class Comments extends React.Component {
     render(){
         TimeAgo.locale(en)
         const timeAgo = new TimeAgo('en-US')
-        
+
         //var ctime = this.props.cmt.node.commentTime
         //let reply = this.props.cmt.node.replycomment.edges
 
@@ -41,7 +47,7 @@ class Comments extends React.Component {
         return(
             <div className="_cmt_box">
                     <span className="_uname">
-                        <Router>  
+                        <Router>
                         {/*
                             <Link to={this.props.cmt.node.commentBy.username} key={this.props.cmt.node.commentBy.id}><span style={{color:'black',fontWeight:'bold',marginRight:'3px'}}>{this.props.cmt.node.commentBy.username}</span></Link>
                             */
@@ -56,8 +62,8 @@ class Comments extends React.Component {
                         {/* :- {ctime.format(new Date(de))}*/}
                         <span>:- {timeAgo.format(new Date(ctime)-60*1000,'time')}</span>
                         </span>
-                        <div className="reply">   
-                        { 
+                        <div className="reply">
+                        {
                             reply.map(c=><ReplayComment key={c.node.id} cmt={c}  />)
                         }
                         </div>
@@ -74,7 +80,7 @@ class Articles extends React.Component{
 
     constructor(props){
         super(props);
-        
+
         this.state = {
             inputcomment : '',
             keyset : '',
@@ -92,13 +98,17 @@ class Articles extends React.Component{
         this.handleClick = this.handleClick.bind(this);
     }
 
-    
+    handletoggle=()=>{
+        //this.store.dispatch(toggle)
+        //console.log(toggle)
+    }
+
     componentDidMount = () => {
       let post=this.props.p.node
       this.setState({cmt_endcursor:post.comments.pageInfo.endCursor,hasNextPage:post.comments.pageInfo.hasNextPage})
       this.setState({comments:post.comments.edges.map(c=><Comments key={c.node.id} cmt={c.node}  />)})
     }
-    
+
 
     handleSubmit(e){
         e.preventDefault()
@@ -111,7 +121,7 @@ class Articles extends React.Component{
 
         //el.appendChild("jlkjsdlkjlksdf")
 
-       
+
         this.props.m.mutate({variables:{comment:this.state.inputcomment,photoid:this.state.keyset,userid:localStorage.getItem('userid')}})
         .then(res=>{
             if (res.data.postComment.formErrors == null) {
@@ -136,7 +146,7 @@ class Articles extends React.Component{
         })
         .catch(err=>{
             console.log(err+' Network error!')
-        })       
+        })
     }
 
     handleClick(){
@@ -174,7 +184,7 @@ class Articles extends React.Component{
                             ]
                             })
                             console.log(next.fetchMoreResult.photos.comments.edges)
-                            
+
                         }
                         /*
                         updateQuery:(prev,next)=>{
@@ -210,12 +220,12 @@ class Articles extends React.Component{
         TimeAgo.locale(en)
         const timeAgo = new TimeAgo('en-US')
         let post = this.props.p.node
-        
+
         let server = "http://localhost:8000/"
         //let server = "http://994365fa.ngrok.io/"
         let img = server+post.photo
         let prf =server+post.uploadBy.profilePic.profileThumbs
-        
+
         //let img = "http://2010663b.ngrok.io/"+post.photo
         //let prf = "http://2010663b.ngrok.io/"+post.uploadBy.profilePic.profileThumbs
         //let pageInfo = this.props.pageInfo
@@ -227,7 +237,7 @@ class Articles extends React.Component{
                     <header className="img_header">
                         <div className="img_header_title">
                             {/*<Link to={this.props.p.uploadBy.username}><h4>{this.props.p.uploadBy.username}</h4></Link>
-                            */}    
+                            */}
                                 <div className="fl_rw">
                                         <div className="_pt">
                                             {/*<Link to={this.props.p.uploadBy.username}><span className="user">{this.props.p.uploadBy.firstName}</span></Link>*/}
@@ -239,60 +249,49 @@ class Articles extends React.Component{
                                                     <span className="time">{timeAgo.format(new Date(post.createdDate)-60*1000,'time')} ago</span>
                                                     {/*<span className="time" >{this.props.p.createdDate}</span>*/}
                                                 </div>
-                                            </div>                            
+                                            </div>
                                         </div>
                                         <div className="option">
-                                            <div className="dot">    
-                                                <span className={this.state.pcontent} onClick={this.View}></span>
+                                            <div className="dot">
+                                                <span className={this.state.pcontent} onClick={this.handletoggle}></span>
                                             </div>
-                                            <div className="dropdown">
-                                                <div className="dropdown-content" style={{display : this.state.show}}>
-                                                    <ul>
-                                                        <li>Option 1</li>
-                                                        <li>Option 2</li>
-                                                        <li>Option 3</li>
-                                                        <li>Option 4</li>
-                                                    </ul>
-                                                </div>    
-                                            </div>
-                                            
                                         </div>
-                                </div>        
+                                </div>
                                 <div className="_info">
                                     <div className="caption">
                                         <span>{post.caption}</span>
                                     </div>
                                 </div>
-                                                       
-                        </div>  
-          
+
+                        </div>
+
                     </header>
                     <div className="scrl">
                     <Router>
                         <div className="img_content">
                         <a target="_blank" href={img}>
                             <div className="main_img">
-                                <img alt="smile" src={img} className="m_img" />                      
+                                <img alt="smile" src={img} className="m_img" />
                             </div>
                         </a>
                         </div>
-                        
-                        </Router> 
+
+                        </Router>
                         <div className="img_footer">
                         <div className="rating">
                         <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
                         </div>
-                        <div className="cmt_section">                        
+                        <div className="cmt_section">
                             <div className="show_comments">
                             {
                                 this.state.comments
                             }
 
-                            {/*       
+                            {/*
                             {post.comments.edges.map(c=><Comments key={c.node.id} cmt={c}  />)}
                             */}
-                            {    
-                             this.state.hasNextPage ? (   
+                            {
+                             this.state.hasNextPage ? (
                                 <div className="mcmt">
                                     {/*<span onClick={(e)=>this.loadItems(post.id)}>More Comments</span>*/}
                                     <span onClick={this.loadItems.bind(this,post.id)}>More Comment</span>
@@ -310,10 +309,10 @@ class Articles extends React.Component{
                                     <input type="submit" value="post"  className="pstbtn" />
                                 </div>
                             </form>
-                            </div>            
+                            </div>
                         </div>
                         </div>
-            </article>          
+            </article>
         )
     }
 }
@@ -332,9 +331,9 @@ class Article extends React.Component{
     updateStat(pageInfo){
         this.setState({hasNextPage:pageInfo.hasNextPage,cursor:pageInfo.endCursor})
     }
-    
+
 /*    componentWillReceiveProps(){
-        
+
         if(this.props.data.loading){
             //return (<div>sdf</div>)
             console.log(this.props)
@@ -398,7 +397,7 @@ class Article extends React.Component{
     render(){
         //console.log(this.props)
         if(this.props.data.loading){
-            return (<div>Loading...</div>)   
+            return (<div>Loading...</div>)
         }
         //console.log(this.props)
         //console.log(localStorage)
@@ -443,7 +442,7 @@ class Article extends React.Component{
 
                 <div>
                  {/* {photos.map(p=><Articles key={p.node.id} p={p} m={mu}/>)}*/}
-                 
+
                 {<InfiniteScroll
                     //pageStart = {0}
                     //next = {this.loadMore}
@@ -485,7 +484,7 @@ allContext(first:5,after:$after) {
                 pageInfo{
                     hasNextPage
                     endCursor
-                }    
+                }
                 edges {
                     node {
                     id
@@ -513,7 +512,7 @@ allContext(first:5,after:$after) {
                     commentBy{
                         id
                         username
-                        
+
                     }
                     }
                 }
@@ -583,7 +582,7 @@ const LoadComment = gql`query loadcmt($id:ID!,$after:String!){
             id
             username
             firstName
-            lastName     
+            lastName
           }
         }
       }
@@ -637,7 +636,7 @@ const MY_QUERY = gql`query allPhotos{
                     commentBy{
                         id
                         username
-                        
+
                     }
                     }
                 }
@@ -662,7 +661,7 @@ const UpdateComment = gql`mutation create($comment:String!,$photoid:ID!,$userid:
       comment:$comment
       photoid:$photoid
       uid:$userid
-    ) 
+    )
     {
         formErrors
         comment {
@@ -711,7 +710,7 @@ const UpdateComment = gql`mutation create($comment:String!,$photoid:ID!,$userid:
                 username
             }
         }
-    
+
     }
 
 }
