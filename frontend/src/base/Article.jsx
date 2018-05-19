@@ -11,9 +11,14 @@ import gql from 'graphql-tag'
 
 //import {toggle} from '.../actions'
 //import {toggle} from '../actions/reduceaction'
+import {createStore} from 'redux'
+import { reducer } from '../reducers/reduce'
+
 
 
 import en from 'javascript-time-ago/locale/en'
+
+const store = createStore(reducer)
 
 class ReplayComment extends React.Component{
     render(){
@@ -43,7 +48,7 @@ class Comments extends React.Component {
         var ctime = this.props.cmt.commentTime
         let reply = this.props.cmt.replycomment ? this.props.cmt.replycomment.edges : []
         //console.log(this.props)
-        console.log(this.props.cmt)
+        //console.log(this.props.cmt)
         return(
             <div className="_cmt_box">
                     <span className="_uname">
@@ -97,10 +102,32 @@ class Articles extends React.Component{
         this.updateInput = this.updateInput.bind(this);
         this.handleClick = this.handleClick.bind(this);
     }
-
+    
     handletoggle=()=>{
         //this.store.dispatch(toggle)
         //console.log(toggle)
+
+        if(this.state.show === 'none'){
+            this.setState({show:'initial'})
+            this.setState({pcontent:'ops'})
+            store.dispatch({
+                type:'none',
+                value:'initial'
+            })
+        }
+        else{
+            this.setState({'show':'none'})
+            this.setState({pcontent:'op'})
+            store.dispatch({
+                type:'initial',
+                value:'none'
+            })            
+        }
+        //console.log("sdfsdfs")
+        //console.log(store.getState())
+        /*store.subscribe(()=>{
+            console.log("update",store.getState())
+        })*/
     }
 
     componentDidMount = () => {
@@ -204,16 +231,27 @@ class Articles extends React.Component{
             },500);
     }
     View=()=>{
+
+        const store = createStore(reducer,'none')
         if(this.state.show=='none'){
             this.setState({show:'initial'})
             this.setState({pcontent:'ops'})
+            store.dispatch({
+                type:'none',
+                value:'initial'
+            })
         }
         else{
             this.setState({'show':'none'})
             this.setState({pcontent:'op'})
+            store.dispatch({
+                type:'initial',
+                value:'none'
+            })            
         }
-
-
+        store.subscribe(()=>{
+            console.log("update",store.getState())
+        })
         }
 
     render(){
@@ -345,7 +383,7 @@ class Article extends React.Component{
         setTimeout(()=>{
                 //let { data, location } = this.props
                 let { data, } = this.props
-                console.log(this.props)
+                //console.log(this.props)
                 //console.log(data.allContext.pageInfo.endCursor)
                 //if (data.allContext.pagInfo.hasNextPage){
                     data.fetchMore({
@@ -354,7 +392,7 @@ class Article extends React.Component{
                             after:data.allContext.pageInfo.endCursor,
                         },
                         updateQuery:(prev,next)=>{
-                            console.log(next.fetchMoreResult.allContext.edges)
+                            //console.log(next.fetchMoreResult.allContext.edges)
                             const newEdges = next.fetchMoreResult.allContext.edges
                             const pageInfo = next.fetchMoreResult.allContext.pageInfo
                             this.setState({'hasNextPage':pageInfo.hasNextPage})
@@ -451,11 +489,11 @@ class Article extends React.Component{
                     //dataLength = {5}
                     hasMore = {this.state.hasNextPage}
                     loadMore = {this.loadItems.bind(this)}
-                    loader={<h1 className='loader-section'> Loading.... </h1>}
+                    loader="<h1>Loading..</h1>"
                     threshold = {1200}
                     //endMessage = {ending}
                     >
-                    <div>{photos.map(p=><Articles key={p.id} p={p} m={mu} />)}</div>
+                    <div>{photos.map(p=><Articles key={p.node.id} p={p} m={mu} />)}</div>
                 </InfiniteScroll>}
             </div>
         );

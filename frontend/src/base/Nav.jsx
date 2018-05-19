@@ -26,6 +26,8 @@ import Loading from '../loading'
 //const Main = () => <Async load={import('./Comb')}/>
 //const Loading = () => <div>Loading...</div>;
 
+import {initialState} from '../actions/actions'
+
 const Main = Loadable({
     loader: () => import('./Main'),
     loading : Loading
@@ -104,6 +106,7 @@ class Nav extends React.Component{
         localStorage.removeItem('token')
         window.location.replace('/')
     }
+    
     render(){
         //var token=localStorage.getItem('token')
         
@@ -113,6 +116,7 @@ class Nav extends React.Component{
             'maxWidth':'20px',
             'minWidth':'20px'
         }
+        
         return(
             <Router>
                 <span className="m_con">  
@@ -153,7 +157,7 @@ class Nav extends React.Component{
             
             <Route path="/registration" component={Registration} />
             </Switch>
-            <div className="dropdown">
+            <div className="dropdown" style={{display:initialState.toggle}}>
                 <div className="dropdown-content" style={{display : this.state.show}}>
                         <div>Share External</div>
                         <div>Full size image</div>
