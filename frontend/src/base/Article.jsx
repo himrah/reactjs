@@ -19,6 +19,9 @@ import gql from 'graphql-tag'
 
 import en from 'javascript-time-ago/locale/en'
 
+import { mapStateToProps,mapDispatchToProps } from '../others/MapsProps'
+import {connect} from 'react-redux'
+
 //const store = createStore(reducer)
 
 class ReplayComment extends React.Component{
@@ -105,10 +108,19 @@ class Articles extends React.Component{
     }
     
     handletoggle=()=>{
+
+          //console.log(this.props.click.onStClick("sdf"))
+          //console.log(this.props.toggle)
+          if (this.props.toggle==='initial'){
+            this.props.click.onStClick("none")
+          }
+          else{
+              this.props.click.onStClick('initial')
+          }
         //this.store.dispatch(toggle)
         //console.log(toggle)
 
-        if(this.state.show === 'none'){
+/*        if(this.state.show === 'none'){
             this.setState({show:'initial'})
             this.setState({pcontent:'ops'})
             console.log(this.props.dispatch)
@@ -116,21 +128,11 @@ class Articles extends React.Component{
                 type:'none',
                 value:'initial'
             })
-            console.log(this.props.dispatch)
-
-            /*store.dispatch({
-                type:'none',
-                value:'initial'
-            })*/
         }
         else{
             this.setState({'show':'none'})
-            this.setState({pcontent:'op'})
-            /*store.dispatch({
-                type:'initial',
-                value:'none'
-            })*/            
-        }
+            this.setState({pcontent:'op'})            
+        }*/
         //console.log("sdfsdfs")
         //console.log(store.getState())
         /*store.subscribe(()=>{
@@ -267,12 +269,12 @@ class Articles extends React.Component{
         TimeAgo.locale(en)
         const timeAgo = new TimeAgo('en-US')
         let post = this.props.p.node
-
+        //console.log(this.props)
         let server = "http://localhost:8000/"
         //let server = "http://994365fa.ngrok.io/"
         let img = server+post.photo
         let prf =server+post.uploadBy.profilePic.profileThumbs
-
+        
         //let img = "http://2010663b.ngrok.io/"+post.photo
         //let prf = "http://2010663b.ngrok.io/"+post.uploadBy.profilePic.profileThumbs
         //let pageInfo = this.props.pageInfo
@@ -300,7 +302,7 @@ class Articles extends React.Component{
                                         </div>
                                         <div className="option">
                                             <div className="dot">
-                                                <span className={this.state.pcontent} onClick={this.handletoggle}></span>
+                                                <span className={this.state.pcontent} onClick={this.handletoggle.bind(this)}></span>
                                             </div>
                                         </div>
                                 </div>
@@ -460,13 +462,13 @@ class Article extends React.Component{
         const photos = this.props.data.allContext.edges;
         //const pageInfo = this.props.data.allContext.pageInfo
         //const mu = this.props;
-        console.log(this.props)
+        //console.log(this.props)
         //console.log(photos.length)
         //console.log(photos)
         //console.log(this.state)
         //this.updateStat(pageInfo)
         //console.log(photos)
-
+        //console.log(this.props)
         //var items=[]
         //items.push(photos.map(p=><Articles key={p.node.id} p={p} m={mu}/>))
 
@@ -486,6 +488,7 @@ class Article extends React.Component{
        //var item=[]
        //item.push(photos.map(p=><Articles key={p.id} p={p} m={mu} />))
        //console.log(photos)
+       
         return(
 
                 <div>
@@ -501,9 +504,10 @@ class Article extends React.Component{
                     loadMore = {this.loadItems.bind(this)}
                     loader="<h1>Loading..</h1>"
                     threshold = {1200}
+                    
                     //endMessage = {ending}
                     >
-                    <div>{photos.map(p=><Articles key={p.node.id} p={p} />)}</div>
+                    <div>{photos.map(p=><Articles click={this.props} toggle={this.props.toggle} key={p.node.id} p={p} />)}</div>
                 </InfiniteScroll>}
             </div>
         );
@@ -777,7 +781,7 @@ const mapDispatchToProps = (dispatch)=>{
 }*/
 
 export default compose(
-    //connect(mapStateToProps,mapDispatchToProps),
+    connect(mapStateToProps,mapDispatchToProps),
     graphql(MY_QUERY,queryOptions),
     graphql(UpdateComment)
 

@@ -1,17 +1,21 @@
 import React, { Component } from 'react';
-import {Toggle} from '../actions/actions'
+import {Toggle,Gallery} from '../actions/actions'
 
 export const mapStateToProps = state =>{
-    console.log(state)
+    //console.log(state)
     return {
-        toggle:state.toggle
+        toggle:state.toggle,
+        gallery:state.gallery
     }
 }
 
 export const mapDispatchToProps=dispatch=>{
     return {
         onStClick:st=>{
-            dispatch(chstate(st))
+            dispatch(Toggle(st))
+        },
+        onGallery:st=>{
+            dispatch(Gallery(st))
         }
     }
 }

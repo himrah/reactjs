@@ -11,3 +11,10 @@ export const Toggle =(newstate)=> {
         toggle:newstate,
     }
 }
+
+export const Gallery =(newstate)=> {
+    return{
+        type:"Gallery",
+        gallery:newstate,
+    }
+}

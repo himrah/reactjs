@@ -25,14 +25,10 @@ import Loading from '../loading'
 
 //const Main = () => <Async load={import('./Comb')}/>
 //const Loading = () => <div>Loading...</div>;
-import {Provider} from 'react-redux'
-/*import {reducer} from '../reducers/reduce'
-import {Provider} from 'react-redux'
-import {createStore} from 'redux'
+//import {Provider} from 'react-redux'
 
-//import {initialState} from '../actions/actions'
-
-const store = createStore(reducer)*/
+import { mapStateToProps } from '../others/MapsProps'
+import {connect} from 'react-redux'
 
 const Main = Loadable({
     loader: () => import('./Main'),
@@ -122,9 +118,9 @@ class Nav extends React.Component{
             'maxWidth':'20px',
             'minWidth':'20px'
         }
-        
+        console.log(this.props.toggle)
         return(
-            <Provider>
+            
                 <Router>
                     <span className="m_con">  
                         <Helmet>
@@ -165,7 +161,7 @@ class Nav extends React.Component{
                 <Route path="/registration" component={Registration} />
                 </Switch>
                 <div className="dropdown">
-                    <div className="dropdown-content" style={{display : this.state.show}}>
+                    <div className="dropdown-content" style={{display : this.props.toggle}}>
                             <div>Share External</div>
                             <div>Full size image</div>
                             <div>Copy Link</div>
@@ -195,8 +191,8 @@ class Nav extends React.Component{
                     </nav>            
             </span>   
             </Router>
-        </Provider>    
+        
         )
     }
 }
-export default Nav;
+export default connect(mapStateToProps)(Nav);

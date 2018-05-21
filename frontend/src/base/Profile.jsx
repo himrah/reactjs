@@ -5,6 +5,9 @@ import gql from 'graphql-tag'
 import  { post } from 'axios';
 import {Helmet} from 'react-helmet'
 import './profile.css'
+import { mapStateToProps,mapDispatchToProps } from '../others/MapsProps'
+import {connect} from 'react-redux'
+
 
 const query = gql`query user($username:String!)
 {
@@ -91,7 +94,7 @@ class Thumb extends React.Component{
       'maxWidth':this.props.mw,
       'padding':'2px'
     }
-  
+    //console.log(this.props.Gallery.Gallery.gallery)
     //console.log(this.props)
     let img = server+this.props.photo.thumbs
     //let img = "http://localhost:8000/"+this.props.photo.node.thumbs
@@ -112,13 +115,19 @@ class Profile extends React.Component{
     this.state ={
       //file:null
       maxWidth:'33.3%',
-      grid:3
+      grid:1
       
     }
     this.onFormSubmit = this.onFormSubmit.bind(this)
     this.onChange = this.onChange.bind(this)
     this.fileUpload = this.fileUpload.bind(this)
   }
+  
+  componentDidMount = () => {
+    console.log(this.props.gallery)
+    this.setState({grid:this.props.gallery})
+    //this.setState()
+  }  
     
   onFormSubmit(e){
     e.preventDefault()
@@ -129,6 +138,8 @@ class Profile extends React.Component{
     })
   }
 
+  
+  
   onChange(e){
     this.setState({file:e.target.files[0]})
   }
@@ -154,12 +165,15 @@ class Profile extends React.Component{
 }
 changeWidth(e){
 //console.log(e)
+this.props.onGallery(e)
 this.setState({'grid':e,'maxWidth':`${100/e}%`})
 }
 
   render(){
+        //console.log(this.props.gallery)
+
         let { data } = this.props
-        console.log(data)
+        //console.log(data)
         if (data.loading || !data.users) {
           return <div>Loading...</div>
         }
@@ -179,8 +193,9 @@ this.setState({'grid':e,'maxWidth':`${100/e}%`})
             t.push(e)
           })
           photo_list.push(t)
-          counter+=this.state.grid
+          counter+=this.props.gallery
         }
+        console.log(photo_list)
         return(
           <main className="main">      
           <Helmet>
@@ -286,7 +301,7 @@ this.setState({'grid':e,'maxWidth':`${100/e}%`})
             <div className="p_cont">
             {   
               <div className="_row">
-                {photo_list.map(p=><Group key={p[0].node.id} maxWidth={this.state.maxWidth} photo={p} />)}
+                {photo_list.map(p=><Group key={p[0].node.id} Gallery={this.props} maxWidth={this.state.maxWidth} photo={p} />)}
               </div>
             }
             </div>    
@@ -311,7 +326,7 @@ class Group extends React.Component{
       <div className="fl_rw _group">
         {
           this.props.photo.map(
-            p=><Thumb key={p.node.id} mw={this.props.maxWidth} photo={p.node}/>
+            p=><Thumb key={p.node.id} Gallery={this.props} mw={this.props.maxWidth} photo={p.node}/>
           )
         }
       </div>
@@ -328,6 +343,7 @@ const queryOptions = {
 }
 
 export default compose(
+  connect(mapStateToProps,mapDispatchToProps),
   graphql(query, queryOptions),
   //graphql(upload)
 )(Profile)

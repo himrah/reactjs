@@ -15,6 +15,20 @@ import Loading from './loading'
 //const store = createStore(reducer)
 //let store = createStore(reducer)
 
+//import {initialState} from '../actions/actions'
+
+import reducer from './reducers/reduce'
+import {Provider} from 'react-redux'
+import {createStore} from 'redux'
+
+
+const store = createStore(reducer,{toggle:'none',gallery:3},
+window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+)
+
+
+
+
 const Login = Loadable({
   loader: () => import('./base/Login'),
   loading : Loading
@@ -47,14 +61,14 @@ class Container extends Component{
     }*/
     //console.log(token)
     return (
-    <div>
+    <Provider store={store}>
       { token ? (
         <Nav />
       ): (
         <Login />
       )
       }
-    </div>
+    </Provider>
     );
   }
 }

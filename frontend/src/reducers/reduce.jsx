@@ -21,9 +21,12 @@
 }*/
 
 
-const reducer = (state,action)=>{
+const reducer = (state='none',action)=>{
   switch (action.type) {
     case 'Change':return action
+    case 'Gallery':return action
     default: return state
-  }
+    }
 }
+
+export default reducer;
