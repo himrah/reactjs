@@ -11,14 +11,15 @@ import gql from 'graphql-tag'
 
 //import {toggle} from '.../actions'
 //import {toggle} from '../actions/reduceaction'
-import {createStore} from 'redux'
-import { reducer } from '../reducers/reduce'
-
-
+//import {createStore} from 'redux'
+//import { reducer } from '../reducers/reduce'
+//import { connect } from 'react-redux'
+//import {initialState} from '../actions/actions'
+//import { bindActionCreators } from 'redux'
 
 import en from 'javascript-time-ago/locale/en'
 
-const store = createStore(reducer)
+//const store = createStore(reducer)
 
 class ReplayComment extends React.Component{
     render(){
@@ -110,18 +111,25 @@ class Articles extends React.Component{
         if(this.state.show === 'none'){
             this.setState({show:'initial'})
             this.setState({pcontent:'ops'})
-            store.dispatch({
+            console.log(this.props.dispatch)
+            this.props.dispatch({
                 type:'none',
                 value:'initial'
             })
+            console.log(this.props.dispatch)
+
+            /*store.dispatch({
+                type:'none',
+                value:'initial'
+            })*/
         }
         else{
             this.setState({'show':'none'})
             this.setState({pcontent:'op'})
-            store.dispatch({
+            /*store.dispatch({
                 type:'initial',
                 value:'none'
-            })            
+            })*/            
         }
         //console.log("sdfsdfs")
         //console.log(store.getState())
@@ -230,6 +238,7 @@ class Articles extends React.Component{
                 })
             },500);
     }
+    /*
     View=()=>{
 
         const store = createStore(reducer,'none')
@@ -252,7 +261,7 @@ class Articles extends React.Component{
         store.subscribe(()=>{
             console.log("update",store.getState())
         })
-        }
+    }*/
 
     render(){
         TimeAgo.locale(en)
@@ -450,7 +459,8 @@ class Article extends React.Component{
         //this.setState({hasNextPage:pageInfo.hasNextPage,cursor:pageInfo.endCursor})
         const photos = this.props.data.allContext.edges;
         //const pageInfo = this.props.data.allContext.pageInfo
-        const mu = this.props;
+        //const mu = this.props;
+        console.log(this.props)
         //console.log(photos.length)
         //console.log(photos)
         //console.log(this.state)
@@ -493,7 +503,7 @@ class Article extends React.Component{
                     threshold = {1200}
                     //endMessage = {ending}
                     >
-                    <div>{photos.map(p=><Articles key={p.node.id} p={p} m={mu} />)}</div>
+                    <div>{photos.map(p=><Articles key={p.node.id} p={p} />)}</div>
                 </InfiniteScroll>}
             </div>
         );
@@ -756,7 +766,19 @@ const UpdateComment = gql`mutation create($comment:String!,$photoid:ID!,$userid:
 
 
 
+/*const mapStateToProps = state =>{
+    state:state
+}
+
+const mapDispatchToProps = (dispatch)=>{
+    return bindActionCreators({
+        toggle:initialState.toggle
+    },dispatch)
+}*/
+
 export default compose(
+    //connect(mapStateToProps,mapDispatchToProps),
     graphql(MY_QUERY,queryOptions),
     graphql(UpdateComment)
+
 )(Article)

@@ -25,8 +25,14 @@ import Loading from '../loading'
 
 //const Main = () => <Async load={import('./Comb')}/>
 //const Loading = () => <div>Loading...</div>;
+import {Provider} from 'react-redux'
+/*import {reducer} from '../reducers/reduce'
+import {Provider} from 'react-redux'
+import {createStore} from 'redux'
 
-import {initialState} from '../actions/actions'
+//import {initialState} from '../actions/actions'
+
+const store = createStore(reducer)*/
 
 const Main = Loadable({
     loader: () => import('./Main'),
@@ -118,76 +124,78 @@ class Nav extends React.Component{
         }
         
         return(
-            <Router>
-                <span className="m_con">  
-                    <Helmet>
-                        <title>Fasigner</title>
-                    </Helmet>
-                <nav className="nav">
-                    <div className="navdiv">
-                        <div className="brand">
-                            <span className="header_font">            
-                                <Link to="/"><span style={{color:'black'}}>NiXiS</span> </Link>
-                            </span>
-                        </div>
-                    { token ? (
-                        <div className="profile_info _on_top">         
-                        <span className="top_p"><Link to='/ajay'><img className="logo" style={style} src={profile} alt="sdf"  /> </Link></span>
-                        <span className="top_p"><Link to="/message"><img src={msg} alt="sdf" className="logo" style={style} /> </Link></span>
-                        <span className="top_p"><Link to="/notify/"><img src={notify} alt="sdf" className="logo" style={style} /> </Link></span>
-                        <span className="top_p"><Link to="#" onClick={this.logout} ><img src={logout} alt="sdf" className="logo" style={style} /> </Link></span>
-                        </div>
-                        ): (
-                            <div className="profile_info">                    
-                            <span className="top_p"><Link to="/login">Login</Link></span>
+            <Provider>
+                <Router>
+                    <span className="m_con">  
+                        <Helmet>
+                            <title>Fasigner</title>
+                        </Helmet>
+                    <nav className="nav">
+                        <div className="navdiv">
+                            <div className="brand">
+                                <span className="header_font">            
+                                    <Link to="/"><span style={{color:'black'}}>NiXiS</span> </Link>
+                                </span>
                             </div>
-                        )
-
-                    }
-    {/*                    <span className="top_p"><Link to="/logout">Logout</Link></span>
-                        <span className="top_p"><Link to="/login">Login</Link></span>*/}
-                    </div>
-                </nav>  
-            <Switch>      
-            <Route exact path="/" component={Main}/>
-            <Route path="/notify/" component={Interest}/>
-            <Route path="/logout" component={Logout}/>
-            <Route path="/message/" component={Msg}/>
-            <Route path="/:userName" component={Profile}/>
-            
-            <Route path="/registration" component={Registration} />
-            </Switch>
-            <div className="dropdown" style={{display:initialState.toggle}}>
-                <div className="dropdown-content" style={{display : this.state.show}}>
-                        <div>Share External</div>
-                        <div>Full size image</div>
-                        <div>Copy Link</div>
-                        <div>Report</div>
-                </div>    
-            </div>
-
-            <nav className="btm_nav">
-                    <div className="btm_navdiv">
-                    { token ? (
-                        <div className="profile_info _on_bottom">         
-                        <span className="top_p"><Link to='/ajay'><img className="logo" style={style} src={profile} alt="sdf"  /> </Link></span>
-                        <span className="top_p"><Link to="/message"><img src={msg} alt="sdf" className="logo" style={style} /> </Link></span>
-                        <span className="top_p"><Link to="/notify/"><img src={notify} alt="sdf" className="logo" style={style} /> </Link></span>
-                        <span className="top_p"><Link to="#" onClick={this.logout} ><img src={logout} alt="sdf" className="logo" style={style} /> </Link></span>
-                        </div>
-                        ): (
-                            <div className="profile_info">                    
-                            <span className="top_p"><Link to="/login">Login</Link></span>
+                        { token ? (
+                            <div className="profile_info _on_top">         
+                            <span className="top_p"><Link to='/ajay'><img className="logo" style={style} src={profile} alt="sdf"  /> </Link></span>
+                            <span className="top_p"><Link to="/message"><img src={msg} alt="sdf" className="logo" style={style} /> </Link></span>
+                            <span className="top_p"><Link to="/notify/"><img src={notify} alt="sdf" className="logo" style={style} /> </Link></span>
+                            <span className="top_p"><Link to="#" onClick={this.logout} ><img src={logout} alt="sdf" className="logo" style={style} /> </Link></span>
                             </div>
-                        )
+                            ): (
+                                <div className="profile_info">                    
+                                <span className="top_p"><Link to="/login">Login</Link></span>
+                                </div>
+                            )
 
-                    }
-    {/*                    <span className="top_p"><Link to="/logout">Logout</Link></span>
-                        <span className="top_p"><Link to="/login">Login</Link></span>*/}
-                    </div>
-                </nav>            
-        </span>   
-        </Router>
+                        }
+        {/*                    <span className="top_p"><Link to="/logout">Logout</Link></span>
+                            <span className="top_p"><Link to="/login">Login</Link></span>*/}
+                        </div>
+                    </nav>  
+                <Switch>      
+                <Route exact path="/" component={Main}/>
+                <Route path="/notify/" component={Interest}/>
+                <Route path="/logout" component={Logout}/>
+                <Route path="/message/" component={Msg}/>
+                <Route path="/:userName" component={Profile}/>
+                
+                <Route path="/registration" component={Registration} />
+                </Switch>
+                <div className="dropdown">
+                    <div className="dropdown-content" style={{display : this.state.show}}>
+                            <div>Share External</div>
+                            <div>Full size image</div>
+                            <div>Copy Link</div>
+                            <div>Report</div>
+                    </div>    
+                </div>
+
+                <nav className="btm_nav">
+                        <div className="btm_navdiv">
+                        { token ? (
+                            <div className="profile_info _on_bottom">         
+                            <span className="top_p"><Link to='/ajay'><img className="logo" style={style} src={profile} alt="sdf"  /> </Link></span>
+                            <span className="top_p"><Link to="/message"><img src={msg} alt="sdf" className="logo" style={style} /> </Link></span>
+                            <span className="top_p"><Link to="/notify/"><img src={notify} alt="sdf" className="logo" style={style} /> </Link></span>
+                            <span className="top_p"><Link to="#" onClick={this.logout} ><img src={logout} alt="sdf" className="logo" style={style} /> </Link></span>
+                            </div>
+                            ): (
+                                <div className="profile_info">                    
+                                <span className="top_p"><Link to="/login">Login</Link></span>
+                                </div>
+                            )
+
+                        }
+        {/*                    <span className="top_p"><Link to="/logout">Logout</Link></span>
+                            <span className="top_p"><Link to="/login">Login</Link></span>*/}
+                        </div>
+                    </nav>            
+            </span>   
+            </Router>
+        </Provider>    
         )
     }
 }
