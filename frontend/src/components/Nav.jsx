@@ -27,7 +27,7 @@ import Loading from '../loading'
 //const Loading = () => <div>Loading...</div>;
 //import {Provider} from 'react-redux'
 
-import { mapStateToProps } from '../others/MapsProps'
+import { mapStateToProps } from './others/MapsProps'
 import {connect} from 'react-redux'
 
 const Main = Loadable({

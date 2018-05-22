@@ -21,66 +21,12 @@ import en from 'javascript-time-ago/locale/en'
 
 import { mapStateToProps,mapDispatchToProps } from '../others/MapsProps'
 import {connect} from 'react-redux'
+//import ReplayComment from './Reply'
+import Comments from './comments'
 
 //const store = createStore(reducer)
 
-class ReplayComment extends React.Component{
-    render(){
-        return(
-            <span className="_uname">
-                <span className="_cmt">{this.props.cmt.node.comment} </span>
-                <Link to={this.props.cmt.node.commentBy.username}>
-                    <span style={{color:'black',fontWeight:'bold',marginRight:'3px'}}>
-                        {this.props.cmt.node.commentBy.firstName}
-                    </span>
-                </Link>
-            </span>
-        )
-    }
-}
 
-
-
-class Comments extends React.Component {
-    render(){
-        TimeAgo.locale(en)
-        const timeAgo = new TimeAgo('en-US')
-
-        //var ctime = this.props.cmt.node.commentTime
-        //let reply = this.props.cmt.node.replycomment.edges
-
-        var ctime = this.props.cmt.commentTime
-        let reply = this.props.cmt.replycomment ? this.props.cmt.replycomment.edges : []
-        //console.log(this.props)
-        //console.log(this.props.cmt)
-        return(
-            <div className="_cmt_box">
-                    <span className="_uname">
-                        <Router>
-                        {/*
-                            <Link to={this.props.cmt.node.commentBy.username} key={this.props.cmt.node.commentBy.id}><span style={{color:'black',fontWeight:'bold',marginRight:'3px'}}>{this.props.cmt.node.commentBy.username}</span></Link>
-                            */
-                           <Link to={this.props.cmt.commentBy.username} key={this.props.cmt.commentBy.id}><span style={{color:'black',fontWeight:'bold',marginRight:'3px'}}>{this.props.cmt.commentBy.username}</span></Link>
-
-                        }
-                        </Router>
-                        <span className="_cmt" style={{fontweight:'normal'}}>
-                            {this.props.cmt.comment}
-                        </span>
-                        <span className="_cmt_time" style={{color:'rgb(83, 83, 83)',fontSize:'12px',fontStyle:'inherit',marginLeft:'2px'}}>
-                        {/* :- {ctime.format(new Date(de))}*/}
-                        <span>:- {timeAgo.format(new Date(ctime)-60*1000,'time')}</span>
-                        </span>
-                        <div className="reply">
-                        {
-                            reply.map(c=><ReplayComment key={c.node.id} cmt={c}  />)
-                        }
-                        </div>
-                    </span>
-            </div>
-        )
-    }
-}
 
 
 
@@ -117,27 +63,6 @@ class Articles extends React.Component{
           else{
               this.props.click.onStClick('initial')
           }
-        //this.store.dispatch(toggle)
-        //console.log(toggle)
-
-/*        if(this.state.show === 'none'){
-            this.setState({show:'initial'})
-            this.setState({pcontent:'ops'})
-            console.log(this.props.dispatch)
-            this.props.dispatch({
-                type:'none',
-                value:'initial'
-            })
-        }
-        else{
-            this.setState({'show':'none'})
-            this.setState({pcontent:'op'})            
-        }*/
-        //console.log("sdfsdfs")
-        //console.log(store.getState())
-        /*store.subscribe(()=>{
-            console.log("update",store.getState())
-        })*/
     }
 
     componentDidMount = () => {
@@ -198,7 +123,8 @@ class Articles extends React.Component{
     loadItems=(id)=>{
         setTimeout(()=>{
                 //let { data, location } = this.props
-                let { data, } = this.props.m
+                console.log(this.props)
+                let { data, } = this.props.click
                 //console.log(this.props)
                 //console.log(data.allContext.pageInfo.endCursor)
                 //if (data.allContext.pagInfo.hasNextPage){

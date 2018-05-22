@@ -5,7 +5,7 @@ import gql from 'graphql-tag'
 import  { post } from 'axios';
 import {Helmet} from 'react-helmet'
 import './profile.css'
-import { mapStateToProps,mapDispatchToProps } from '../others/MapsProps'
+import { mapStateToProps,mapDispatchToProps } from './others/MapsProps'
 import {connect} from 'react-redux'
 
 

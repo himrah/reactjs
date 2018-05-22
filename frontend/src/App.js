@@ -21,21 +21,18 @@ import reducer from './reducers/reduce'
 import {Provider} from 'react-redux'
 import {createStore} from 'redux'
 
-
 const store = createStore(reducer,{toggle:'none',gallery:3},
 window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 )
 
 
-
-
 const Login = Loadable({
-  loader: () => import('./base/Login'),
+  loader: () => import('./components/Login'),
   loading : Loading
 })
 
 const Nav = Loadable({
-  loader: () => import('./base/Nav'),
+  loader: () => import('./components/Nav'),
   loading : Loading
 })
 
@@ -72,7 +69,6 @@ class Container extends Component{
     );
   }
 }
-
 
 
 class App extends Component {
