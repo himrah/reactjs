@@ -5,6 +5,7 @@ import gql from 'graphql-tag'
 import  { post } from 'axios';
 import {Helmet} from 'react-helmet'
 import './profile.css'
+import { Gallery } from "./actions/actions"
 import { mapStateToProps,mapDispatchToProps } from './others/MapsProps'
 import {connect} from 'react-redux'
 
@@ -46,36 +47,6 @@ const query = gql`query user($username:String!)
   `
 
 
-
-
-/*
-  const MY_QUERY = gql`query allPhotos{
-    allPhotos {
-        id
-        photo
-        createdDate
-        comments {
-          edges {
-            node {
-              id
-              comment
-              commentTime
-              commentBy{
-                username
-                id
-              }
-            }
-          }
-        }
-        uploadBy {
-          id
-          username
-          
-        }
-      }
-      }`
-*/
-
 const server = "http://localhost:8000/"
 //const server = "http://cf792ff7.ngrok.io/"
 
@@ -114,8 +85,8 @@ class Profile extends React.Component{
     super(props);
     this.state ={
       //file:null
-      maxWidth:'33.3%',
-      grid:1
+      maxWidth:'33%',
+      grid:3
       
     }
     this.onFormSubmit = this.onFormSubmit.bind(this)
@@ -124,10 +95,15 @@ class Profile extends React.Component{
   }
   
   componentDidMount = () => {
-    console.log(this.props.gallery)
-    this.setState({grid:this.props.gallery})
+    console.log(this.props)
+    this.setState(
+      {
+        grid:this.props.Gallery.grid,
+        maxWidth:this.props.Gallery.width
+      }
+    )
     //this.setState()
-  }  
+  }
     
   onFormSubmit(e){
     e.preventDefault()
@@ -165,7 +141,9 @@ class Profile extends React.Component{
 }
 changeWidth(e){
 //console.log(e)
-this.props.onGallery(e)
+//this.props.dispatch(Gallery({grid:e,width:`${100/e}%`}))
+//this.props.onGallery({grid:e,width:`${100/e}%`})
+this.props.dispatch(Gallery({grid:e,width:`${100/e}%`}))
 this.setState({'grid':e,'maxWidth':`${100/e}%`})
 }
 
@@ -185,7 +163,7 @@ this.setState({'grid':e,'maxWidth':`${100/e}%`})
         //console.log(profile_photos)
         //var l = []
         var photo_list=[]
-        var counter =0
+        var counter = 0
         let l = profile_photos
         while(counter<l.length){
           var t=[]
@@ -193,9 +171,10 @@ this.setState({'grid':e,'maxWidth':`${100/e}%`})
             t.push(e)
           })
           photo_list.push(t)
-          counter+=this.props.gallery
+          counter+=this.state.grid
         }
-        console.log(photo_list)
+        //console.log(this.props)
+        //console.log(photo_list)
         return(
           <main className="main">      
           <Helmet>
@@ -343,11 +322,24 @@ const queryOptions = {
 }
 
 export default compose(
+  connect(
+    (state)=>({
+      Gallery:state.Gallery,
+      //onGallery:state.onGal
+    })
+  ),
+  graphql(query,queryOptions)
+)(Profile)
+//export default comp(Profile)
+//export default graphql(query,queryOptions)(Profile)
+
+/*
+export default compose(
   connect(mapStateToProps,mapDispatchToProps),
   graphql(query, queryOptions),
   //graphql(upload)
 )(Profile)
-
+*/
 //var a=this.props.match.params.userName
 
 /*const upload = gql`mutation abc(){

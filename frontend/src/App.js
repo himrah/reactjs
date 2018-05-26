@@ -17,13 +17,28 @@ import Loading from './loading'
 
 //import {initialState} from '../actions/actions'
 
-import reducer from './reducers/reduce'
+import allreducer from './components/reducers/reduce'
 import {Provider} from 'react-redux'
 import {createStore} from 'redux'
+//import { initialState } from './components/actions/actions'
+/*
+const initialstate={
+  Gallery:{
+    grid:3,
+    width:"300px"
+  },
+  Toggle:'none'
+}*/
 
-const store = createStore(reducer,{toggle:'none',gallery:3},
-window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-)
+export const initialState = {
+  Gallery:
+    {
+      grid:3,
+      width:'33.3%'
+    },
+  Toggle:'none'
+}
+const store = createStore(allreducer,initialState,window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
 
 
 const Login = Loadable({
@@ -36,7 +51,7 @@ const Nav = Loadable({
   loading : Loading
 })
 
-/*class P extends Component{
+class P extends Component{
   render() {
     return(
       <div>
@@ -44,7 +59,7 @@ const Nav = Loadable({
       </div>
     )
   }
-}*/
+}
 
 class Container extends Component{
   render() {

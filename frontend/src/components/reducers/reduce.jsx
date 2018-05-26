@@ -20,13 +20,36 @@
     //return state;
 }*/
 
+import { combineReducers } from 'redux'
+import {Change_Gallery,Change_Toggle} from '../actions/actions'
 
-const reducer = (state='none',action)=>{
-  switch (action.type) {
-    case 'Change':return action
-    case 'Gallery':return action
-    default: return state
+
+const Toggle = (state='',action)=>{
+    switch(action.type){
+        case Change_Toggle: return action.value
+            //break;
+            //console.log(action.value.newstate)
+        //case 'another': return action.toggle
+        default:
+            return state
     }
 }
 
-export default reducer;
+const Gallery = (state={},action)=>{
+  switch (action.type) {
+    case Change_Gallery:return action.value
+    default: return state
+  }
+}
+//var allreducer = combineReducers({Gallery:Gallery,Toggle:Toggle})
+
+
+const allreducer = combineReducers(
+    {  Gallery:Gallery,
+      Toggle:Toggle
+    }
+    )
+
+
+export default allreducer
+//export default reducer;

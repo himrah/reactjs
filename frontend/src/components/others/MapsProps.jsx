@@ -4,8 +4,8 @@ import {Toggle,Gallery} from '../actions/actions'
 export const mapStateToProps = state =>{
     //console.log(state)
     return {
-        toggle:state.toggle,
-        gallery:state.gallery
+        Toggle:state.Toggle,
+        Gallery:state.Gallery
     }
 }
 
