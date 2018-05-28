@@ -8,6 +8,8 @@ import './profile.css'
 import { Gallery } from "./actions/actions"
 import { mapStateToProps,mapDispatchToProps } from './others/MapsProps'
 import {connect} from 'react-redux'
+import {Link} from 'react-router-dom'
+import {Map,fromJS} from 'immutable'
 
 
 const query = gql`query user($username:String!)
@@ -21,6 +23,10 @@ const query = gql`query user($username:String!)
       id
       about,
       birthDay
+      website
+      fb
+      instagram
+      twitter
     }
 		profilePic{
       id
@@ -45,6 +51,65 @@ const query = gql`query user($username:String!)
   }
 }
   `
+
+class Edit extends React.Component{
+  constructor(props){
+    super(props);
+      this.state = {
+        user:[],
+        users:[],
+        us:'ajay'
+    }
+  }
+  componentDidMount = () => {
+    
+    //const user = fromJS({name:'ajay',contact:{mobile:90}})
+    const user = fromJS(this.props.info.users) 
+    console.log(this.props.info.users)
+    console.log(user.get('profile').get('about'))
+    this.setState(
+      {
+        user:user,
+        users:this.props.info.users
+      }
+    )
+  }
+  handlechange(e){
+    console.log(e.target)
+    //this.setState({users:})
+  }
+  handlesubmit(){
+
+  }
+
+  render(){
+    //let user = this.state.user
+    //console.log(this.state.user)
+    //let u = Map(this.state.user)
+    //console.log(u.get('firstName'))
+    //let user = this.props.info.users
+    console.log(this.state.user)
+    let user = Map(this.state.user)
+    //console.log(user.get('firstName'))
+    //console.log(user.getIn(['profile','birthDays','sdf']))
+    //console.log(this.props)
+    return(
+      <article>
+        <form onSubmit={this.handlesubmit} onChange={this.handlechange.bind(this)}>
+        First Name : <input type="text" value={user.get('firstName')}  name="first_name"/>
+        Last Name : <input type="text" value={user.get('lastName')} name="last_name"/>
+        Date of Birthday : <input type="date" value={user.getIn(['profile','birthDay'])} name="birthDay"/>
+        About : <textarea value={user.getIn(['profile','about'])} />
+        website : <input type="text" value={user.getIn(['profile','website'])} name="website"/>
+        twitter <input type="text" name="twitter" value={user.getIn(['profile','twitter'])}/>
+        Instagram <input type="text" name="insta" value={user.getIn(['profile','instagram'])}/>
+        Facebook <input type="text" name="fb" value={user.getIn(['profile','fb'])}/>        
+        <button name="submit" className="edit">Sumit</button>
+      </form>
+      </article>
+    )
+  }
+}
 
 
 const server = "http://localhost:8000/"
@@ -86,8 +151,9 @@ class Profile extends React.Component{
     this.state ={
       //file:null
       maxWidth:'33%',
-      grid:3
-      
+      grid:3,
+      isedtable:true,
+      edit:'none',
     }
     this.onFormSubmit = this.onFormSubmit.bind(this)
     this.onChange = this.onChange.bind(this)
@@ -140,15 +206,20 @@ class Profile extends React.Component{
     return  post(url, formData,config)
 }
 changeWidth(e){
-//console.log(e)
-//this.props.dispatch(Gallery({grid:e,width:`${100/e}%`}))
-//this.props.onGallery({grid:e,width:`${100/e}%`})
+
 this.props.dispatch(Gallery({grid:e,width:`${100/e}%`}))
 this.setState({'grid':e,'maxWidth':`${100/e}%`})
 }
-
+ShowEditInfo(){
+  if (this.state.edit=='none')
+  {
+    this.setState({edit:'initial'})
+  }
+  else{
+    this.setState({edit:'none'})
+  }
+}
   render(){
-        //console.log(this.props.gallery)
 
         let { data } = this.props
         //console.log(data)
@@ -194,7 +265,8 @@ this.setState({'grid':e,'maxWidth':`${100/e}%`})
                           </div>
                           <div className="_about">
                             {data.users.profile.about}
-                          </div>          
+                          </div>
+                          <button className="edit" onClick={this.ShowEditInfo.bind(this)}>Edit Profile</button>
                       </div>
                     ) : (
                       <div className="p">
@@ -249,8 +321,10 @@ this.setState({'grid':e,'maxWidth':`${100/e}%`})
             </div>
    */}
 
-
             </section>
+            <section className="edit_info" style={{display:this.state.edit}}>
+              <Edit info={data}/>
+              </section>
             <section className="slide">
                     <div className="fl_rw sl_sec">
                         <div><span  className="li" >All(232)</span></div>

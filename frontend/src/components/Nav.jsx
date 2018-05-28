@@ -18,6 +18,7 @@ import { Helmet } from 'react-helmet'
 import Loadable from 'react-loadable'
 //import $ from 'jquery'
 import Loading from '../loading'
+import Create from './Create'
 //import Main from './Main'
 //import { Comb } from './Comb';
 
@@ -161,8 +162,8 @@ class Nav extends React.Component{
                 <Route path="/notify/" component={Interest}/>
                 <Route path="/logout" component={Logout}/>
                 <Route path="/message/" component={Msg}/>
+                <Route path="/:userName/create" component={Create}/>
                 <Route path="/:userName" component={Profile}/>
-                
                 <Route path="/registration" component={Registration} />
                 </Switch>
                 <div className="dropdown">

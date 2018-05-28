@@ -25,6 +25,10 @@ class Profile(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)
     about = models.TextField(blank=True)
     birth_day = models.DateField(null=True,blank=True)
+    fb = models.CharField(blank=True,max_length=30)
+    instagram = models.CharField(blank=True,max_length=30)
+    twitter = models.CharField(blank=True,max_length=30)
+    website = models.CharField(blank=True,max_length=30)
 
     def __str__(self):
         return str(self.user)

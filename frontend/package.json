@@ -32,6 +32,7 @@
     "graphql-tag": "^2.7.3",
     "html-webpack-plugin": "2.29.0",
     "i": "^0.3.6",
+    "immutable": "^3.8.2",
     "javascript-time-ago": "^1.0.28",
     "jest": "20.0.4",
     "jquery": "^3.3.1",
