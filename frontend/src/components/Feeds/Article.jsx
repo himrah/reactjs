@@ -254,7 +254,12 @@ class Articles extends React.Component{
                         </Router>
                         <div className="img_footer">
                         <div className="rating">
-                        <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
+                        <span className="str s1"></span>
+                        <span className="str s2"></span>
+                        <span className="str s3"></span>
+                        <span className="str s4"></span>
+                        <span className="str s5"></span>
+                        {/*<span>☆</span><span>☆</span><span>☆</span><span>☆</span>*/}
                         </div>
                         <div className="cmt_section">
                             <div className="show_comments">

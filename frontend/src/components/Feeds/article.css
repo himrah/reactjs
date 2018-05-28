@@ -175,14 +175,14 @@ width: 100px;
 }
 .option{
     direction: rtl;
-    position: absolute
+    /*position: absolute*/
 }
 .dot{
     width: 30px;
     cursor: pointer;
 }
 .op:after{
-    content: '\2807';
+    content: '\2807'; /* 1801 for ....,  2026 ... */
     font-size: 25px;
     /*color: #656060*/
     color: rgb(247, 187, 77);
@@ -233,4 +233,44 @@ width: 100px;
     bottom: 48px;
     width: 100%;
     position: fixed;
+}
+
+.s2,.str,.s3,.s4,.s5{
+    margin: auto;
+}
+
+.str::after{
+    content: '\2605';
+    /*color: #656060*/
+       
+}
+.s1::after{
+    color: rgb(248, 211, 144);
+    font-size: 20px;
+}
+.s2::after{  
+    color:rgb(221, 229, 124);
+    font-size: 22px;
+}
+.s3::after{
+    color:rgb(169, 229, 124);
+    font-size: 24px;
+}
+.s4::after{
+    color:rgb(79, 231, 108);
+    font-size: 26px;
+}
+.s5::after{
+    color:rgb(30, 226, 238);
+    font-size: 28px;
+}
+
+.rating{
+    text-align: right;
+    float: left;
+    padding: 12px;
+    display: flex;
+    size: 15px;
+    flex-flow: row nowrap;
+    width: 0
 }

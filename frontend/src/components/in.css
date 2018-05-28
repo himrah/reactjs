@@ -127,15 +127,6 @@ inputs:focus{
 }
 
 
-.rating{
-    text-align: right;
-    float: left;
-    padding: 12px;
-    display: flex;
-    size: 15px;
-    flex-flow: row nowrap;
-}
-
 /*  .rating > span {
     display: inline-block;
     position: relative;

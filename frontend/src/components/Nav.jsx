@@ -138,6 +138,8 @@ class Nav extends React.Component{
                             </div>
                         { token ? (
                             <div className="profile_info _on_top">         
+                            {/*<span className="top_p"><Link to='/'><span className="homeT"></span></Link></span>*/}
+                            
                             <span className="top_p"><Link to='/ajay'><img className="logo" style={style} src={profile} alt="sdf"  /> </Link></span>
                             <span className="top_p"><Link to="/message"><img src={msg} alt="sdf" className="logo" style={style} /> </Link></span>
                             <span className="top_p"><Link to="/notify/"><img src={notify} alt="sdf" className="logo" style={style} /> </Link></span>
@@ -175,7 +177,8 @@ class Nav extends React.Component{
                 <nav className="btm_nav">
                         <div className="btm_navdiv">
                         { token ? (
-                            <div className="profile_info _on_bottom">         
+                            <div className="profile_info _on_bottom">
+                            <span className="top_p" style={{color:'black',fontFamily: 'BLKCHCRY',fontSize:'30px'}}><Link to="/">N</Link></span>
                             <span className="top_p"><Link to='/ajay'><img className="logo" style={style} src={profile} alt="sdf"  /> </Link></span>
                             <span className="top_p"><Link to="/message"><img src={msg} alt="sdf" className="logo" style={style} /> </Link></span>
                             <span className="top_p"><Link to="/notify/"><img src={notify} alt="sdf" className="logo" style={style} /> </Link></span>

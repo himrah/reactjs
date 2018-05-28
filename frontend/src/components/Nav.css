@@ -21,8 +21,8 @@
     flex-flow: row nowrap;;
 }
 .top_p{
-    margin: 0 auto;
-    padding:12px;
+    margin: auto;
+    padding:5px;
     max-width: 90px;
 }
 .header_font{
@@ -118,6 +118,8 @@ html,body{
     
 }
 
-
-
-
+.homeT::after{
+    content: '\2630';
+    color:black;
+    font-size:30px;
+}
