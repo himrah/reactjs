@@ -106,11 +106,71 @@ class Img(graphene.Mutation):
     class Input:    
         pass
 
-    form_errors = graphene.String()    
+    form_errors = graphene.String()
+    
+
     @classmethod
     def mutate(self,info,context,**kwargs):
         print(context)
-    
+
+class UpdateInfo(graphene.Mutation):
+    class Input:
+        user_id = graphene.ID()
+        first_name = graphene.String()
+        last_name = graphene.String()
+        website = graphene.String()
+        twitter = graphene.String()
+        fb = graphene.String()
+        instagram = graphene.String()
+        about = graphene.String()
+        dob = graphene.String()
+    form_errors = graphene.String()
+    status=graphene.String()
+    #info = "Success"
+
+    @classmethod
+    def mutate(self,info,context,**kwargs):    
+        user_id=kwargs.get('user_id')
+        first_name = kwargs.get('first_name')
+        last_name = kwargs.get('last_name')
+        website = kwargs.get('website')
+        twitter = kwargs.get('twitter')
+        fb = kwargs.get('fb')
+        instagram = kwargs.get('instagram')
+        about = kwargs.get('about')
+        dob = kwargs.get('dob')
+        u = User.objects.get(id = from_global_id(user_id)[1])
+        p = Profile.objects.get(user_id=from_global_id(user_id)[1])
+        #print(user_id,first_name,last_name,website,twitter)
+        #user_id = from_global_id(kwargs.get('userid'))[1]
+        #print(user_id)
+        #print("hihihihihi ",from_global_id(user_id)[1]
+        #if(u.id == context.context.user.id):
+        #    u.first_name = first_name
+        #    u.last_name = last_name
+        print(u.id,context.context.user.id)
+        if(u.id==context.context.user.id):
+            print("Trre")
+            u.first_name = first_name
+            u.last_name = last_name
+            p.birth_date = dob
+            p.about = about
+            p.fb = fb
+            p.instagram = instagram
+            p.twitter = twitter
+            p.website = website
+            u.save()
+            p.save()
+            return UpdateInfo(form_errors="None",status="Success")
+        else:
+            return UpdateInfo(form_errors="None",status="Fail")
+            #return None
+            #print(u.id, context.context.user.id)
+        #print(context.context.user.is_authenticated)
+        
+        #print(dir(info))
+        #print(dir(context.context.user))
+
 
 class PostComment(graphene.Mutation):
 #    id = graphene.Int()
@@ -120,7 +180,7 @@ class PostComment(graphene.Mutation):
         comment = graphene.String()
         photoid = graphene.ID()
         uid = graphene.ID()
-    form_errors = graphene.String()    
+    form_errors = graphene.String()
     comment = graphene.Field(lambda:CommentType)
 
     @classmethod
@@ -158,6 +218,7 @@ class Mutation(graphene.AbstractType):
     post_comment = PostComment.Field()
     authentication = Authentication.Field()
     img = Img.Field()
+    update_info = UpdateInfo.Field()
     
 class Query(graphene.AbstractType):
     all_img = graphene.List(ImgType)

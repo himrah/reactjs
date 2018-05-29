@@ -100,7 +100,7 @@ JWT_VERIFY_EXPIRATION = False
 import datetime
 
 JWT_AUTH = {
-    'JWT_EXPIRATION_DELTA': datetime.timedelta(minutes=10),  #   Token expires * minutes after being issued
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(days = 2),  #   Token expires * minutes after being issued
      'JWT_ALLOW_REFRESH': True,
      'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7),  # Token can be refreshed up to * minutes after being issued
  }
