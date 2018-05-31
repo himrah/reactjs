@@ -6,7 +6,7 @@
 }*/
 export const Change_Gallery = "gallery:UpdateGallery"
 export const Change_Toggle = "gallery:UpdateToggle"
-
+export const Change_User = "User:UpdateUser"
 export const Toggle =(newstate)=> {
     return{
         type:Change_Toggle,
@@ -32,4 +32,17 @@ export const initialState = {
       width:'300px'
     },
   Toggle:'none'
+}
+
+export const User = (newstate)=>{
+    return{
+        value:
+        {
+            username:newstate.username,
+            user_id : newstate.user_id,
+            first_name:newstate.first_name,
+            last_name:newstate.last_name
+        },
+        type:Change_User
+    }
 }

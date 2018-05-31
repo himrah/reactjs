@@ -21,8 +21,15 @@
 }*/
 
 import { combineReducers } from 'redux'
-import {Change_Gallery,Change_Toggle} from '../actions/actions'
+import {Change_Gallery,Change_Toggle,Change_User} from '../actions/actions'
 
+
+const User = (state='',action)=>{
+    switch(action.type){
+        case Change_User: return action.value
+        default : return state;
+    }
+}
 
 const Toggle = (state='',action)=>{
     switch(action.type){
@@ -46,7 +53,8 @@ const Gallery = (state={},action)=>{
 
 const allreducer = combineReducers(
     {  Gallery:Gallery,
-      Toggle:Toggle
+      Toggle:Toggle,
+      User:User
     }
     )
 

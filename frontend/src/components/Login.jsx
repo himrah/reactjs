@@ -4,9 +4,12 @@ import React from 'react';
 //import '../static/logincss.css'
 import './logincss.css'
 import {post} from 'axios'
-import { graphql, Query } from 'react-apollo'
+import { graphql, Query, compose } from 'react-apollo'
 import gql from 'graphql-tag'
 import client from '../connection'
+import { mapStateToProps, mapDispatchToProps } from './others/MapsProps'
+import {connect} from 'react-redux'
+import { User } from './actions/actions';
 //import About from '../About'
 
 const query = gql`query user{
@@ -18,7 +21,8 @@ const query = gql`query user{
     }
   }`
 
-class Login extends React.Component{
+
+  class Login extends React.Component{
     
     constructor(props){
         super(props);
@@ -31,17 +35,28 @@ class Login extends React.Component{
     }    
 
 
-    componentWillUpdate(nextProps) {
+/*    componentWillUpdate(nextProps) {
         //console.log(localStorage)
+        console.log(this.props)
         console.log(`from cwp ${nextProps}`)
-        
-        
         if (!nextProps.data.loading && nextProps.data.currentUser === null) {
           localStorage.setItem("user",nextProps.data.currentUser)
           //window.location.replace('/login/')
         }
-      }  
+    }*/
+       
+      componentWillReceiveProps(nextProps) {
+          console.log(nextProps)
+          /*if(nextProps.data.currentUser){
+            this.props.dispatch(User({
+                username:nextProps.data.currentUser.username,
+                first_name:nextProps.data.currentUser.first_name,
+                last_name:nextProps.data.currentUser.last_name,
+                user_id:nextProps.data.currentUser.id,
+            }))              
+          }*/
 
+      }
 /*        shouldComponentUpdate = (nextProps, nextState) => {
         let shouldUpdate = this.props.sdata !== nextProps.data;
           console.log(`next ${nextProps} and p ${nextState} `)
@@ -60,7 +75,7 @@ class Login extends React.Component{
     //alert("workd")
     //e.preventDefault()
     //alert(this.state.username+this.state.password)
-  
+    
 
     e.preventDefault()
    /* fetch('http://localhost:8000/api-token-auth/', {
@@ -80,21 +95,23 @@ class Login extends React.Component{
     }
     post(server,{username: this.state.username, password: this.state.password},config)
     .then(res => {
-        //alert(res.data.token)
-        console.log(res.data.token)  
+        //console.log(res.data.token)
         if (res.data.token) {
-            //console.log(res.data.token)
-            //localStorage.setItem('user',res.data)
-            client.query({
+            
+            console.log(res.data)
+            localStorage.setItem('token', res.data.token)
+            this.props.data.refetch()
+            console.log(this.props.data)
+            
+/*            client.query({
                 query:query
             }).then(res=>
             console.log(res))
             console.log(res.data)
-            //graphql(query).then(console.log("sdf"))
+            //localStorage.setItem('token', res.data.token)
+            //window.location.replace('/')*/
 
-            localStorage.setItem('token', res.data.token)
-            window.location.replace('/')
-          }
+        }
           else{
               console.log('Username or Password is wrong')
           }
@@ -106,6 +123,7 @@ class Login extends React.Component{
     
     }
     render(){
+        console.log(this.props)
         return(
         <main className="main-login">
             <section className="section-login">
@@ -142,5 +160,21 @@ class Login extends React.Component{
         )
     }
 }
-Login = graphql(query)(Login)
-export default Login
+const queryOptions = {
+    options: props => ({
+        variables: {
+        
+        },
+    }),
+    }
+
+export default compose(
+    connect(mapStateToProps),
+    graphql(query)
+)(Login)
+    //export  default compose(
+    //connect(mapStateToProps,mapDispatchToProps),    
+    //graphql(query,queryOptions),
+//Login =     graphql(query)(Login)
+//)
+//export default Login
