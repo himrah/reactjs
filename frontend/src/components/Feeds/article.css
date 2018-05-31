@@ -240,7 +240,7 @@ width: 100px;
 }
 
 .str::after{
-    content: '\2605';
+    content: '\2606';
     /*color: #656060*/
        
 }

@@ -32,6 +32,7 @@ const query = gql`query user{
             //count : 0
             //uid : localStorage.token
         }
+        this.handleSubmit = this.handleSubmit.bind(this)
     }    
 
 
@@ -57,6 +58,21 @@ const query = gql`query user{
           }*/
 
       }
+
+componentDidUpdate(prevProps, prevState) {
+    //console.log(this.props.data)
+    let nextProps = this.props
+    if(this.props.data.currentUser){
+        
+        this.props.dispatch(User({
+            username:nextProps.data.currentUser.username,
+            first_name:nextProps.data.currentUser.first_name,
+            last_name:nextProps.data.currentUser.last_name,
+            user_id:nextProps.data.currentUser.id,
+        }))              
+      }
+}
+
 /*        shouldComponentUpdate = (nextProps, nextState) => {
         let shouldUpdate = this.props.sdata !== nextProps.data;
           console.log(`next ${nextProps} and p ${nextState} `)
@@ -95,7 +111,6 @@ const query = gql`query user{
     }
     post(server,{username: this.state.username, password: this.state.password},config)
     .then(res => {
-        //console.log(res.data.token)
         if (res.data.token) {
             
             console.log(res.data)
@@ -128,7 +143,7 @@ const query = gql`query user{
         <main className="main-login">
             <section className="section-login">
             <div className="login_box">
-                <form ref={ref => (this.form = ref)}  onSubmit={e => this.handleSubmit(e)}>
+                <form ref={ref => (this.form = ref)}  onSubmit={this.handleSubmit}>
                         <div>
                             <input type="text"  value={this.state.userame}  name="username" placeholder="Username" className="form-control" id="username"    onChange={this.updateInput}/>
                         </div>
@@ -172,9 +187,3 @@ export default compose(
     connect(mapStateToProps),
     graphql(query)
 )(Login)
-    //export  default compose(
-    //connect(mapStateToProps,mapDispatchToProps),    
-    //graphql(query,queryOptions),
-//Login =     graphql(query)(Login)
-//)
-//export default Login
