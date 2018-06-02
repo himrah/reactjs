@@ -259,7 +259,6 @@ class Single extends React.Component{
           }
         })
       }
-    //this.setState({user:'ajay'})
   }
 
 

@@ -46,39 +46,21 @@ const query = gql`query user{
         }
     }*/
        
-      componentWillReceiveProps(nextProps) {
-          console.log(nextProps)
-          /*if(nextProps.data.currentUser){
-            this.props.dispatch(User({
-                username:nextProps.data.currentUser.username,
-                first_name:nextProps.data.currentUser.first_name,
-                last_name:nextProps.data.currentUser.last_name,
-                user_id:nextProps.data.currentUser.id,
-            }))              
-          }*/
 
-      }
-
-componentDidUpdate(prevProps, prevState) {
-    //console.log(this.props.data)
-    let nextProps = this.props
-    if(this.props.data.currentUser){
-        
-        this.props.dispatch(User({
-            username:nextProps.data.currentUser.username,
-            first_name:nextProps.data.currentUser.first_name,
-            last_name:nextProps.data.currentUser.last_name,
-            user_id:nextProps.data.currentUser.id,
-        }))              
-      }
-}
-
-/*        shouldComponentUpdate = (nextProps, nextState) => {
-        let shouldUpdate = this.props.sdata !== nextProps.data;
-          console.log(`next ${nextProps} and p ${nextState} `)
-        return shouldUpdate
-        }
-  */      
+    componentWillReceiveProps(nextProps) {
+        console.log(this.props.data)
+        nextProps.data.loading
+        console.log(nextProps.data)
+        if(!this.props.data.loading)  
+            if(!nextProps.data.loading){
+                this.props.dispatch(User({
+                    username:nextProps.data.currentUser.username,
+                    first_name:nextProps.data.currentUser.firstName,
+                    last_name:nextProps.data.currentUser.lastName,
+                    user_id:nextProps.data.currentUser.id,
+                }))      
+            }
+    }
 
     updateInput = (e) => {
         this.setState({
