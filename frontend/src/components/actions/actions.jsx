@@ -41,7 +41,14 @@ export const User = (newstate)=>{
             username:newstate.username,
             user_id : newstate.user_id,
             first_name:newstate.first_name,
-            last_name:newstate.last_name
+            last_name:newstate.last_name,
+            about:newstate.about,
+            dob:newstate.birthDay,
+            website:newstate.website,
+            twitter:newstate.twitter,
+            fb:newstate.fb,
+            instagram:newstate.instagram
+
         },
         type:Change_User
     }

@@ -5,7 +5,7 @@ import gql from 'graphql-tag'
 import  { post } from 'axios';
 import {Helmet} from 'react-helmet'
 import './profile.css'
-import { Gallery } from "./actions/actions"
+import { Gallery, User } from "./actions/actions"
 import { mapStateToProps,mapDispatchToProps } from './others/MapsProps'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
@@ -86,7 +86,6 @@ const query = gql`query user($username:String!)
   }
 }
   `
-
 const updateinfo = gql`mutation UpdateInfo($user_id: ID!, $website: String!, $first_name: String!, $last_name: String!, $twitter: String!, $fb: String!, $instagram: String!, $about: String!, $dob: String!) {
   updateInfo(website: $website, userId: $user_id, firstName: $first_name, lastName: $last_name, twitter: $twitter, fb: $fb, instagram: $instagram, about: $about, dob: $dob) {
     formErrors
@@ -137,7 +136,7 @@ class Edit extends React.Component{
     e.preventDefault()
     let user = e.target
     this.props.mutate(
-      {
+      { 
         variables:{
         user_id:this.state.user_id,
         first_name:user.first_name.value,
@@ -157,12 +156,11 @@ class Edit extends React.Component{
   }
 
   render(){
-    console.log(this.state.user)
     let user = Map(this.state.user)
     return(
       <article>
       {
-        <form onSubmit={this.handlesubmit.bind(this)} >
+        <form onSubmit={this.handlesubmit.bind(this)}>
         First Name : <input type="text" name="first_name" value={user.get('firstName')} onChange={this.handlechange.bind(this)}/>
         Last Name : <input type="text" value={user.get('lastName')} name="last_name" onChange={this.handlechange.bind(this)}/>
         Date of Birthday : <input type="date" value={user.getIn(['profile','birthDay'])} name="birthDay" onChange={this.handlechange.bind(this)}/>
@@ -215,7 +213,9 @@ class Thumb extends React.Component{
 
 
 
-class Single extends React.Component{
+
+
+class Profile extends React.Component{
   constructor(props){
     super(props);
     this.state={
@@ -233,31 +233,35 @@ class Single extends React.Component{
 
   componentDidMount = () => {
     //console.log(this.props)
+    this.setState(
+      {
+        grid:this.props.Gallery.grid,
+        maxWidth:this.props.Gallery.width
+      }
+    )
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps)
-    if (nextProps.data.data.loading){
-      //console.log(nextProps)
-    }
-     else{
-       //console.log(nextProps.user) 
-       this.setState(
-        {
-          user:{
-            user_id:nextProps.user.id,
-            first_name:nextProps.user.firstName,
-            last_name:nextProps.user.lastName,
-            about:nextProps.user.profile.about,
-            dob:nextProps.user.profile.birthDay,
-            website:nextProps.user.profile.website,
-            twitter:nextProps.user.profile.twitter,
-            fb:nextProps.user.profile.fb,
-            instagram:nextProps.user.profile.instagram
+    if(this.props.data.users!=nextProps.data.users)
+    {
+      let user = nextProps.data.users
+      this.props.dispatch(
+        User(
+          {
+            user_id:user.id,
+            first_name:user.firstName,
+            last_name:user.lastName,
+            about:user.profile.about,
+            dob:user.profile.birthDay,
+            website:user.profile.website,
+            twitter:user.profile.twitter,
+            fb:user.profile.fb,
+            instagram:user.profile.instagram
           }
-        })
-      }
-  }
+        )
+      )      
+    }
+}
 
 
   Updateuser(e){
@@ -275,7 +279,6 @@ class Single extends React.Component{
     })
   }
 
-  
   
   onChange(e){
     this.setState({file:e.target.files[0]})
@@ -313,9 +316,9 @@ ShowEditInfo(){
 
 
 render(){
-        console.log(this.props.data)
+        console.log(this.state)
         //console.log(this.state.user)
-        let { data, mutate } = this.props.data
+        let { data, mutate } = this.props
         if (data.loading || !data.users) {
           return <div>Loading...</div>
         }
@@ -422,40 +425,6 @@ render(){
 
 
 
-
-class Profile extends React.Component{
-  constructor(props) {
-    super(props);
-    this.state ={
-      //file:null
-      maxWidth:'33%',
-      grid:3,
-      isedtable:true,
-      edit:'none',
-      user:[],
-    }
-  }
-  
-  componentDidMount = () => {
-    this.setState(
-      {
-        grid:this.props.Gallery.grid,
-        maxWidth:this.props.Gallery.width
-      }
-    )
-    //this.setState()
-  }
-
-
-  render(){
-    return(
-      <Single data={this.props}   user={this.props.data.users}/>
-    )
-  }
-
-}
-
-
 class Group extends React.Component{
   render(){
     return(
@@ -484,6 +453,7 @@ export default compose(
       Gallery:state.Gallery,
     })
   ),
+  /*connect(mapStateToProps,mapDispatchToProps),*/
   graphql(query,queryOptions),
   graphql(updateinfo)
 )(Profile)
