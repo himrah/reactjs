@@ -10,6 +10,7 @@ import { mapStateToProps,mapDispatchToProps } from './others/MapsProps'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {Map,fromJS} from 'immutable'
+import Edit from './profileEdit'
 
 /*
 mutation abc(
@@ -94,7 +95,7 @@ const updateinfo = gql`mutation UpdateInfo($user_id: ID!, $website: String!, $fi
 }
 `
 
-class Edit extends React.Component{
+class Edits extends React.Component{
   constructor(props){
     super(props);
       this.state = {
@@ -105,10 +106,9 @@ class Edit extends React.Component{
     }
   }
   componentDidMount = () => {
-    //const user = fromJS({name:'ajay',contact:{mobile:90}})
     const user = fromJS(this.props.info.users) 
     console.log(this.props.info.users)
-    console.log(user.get('profile').get('about'))
+    //console.log(user.get('profile').get('about'))
     this.setState(
       {
         user:user,
@@ -157,10 +157,22 @@ class Edit extends React.Component{
 
   render(){
     let user = Map(this.state.user)
+    console.log(this.props)
     return(
       <article>
       {
         <form onSubmit={this.handlesubmit.bind(this)}>
+        First Name : <input type="text" name="first_name" value={this.props.User.first_name} onChange={this.handlechange.bind(this)}/>
+        Last Name : <input type="text" value={user.get('lastName')} name="last_name" onChange={this.handlechange.bind(this)}/>
+        Date of Birthday : <input type="date" value={user.getIn(['profile','birthDay'])} name="birthDay" onChange={this.handlechange.bind(this)}/>
+        About : <textarea value={user.getIn(['profile','about'])} onChange={this.handlechange.bind(this)} name="about"/>
+        website : <input type="text" value={user.getIn(['profile','website'])} name="website" onChange={this.handlechange.bind(this)}/>
+        twitter <input type="text" name="twitter" value={user.getIn(['profile','twitter'])} onChange={this.handlechange.bind(this)}/>
+        Instagram <input type="text" name="insta" value={user.getIn(['profile','instagram'])} onChange={this.handlechange.bind(this)}/>
+        Facebook <input type="text" name="fb" value={user.getIn(['profile','fb'])} onChange={this.handlechange.bind(this)}/>        
+        
+        
+        {/*
         First Name : <input type="text" name="first_name" value={user.get('firstName')} onChange={this.handlechange.bind(this)}/>
         Last Name : <input type="text" value={user.get('lastName')} name="last_name" onChange={this.handlechange.bind(this)}/>
         Date of Birthday : <input type="date" value={user.getIn(['profile','birthDay'])} name="birthDay" onChange={this.handlechange.bind(this)}/>
@@ -169,6 +181,8 @@ class Edit extends React.Component{
         twitter <input type="text" name="twitter" value={user.getIn(['profile','twitter'])} onChange={this.handlechange.bind(this)}/>
         Instagram <input type="text" name="insta" value={user.getIn(['profile','instagram'])} onChange={this.handlechange.bind(this)}/>
         Facebook <input type="text" name="fb" value={user.getIn(['profile','fb'])} onChange={this.handlechange.bind(this)}/>        
+        
+        */}
         <button type="submit" name="submit" className="edit">Sumit</button>
       </form>
   
@@ -244,11 +258,24 @@ class Profile extends React.Component{
   componentWillReceiveProps(nextProps) {
     if(this.props.data.users!=nextProps.data.users)
     {
-      let user = nextProps.data.users
+      //let user = nextProps.data.users
+      let user = fromJS(nextProps.data.users)
+      console.log(user.getIn(['profile','birthday']))
+      
       this.props.dispatch(
         User(
           {
-            user_id:user.id,
+            user_id:user.get('id'),
+            first_name:user.get('firstName'),
+            last_name:user.get('lastName'),
+            username:user.get('username'),
+            about:user.getIn(['profile','about']),
+            dob:user.getIn(['profile','birthDay']),
+            website:user.getIn(['profile','website']),
+            twitter:user.getIn(['profile','twitter']),
+            fb:user.getIn(['profile','fb']),
+            instagram:user.getIn(['profile','instagram'])
+/*            user_id:user.id,
             first_name:user.firstName,
             last_name:user.lastName,
             about:user.profile.about,
@@ -256,7 +283,7 @@ class Profile extends React.Component{
             website:user.profile.website,
             twitter:user.profile.twitter,
             fb:user.profile.fb,
-            instagram:user.profile.instagram
+            instagram:user.profile.instagram*/
           }
         )
       )      
@@ -316,7 +343,7 @@ ShowEditInfo(){
 
 
 render(){
-        console.log(this.state)
+        //console.log(this.state)
         //console.log(this.state.user)
         let { data, mutate } = this.props
         if (data.loading || !data.users) {
@@ -337,7 +364,7 @@ render(){
           photo_list.push(t)
           counter+=this.state.grid
         }
-        console.log(this.state.user)
+        console.log(this.props)
         return(
           <main className="main">      
           <Helmet>
@@ -348,23 +375,35 @@ render(){
               <div className="pfile">
                   <span className="fl_rw">
                     <div className="information">
-                    { data.users.profile ?(
                       <div className="personal">
-                          
                           <div className="fl_rw">
-                            <span className="unm">{data.users.firstName + " " +data.users.lastName}</span>
+                            {/*<span className="unm">{data.users.firstName + " " +data.users.lastName}</span>
+                            <span className="_un">(@{data.users.username})</span>*/}
+                            <span className="unm">{this.props.User.first_name + " " +this.props.User.last_name}</span>
                             <span className="_un">(@{data.users.username})</span>
                           </div>
                           <div className="_about">
-                            {data.users.profile.about}
+                            {this.props.User.about}
                           </div>
+                          <div className="_about">
+                            {this.props.User.dob}
+                          </div>
+                          <div className="_about">
+                            {this.props.User.instagram}
+                          </div>                
+                          <div className="_about">
+                            {this.props.User.fb}
+                          </div>                                                    
+                          <div className="_about">
+                            {this.props.User.twitter}
+                          </div>
+                          <div className="_about">
+                            {this.props.User.website}
+                          </div>                                                    
                           <button className="edit" onClick={this.ShowEditInfo.bind(this)}>Edit Profile</button>
                       </div>
-                    ) : (
-                      <div className="p">
-                      </div>
-                    )
-                    }
+                    
+                    
                   
                   </div>
                   <div className="container">
@@ -448,12 +487,13 @@ const queryOptions = {
 }
 
 export default compose(
-  connect(
+  /*connect(
     (state)=>({
       Gallery:state.Gallery,
     })
-  ),
+  ),*/
   /*connect(mapStateToProps,mapDispatchToProps),*/
+  connect(mapStateToProps),
   graphql(query,queryOptions),
   graphql(updateinfo)
 )(Profile)
