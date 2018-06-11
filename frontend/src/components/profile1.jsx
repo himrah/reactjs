@@ -372,11 +372,6 @@ render(){
                       <img style={style} src={ server+data.users.profilePic.profileThumbs} alt="profile"/>
                       <div className="overlay"></div>
                       </div>
-                      {
-                      /*
-                      <input type="file" className="in" name="profile_pic" onChange={this.onChangePost}/>
-                      */
-                      }
                     </div>                  
                   </span>                  
                   </div>
