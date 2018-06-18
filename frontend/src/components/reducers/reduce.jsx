@@ -26,9 +26,81 @@ import {Change_Gallery,Change_Toggle,Change_User} from '../actions/actions'
 
 const User = (state='',action)=>{
     switch(action.type){
-        case Change_User: return action.value
-        default : return state;
-    }
+//        case Change_User: return action.value
+        case Change_User:
+        
+        let nstate = {...state}
+        if(action.value.user_id){
+            nstate.user_id = action.value.user_id
+        }
+        if(action.value.username){
+            nstate.username = action.value.username    
+        }
+        //nstate.username = action.value.username
+        if(action.value.first_name){
+            nstate.first_name = action.value.first_name
+        }
+        //nstate.first_name = action.value.first_name
+        
+        if(action.value.last_name){
+            nstate.last_name = action.value.last_name
+        }
+
+        if(action.value.about){
+            nstate.about = action.value.about
+        }
+
+        if(action.value.website){
+            nstate.website = action.value.website
+        }
+        
+        if(action.value.twitter){
+            nstate.twitter = action.value.twitter
+        }
+         
+        if(action.value.instagram){
+            nstate.instagram = action.value.instagram
+        }
+
+        if(action.value.fb){
+            nstate.fb = action.value.fb
+        }                
+        if(action.value.dob){
+            nstate.dob = action.value.dob
+        }        
+        
+        /*nstate.user_id = action.value.user_id
+        nstate.last_name = action.value.last_name
+        nstate.about = action.value.about
+        nstate.website = action.value.website
+        nstate.twitter = action.value.twitter
+        nstate.fb = action.value.fb
+        nstate.instagram = action.value.instagram*/
+
+        /*{
+            username:'',
+            user_id:'',
+            first_name:'',
+            last_name:'',
+            about:'',
+            website:'',
+            twitter:'',
+            fb:'',
+            instagram:''
+        }*/
+        console.log(nstate)
+        return nstate
+        //return action.value
+        
+        default: return state
+        //case Change_User:
+        
+        //let nstate = {...state}
+        //console.log(nstate)
+        //return action.value
+        //default : return state;
+    
+}
 }
 
 const Toggle = (state='',action)=>{

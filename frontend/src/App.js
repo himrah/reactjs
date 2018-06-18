@@ -37,7 +37,18 @@ export const initialState = {
       width:'33.3%'
     },
   Toggle:'none',
-  User:[]
+  User:{
+    username:'',
+    user_id:'',
+    first_name:'',
+    last_name:'',
+    dob:'',
+    about:'',
+    website:'',
+    twitter:'',
+    fb:'',
+    instagram:''
+  }
 }
 const store = createStore(allreducer,initialState,window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
 

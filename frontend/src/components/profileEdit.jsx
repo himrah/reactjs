@@ -28,17 +28,8 @@ class Edit extends React.Component{
             case 'website':this.props.dispatch(User({website:e.target.value}));break;
             case 'twitter':this.props.dispatch(User({twitter:e.target.value}));break;
             case 'insta':this.props.dispatch(User({instagram:e.target.value}));break;
-            case 'fb':this.props.dispatch(User({fb:e.target.value}));break;
-            
-          /*case 'first_name':this.setState({user:user.set('firstName',e.target.value)});break;
-          case 'last_name':this.setState({user:user.set('lastName',e.target.value)});break;
-          case 'birthDay':this.setState({user:user.setIn(['profile','birthDay'],e.target.value)});break;
-          case 'about':this.setState({user:user.setIn(['profile','about'],e.target.value)});break;
-          case 'website':this.setState({user:user.setIn(['profile','website'],e.target.value)});break;
-          case 'twitter':this.setState({user:user.setIn(['profile','twitter'],e.target.value)});break;
-          case 'insta':this.setState({user:user.setIn(['profile','instagram'],e.target.value)});break;
-          case 'fb':this.setState({user:user.setIn(['profile','fb'],e.target.value)});break;*/
-          default:break
+            case 'fb':this.props.dispatch(User({fb:e.target.value}));break;            
+            default:break
         }
       }
       handlesubmit(e){
@@ -59,6 +50,7 @@ class Edit extends React.Component{
           }
         }).then(res=>{
           console.log(res)
+          this.props.view({show:'none'})
         }).catch(err=>{
           console.log(err)
         })
@@ -67,20 +59,35 @@ class Edit extends React.Component{
     render(){
         console.log(this.props)
         let user = this.props.User
+        console.log(user)
         return(
             <article>
             {
-            
               <form onSubmit={this.handlesubmit.bind(this)}>
-              First Name : <input type="text" name="first_name" value={user.first_name} onChange={this.handlechange.bind(this)}/>
-              Last Name : <input type="text" value={user.last_name} name="last_name" onChange={this.handlechange.bind(this)}/>
-              Date of Birthday : <input type="date" value={user.dob} name="birthDay" onChange={this.handlechange.bind(this)}/>
-              About : <textarea value={user.about} onChange={this.handlechange.bind(this)} name="about"/>
-              website : <input type="text" value={user.website} name="website" onChange={this.handlechange.bind(this)}/>
-              twitter <input type="text" name="twitter" value={user.twitter} onChange={this.handlechange.bind(this)}/>
-              Instagram <input type="text" name="insta" value={user.instagram} onChange={this.handlechange.bind(this)}/>
-              Facebook <input type="text" name="fb" value={user.fb} onChange={this.handlechange.bind(this)}/>          
-            
+              <div>
+                First Name : <input type="text" className="input" name="first_name" value={user.first_name} onChange={this.handlechange.bind(this)}/>
+              </div>
+              <div>
+                Last Name : <input type="text" className="input" value={user.last_name} name="last_name" onChange={this.handlechange.bind(this)}/>
+              </div>
+              <div>
+                Date of Birthday : <input type="date" className="input" value={user.dob} name="birthDay" onChange={this.handlechange.bind(this)}/>
+              </div>
+              <div>
+                About : <textarea value={user.about} className="input" onChange={this.handlechange.bind(this)} name="about"/>
+              </div>
+              <div>
+                website : <input type="text" value={user.website} className="input" name="website" onChange={this.handlechange.bind(this)}/>
+              </div>
+              <div>
+               twitter <input type="text" name="twitter" className="input" value={user.twitter} onChange={this.handlechange.bind(this)}/>
+              </div>
+              <div>
+                Instagram <input type="text" name="insta" className="input" value={user.instagram} onChange={this.handlechange.bind(this)}/>
+              </div>
+              <div>
+                Facebook <input type="text" name="fb" className="input" value={user.fb} onChange={this.handlechange.bind(this)}/>
+              </div>
             <button type="submit" name="submit" className="edit">Sumit</button>
             </form>
         

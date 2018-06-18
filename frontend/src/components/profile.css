@@ -219,6 +219,14 @@ height: 100%;
 }
 
 .edit_info{
-  width: 50%;
+  padding: 10px;
+  max-width: 500px;
   align-self:center;
+}
+.input{
+  height: 22px;
+  border-radius: 3px;
+  border: orange 1px solid;
+  max-width: 400px;
+  
 }

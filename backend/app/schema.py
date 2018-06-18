@@ -9,6 +9,7 @@ from graphene_django.types import DjangoObjectType
 from graphene_django.filter import DjangoFilterConnectionField
 from graphene_django.debug import DjangoDebug
 from graphql_relay.node.node import from_global_id
+from django.utils.dateparse import parse_date
 from graphene import relay
 
 """
@@ -113,6 +114,8 @@ class Img(graphene.Mutation):
     def mutate(self,info,context,**kwargs):
         print(context)
 
+
+from datetime import datetime
 class UpdateInfo(graphene.Mutation):
     class Input:
         user_id = graphene.ID()
@@ -153,7 +156,8 @@ class UpdateInfo(graphene.Mutation):
             print("Trre")
             u.first_name = first_name
             u.last_name = last_name
-            p.birth_date = dob
+            p.birth_day = datetime.strptime(dob, "%Y-%m-%d").date()
+            #print(parse_date(dob))
             p.about = about
             p.fb = fb
             p.instagram = instagram

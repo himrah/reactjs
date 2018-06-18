@@ -134,7 +134,7 @@ class Nav extends React.Component{
                         <div className="navdiv">
                             <div className="brand">
                                 <span className="header_font">            
-                                    <Link to="/"><span style={{color:'black'}}>NiXiS</span> </Link>
+                                    <Link to="/"><span style={{color:'orange'}}>NiXiS</span> </Link>
                                 </span>
                             </div>
                         { token ? (

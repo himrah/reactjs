@@ -95,7 +95,7 @@ const updateinfo = gql`mutation UpdateInfo($user_id: ID!, $website: String!, $fi
 }
 `
 
-class Edits extends React.Component{
+/*class Edits extends React.Component{
   constructor(props){
     super(props);
       this.state = {
@@ -172,17 +172,7 @@ class Edits extends React.Component{
         Facebook <input type="text" name="fb" value={user.getIn(['profile','fb'])} onChange={this.handlechange.bind(this)}/>        
         
         
-        {/*
-        First Name : <input type="text" name="first_name" value={user.get('firstName')} onChange={this.handlechange.bind(this)}/>
-        Last Name : <input type="text" value={user.get('lastName')} name="last_name" onChange={this.handlechange.bind(this)}/>
-        Date of Birthday : <input type="date" value={user.getIn(['profile','birthDay'])} name="birthDay" onChange={this.handlechange.bind(this)}/>
-        About : <textarea value={user.getIn(['profile','about'])} onChange={this.handlechange.bind(this)} name="about"/>
-        website : <input type="text" value={user.getIn(['profile','website'])} name="website" onChange={this.handlechange.bind(this)}/>
-        twitter <input type="text" name="twitter" value={user.getIn(['profile','twitter'])} onChange={this.handlechange.bind(this)}/>
-        Instagram <input type="text" name="insta" value={user.getIn(['profile','instagram'])} onChange={this.handlechange.bind(this)}/>
-        Facebook <input type="text" name="fb" value={user.getIn(['profile','fb'])} onChange={this.handlechange.bind(this)}/>        
-        
-        */}
+
         <button type="submit" name="submit" className="edit">Sumit</button>
       </form>
   
@@ -191,7 +181,7 @@ class Edits extends React.Component{
       </article>
     )
   }
-}
+}*/
 
 
 const server = "http://localhost:8000/"
@@ -260,8 +250,8 @@ class Profile extends React.Component{
     {
       //let user = nextProps.data.users
       let user = fromJS(nextProps.data.users)
-      console.log(user.getIn(['profile','birthday']))
-      
+      console.log(user)
+      //console.log(user.getIn(['profile','birthDay']))
       this.props.dispatch(
         User(
           {
@@ -275,15 +265,6 @@ class Profile extends React.Component{
             twitter:user.getIn(['profile','twitter']),
             fb:user.getIn(['profile','fb']),
             instagram:user.getIn(['profile','instagram'])
-/*            user_id:user.id,
-            first_name:user.firstName,
-            last_name:user.lastName,
-            about:user.profile.about,
-            dob:user.profile.birthDay,
-            website:user.profile.website,
-            twitter:user.profile.twitter,
-            fb:user.profile.fb,
-            instagram:user.profile.instagram*/
           }
         )
       )      
@@ -292,7 +273,11 @@ class Profile extends React.Component{
 
 
   Updateuser(e){
-    console.log(e.target)
+    console.log(e.show)
+      this.setState({
+        edit:e.show
+      })
+    
     //console.log(this.props)
   }
   
