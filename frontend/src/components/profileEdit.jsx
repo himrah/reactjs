@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux'
-import {mapStateToProps} from './others/MapsProps'
+import {mapStateToProps, mapDispatchToProps} from './others/MapsProps'
 import gql from 'graphql-tag'
 import { User } from "./actions/actions"
 import { graphql, compose } from 'react-apollo'
@@ -18,9 +18,11 @@ class Edit extends React.Component{
 
     handlechange(e){
         //let user = Map(this.state.user)
+        //this.props.view(e)
+        //this.props.dispatch(User({first_name:e.target.value}))
         this.props.view(e)
-        switch(e.target.name){
-
+        //this.props.UpdateUser({first_name:e.target.value})
+        /*switch(e.target.name){
             case 'first_name':this.props.dispatch(User({first_name:e.target.value}));break;
             case 'last_name':this.props.dispatch(User({last_name:e.target.value}));break;
             case 'birthDay':this.props.dispatch(User({dob:e.target.value}));break;
@@ -30,7 +32,7 @@ class Edit extends React.Component{
             case 'insta':this.props.dispatch(User({instagram:e.target.value}));break;
             case 'fb':this.props.dispatch(User({fb:e.target.value}));break;            
             default:break
-        }
+        }*/
       }
       handlesubmit(e){
         e.preventDefault()
@@ -58,7 +60,7 @@ class Edit extends React.Component{
 
     render(){
         console.log(this.props)
-        let user = this.props.User
+        let user = this.props.user
         console.log(user)
         return(
             <article>
@@ -105,7 +107,7 @@ export default compose(
       })
     ),*/
     /*connect(mapStateToProps,mapDispatchToProps),*/
-    connect(mapStateToProps),
+    connect(mapStateToProps,mapDispatchToProps),
     //graphql(query,queryOptions),
     graphql(updateinfo)
   )(Edit)

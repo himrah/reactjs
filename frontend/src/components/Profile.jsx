@@ -94,8 +94,8 @@ const updateinfo = gql`mutation UpdateInfo($user_id: ID!, $website: String!, $fi
   }
 }
 `
-
-/*class Edits extends React.Component{
+/*
+class Edits extends React.Component{
   constructor(props){
     super(props);
       this.state = {
@@ -160,7 +160,7 @@ const updateinfo = gql`mutation UpdateInfo($user_id: ID!, $website: String!, $fi
     console.log(this.props)
     return(
       <article>
-      {
+      
         <form onSubmit={this.handlesubmit.bind(this)}>
         First Name : <input type="text" name="first_name" value={this.props.User.first_name} onChange={this.handlechange.bind(this)}/>
         Last Name : <input type="text" value={user.get('lastName')} name="last_name" onChange={this.handlechange.bind(this)}/>
@@ -171,18 +171,17 @@ const updateinfo = gql`mutation UpdateInfo($user_id: ID!, $website: String!, $fi
         Instagram <input type="text" name="insta" value={user.getIn(['profile','instagram'])} onChange={this.handlechange.bind(this)}/>
         Facebook <input type="text" name="fb" value={user.getIn(['profile','fb'])} onChange={this.handlechange.bind(this)}/>        
         
-        
 
         <button type="submit" name="submit" className="edit">Sumit</button>
       </form>
   
-    }
-
+      
+      <p>sdf</p>  
       </article>
     )
   }
-}*/
-
+}
+*/
 
 const server = "http://localhost:8000/"
 //const server = "http://cf792ff7.ngrok.io/"
@@ -227,7 +226,8 @@ class Profile extends React.Component{
       grid:3,
       isedtable:true,
       edit:'none',
-      user:{},      
+      user:{},
+      first_name:'',      
     }
     this.onFormSubmit = this.onFormSubmit.bind(this)
     this.onChange = this.onChange.bind(this)
@@ -250,13 +250,30 @@ class Profile extends React.Component{
     {
       //let user = nextProps.data.users
       let user = fromJS(nextProps.data.users)
+      console.log(nextProps.data.users)
+      //let user = nextProps.data.users;
       console.log(user)
+      this.setState({
+        user:{
+          first_name:user.get('firstName'),
+          last_name:user.get('lastName'),
+          username:user.get('username'),
+          about:user.getIn(['profile','about']),
+          dob:user.getIn(['profile','birthDay']),
+          website:user.getIn(['profile','website']),
+          twitter:user.getIn(['profile','twitter']),
+          fb:user.getIn(['profile','fb']),
+          instagram:user.getIn(['profile','instagram'])
+        }
+      })
+      //this.setState({first_name:user.firstName})
+      //this.props.dispatch(User({first_name:user.firstName}))
       //console.log(user.getIn(['profile','birthDay']))
-      this.props.dispatch(
-        User(
-          {
-            user_id:user.get('id'),
-            first_name:user.get('firstName'),
+      //this.props.dispatch(
+        //User(
+          //{
+            //user_id:user.get('id'),
+            /*first_name:user.get('firstName'),
             last_name:user.get('lastName'),
             username:user.get('username'),
             about:user.getIn(['profile','about']),
@@ -264,19 +281,37 @@ class Profile extends React.Component{
             website:user.getIn(['profile','website']),
             twitter:user.getIn(['profile','twitter']),
             fb:user.getIn(['profile','fb']),
-            instagram:user.getIn(['profile','instagram'])
-          }
-        )
-      )      
+            instagram:user.getIn(['profile','instagram'])*/
+          //}
+        //)
+      //)      
     }
 }
 
 
   Updateuser(e){
-    console.log(e.show)
-      this.setState({
+    console.log(e.target.value)
+    this.setState({
+      user:{
+        ...this.state.user,
+      }
+    })
+    switch(e.target.name){
+      case 'first_name':this.setState({user:{...this.state.user,first_name:e.target.value}});break;
+      case 'last_name':this.setState({user:{...this.state.user,last_name:e.target.value}});break;
+      case 'birthDay':this.setState({user:{...this.state.user,dob:e.target.value}});break;
+      case 'website':this.setState({user:{...this.state.user,website:e.target.value}});break;
+      case 'about':this.setState({user:{...this.state.user,about:e.target.value}});break;
+      case 'twitter':this.setState({user:{...this.state.user,twitter:e.target.value}});break;
+      case 'insta':this.setState({user:{...this.state.user,instagram:e.target.value}});break;
+      case 'fb':this.setState({user:{...this.state.user,fb:e.target.value}});break;
+      default:break;
+    }
+
+
+    /*this.setState({
         edit:e.show
-      })
+      })*/
     
     //console.log(this.props)
   }
@@ -326,7 +361,20 @@ ShowEditInfo(){
   }
 }
 
+singlechange(e){
+  //this.setState({first_name:e.target.value})
+  //this.props.dispatch(User({first_name:e.target.value}))
+  this.setState({
+    user:{
+      ...this.state.user,
+      first_name:e.target.value
+    }
+  })
 
+
+  console.log(e.target.value)
+
+}
 render(){
         //console.log(this.state)
         //console.log(this.state.user)
@@ -350,6 +398,7 @@ render(){
           counter+=this.state.grid
         }
         console.log(this.props)
+        //console.log(this.state.user.first_name)
         return(
           <main className="main">      
           <Helmet>
@@ -364,32 +413,29 @@ render(){
                           <div className="fl_rw">
                             {/*<span className="unm">{data.users.firstName + " " +data.users.lastName}</span>
                             <span className="_un">(@{data.users.username})</span>*/}
-                            <span className="unm">{this.props.User.first_name + " " +this.props.User.last_name}</span>
+                            <span className="unm">{this.state.user.first_name + " " +this.state.user.last_name}</span>
                             <span className="_un">(@{data.users.username})</span>
                           </div>
                           <div className="_about">
-                            {this.props.User.about}
+                            {this.state.user.about}
                           </div>
                           <div className="_about">
-                            {this.props.User.dob}
+                            {this.state.user.dob}
                           </div>
                           <div className="_about">
-                            {this.props.User.instagram}
+                            {this.state.user.instagram}
                           </div>                
                           <div className="_about">
-                            {this.props.User.fb}
+                            {this.state.user.fb}
                           </div>                                                    
                           <div className="_about">
-                            {this.props.User.twitter}
+                            {this.state.user.twitter}
                           </div>
                           <div className="_about">
-                            {this.props.User.website}
-                          </div>                                                    
+                            {this.state.user.website}
+                          </div>              
                           <button className="edit" onClick={this.ShowEditInfo.bind(this)}>Edit Profile</button>
                       </div>
-                    
-                    
-                  
                   </div>
                   <div className="container">
                       {/*}
@@ -411,7 +457,7 @@ render(){
 
             </section>
             <section className="edit_info" style={{display:this.state.edit}}>
-              <Edit info={data} mutate = {mutate}  view={this.Updateuser.bind(this)}/>
+              <Edit info={data} mutate = {mutate} user={this.state.user}  view={this.Updateuser.bind(this)}/>
               </section>
             <section className="slide">
                     <div className="fl_rw sl_sec">

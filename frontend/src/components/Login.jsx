@@ -52,14 +52,16 @@ const query = gql`query user{
         nextProps.data.loading
         console.log(nextProps.data)
         if(!this.props.data.loading)  
-            if(!nextProps.data.loading){
+            {
+                if(!nextProps.data.loading){
                 this.props.dispatch(User({
                     username:nextProps.data.currentUser.username,
                     first_name:nextProps.data.currentUser.firstName,
                     last_name:nextProps.data.currentUser.lastName,
                     user_id:nextProps.data.currentUser.id,
-                }))      
+                }))
             }
+        }
     }
 
     updateInput = (e) => {
