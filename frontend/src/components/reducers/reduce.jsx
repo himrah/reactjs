@@ -50,8 +50,8 @@ const User = (state='',action)=>{
         //}
         
         let nstate = {...state}
-        console.log(nstate)
-        console.log(action)
+        //console.log(nstate)
+        //console.log(action)
         if(action.value.user_id){
             nstate.user_id = action.value.user_id
         }
@@ -61,14 +61,14 @@ const User = (state='',action)=>{
         }
         //nstate.username = action.value.username
         if(action.value.first_name!==nstate.first_name){
-            console.log(action.value.first_name)
+            //console.log(action.value.first_name)
             nstate.first_name = action.value.first_name
         }
         //nstate.first_name = action.value.first_name
         
         if(action.value.last_name!==nstate.last_name){
             
-            console.log(action.value.last_name)
+            //console.log(action.value.last_name)
             nstate.last_name = action.value.last_name
             //nstate.last_name = "abc"
             //nstate.last_name = (action.value.last_name)?action.value.last_name:undefined

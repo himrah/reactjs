@@ -253,9 +253,9 @@ class Profile extends React.Component{
     {
       //let user = nextProps.data.users
       let user = fromJS(nextProps.data.users)
-      console.log(nextProps.data.users)
+      //console.log(nextProps.data.users)
       //let user = nextProps.data.users;
-      console.log(user)
+      //console.log(user)
       /*this.setState({
         user:{
           first_name:user.get('firstName'),
@@ -427,7 +427,7 @@ render(){
           photo_list.push(t)
           counter+=this.state.grid
         }
-        console.log(this.props)
+        //console.log(this.props)
         //console.log(this.state.user.first_name)
         return(
           <main className="main">      
