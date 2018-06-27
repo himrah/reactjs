@@ -20,7 +20,9 @@ class Edit extends React.Component{
         //let user = Map(this.state.user)
         //this.props.view(e)
         //this.props.dispatch(User({first_name:e.target.value}))
-        this.props.view(e)
+        var f = document.forms.namedItem("editform")
+        this.props.view(f)
+        //this.props.view(e)
         //this.props.UpdateUser({first_name:e.target.value})
         /*switch(e.target.name){
             case 'first_name':this.props.dispatch(User({first_name:e.target.value}));break;
@@ -65,30 +67,30 @@ class Edit extends React.Component{
         return(
             <article>
             {
-              <form onSubmit={this.handlesubmit.bind(this)}>
+              <form onSubmit={this.handlesubmit.bind(this)} onChange={this.handlechange.bind(this)} name="editform">
               <div>
-                First Name : <input type="text" className="input" name="first_name" value={user.first_name} onChange={this.handlechange.bind(this)}/>
+                First Name : <input type="text" className="input" name="first_name" value={user.first_name} />
               </div>
               <div>
-                Last Name : <input type="text" className="input" value={user.last_name} name="last_name" onChange={this.handlechange.bind(this)}/>
+                Last Name : <input type="text" className="input" value={user.last_name} name="last_name"/>
               </div>
               <div>
-                Date of Birthday : <input type="date" className="input" value={user.dob} name="birthDay" onChange={this.handlechange.bind(this)}/>
+                Date of Birthday : <input type="date" className="input" value={user.dob} name="dob" />
               </div>
               <div>
-                About : <textarea value={user.about} className="input" onChange={this.handlechange.bind(this)} name="about"/>
+                About : <textarea value={user.about} className="input"  name="about"/>
               </div>
               <div>
-                website : <input type="text" value={user.website} className="input" name="website" onChange={this.handlechange.bind(this)}/>
+                website : <input type="text" value={user.website} className="input" name="website" />
               </div>
               <div>
-               twitter <input type="text" name="twitter" className="input" value={user.twitter} onChange={this.handlechange.bind(this)}/>
+               twitter <input type="text" name="twitter" className="input" value={user.twitter} />
               </div>
               <div>
-                Instagram <input type="text" name="insta" className="input" value={user.instagram} onChange={this.handlechange.bind(this)}/>
+                Instagram <input type="text" name="instagram" className="input" value={user.instagram} />
               </div>
               <div>
-                Facebook <input type="text" name="fb" className="input" value={user.fb} onChange={this.handlechange.bind(this)}/>
+                Facebook <input type="text" name="fb" className="input" value={user.fb} />
               </div>
             <button type="submit" name="submit" className="edit">Sumit</button>
             </form>

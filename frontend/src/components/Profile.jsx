@@ -364,9 +364,9 @@ ShowEditInfo(){
   }
 }
 
-singlechange(e){
+singlechange(f){
   //this.setState({first_name:e.target.value})
-  var f = document.forms.namedItem("upform")
+  //var f = document.forms.namedItem("upform")
   //formData = new FormData(f)
   //form.append("form",f)
   //console.log(f.elements.first_name.value)
@@ -376,7 +376,13 @@ singlechange(e){
     //first_name:(e.target.name==="first_name")?e.target.value:"",
     //last_name:(e.target.name==="last_name")?e.target.value:""
     first_name:f.elements.first_name.value,
-    last_name:f.elements.last_name.value
+    last_name:f.elements.last_name.value,
+    dob:f.elements.dob.value,
+    instagram:f.elements.instagram.value,
+    fb:f.elements.fb.value,
+    twitter:f.elements.twitter.value,
+    website:f.elements.website.value,
+    about:f.elements.about.value,
   }))
   /*switch(e.target.name){
     case 'first_name':this.props.dispatch(User({first_name:e.target.value}));break;
@@ -396,7 +402,7 @@ singlechange(e){
   })*/
 
 
-  console.log(e.target.value)
+  //console.log(e.target.value)
 
 }
 render(){
@@ -437,37 +443,41 @@ render(){
                           <div className="fl_rw">
                             {/*<span className="unm">{data.users.firstName + " " +data.users.lastName}</span>
                             <span className="_un">(@{data.users.username})</span>*/}
-                            <span className="unm">{this.state.user.first_name + " " +this.state.user.last_name}</span>
-                            <span className="_un">(@{data.users.username})</span>
+                            <span className="unm">{this.props.User.first_name + " " +this.props.User.last_name}</span>
+                            <span className="_un">(@{this.props.User.username})</span>
                           </div>
-                          <div className="_about">
+                         {/* <div className="_about">
                             {this.props.User.first_name}
                           </div>
                           <div className="_about">
                             {this.props.User.last_name}
                           </div>
+                                
                           <form onChange={this.singlechange.bind(this)} name="upform" id="upform">
                           <input type="text" name="first_name" value={this.props.User.first_name?this.props.User.first_name:""} />
                           <input type="text" name="last_name" value={this.props.User.last_name} />
-                          </form>
-                          {/*
+                          </form>*/}
+                          
                           <div className="_about">
-                            {this.state.user.dob}
+                            {this.props.User.dob}
                           </div>
                           <div className="_about fl_rw">
-                          <img src={instagram} className="logo" />{this.state.user.instagram}
+                          <img src={instagram} className="logo" />{this.props.User.instagram}
                           </div>                
                           <div className="_about fl_rw">
 
-                          <img src={fb} className="logo"/>{this.state.user.fb}
+                          <img src={fb} className="logo"/>{this.props.User.fb}
                           </div>                                                    
                           <div className="_about fl_rw">
-                          <img src={twitter} className="logo" />{this.state.user.twitter}
+                          <img src={twitter} className="logo" />{this.props.User.twitter}
                           </div>
                           <div className="_about">
-                            {this.state.user.website}
+                            {this.props.User.website}
                           </div>              
-                          */}
+                          <div className="_about">
+                            {this.props.User.about}
+                          </div>              
+
                           <button className="edit" onClick={this.ShowEditInfo.bind(this)}>Edit Profile</button>
                       </div>
                   </div>
@@ -491,7 +501,7 @@ render(){
 
             </section>
             <section className="edit_info" style={{display:this.state.edit}}>
-              <Edit info={data} mutate = {mutate} user={this.state.user}  view={this.Updateuser.bind(this)}/>
+              <Edit info={data} mutate = {mutate} user={this.props.User} view={this.singlechange.bind(this)}  viewss={this.Updateuser.bind(this)}/>
               </section>
             <section className="slide">
                     <div className="fl_rw sl_sec">

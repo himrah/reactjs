@@ -74,26 +74,26 @@ const User = (state='',action)=>{
             //nstate.last_name = (action.value.last_name)?action.value.last_name:undefined
         }
 
-        if(action.value.about){
+        if(action.value.about!==nstate.last_name){
             nstate.about = action.value.about
         }
 
-        if(action.value.website){
+        if(action.value.website!==nstate.website){
             nstate.website = action.value.website
         }
         
-        if(action.value.twitter){
+        if(action.value.twitter!==nstate.twitter){
             nstate.twitter = action.value.twitter
         }
          
-        if(action.value.instagram){
+        if(action.value.instagram!==nstate.instagram){
             nstate.instagram = action.value.instagram
         }
 
-        if(action.value.fb){
+        if(action.value.fb!==nstate.fb){
             nstate.fb = action.value.fb
         }                
-        if(action.value.dob){
+        if(action.value.dob!==nstate.dob){
             nstate.dob = action.value.dob
         }
         
