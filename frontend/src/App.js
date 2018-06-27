@@ -50,7 +50,7 @@ export const initialState = {
     website:'',
     twitter:'',
     fb:'',
-    instagram:''
+    instagram:'',
   }
 }
 const store = createStore(allreducer,initialState,window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())

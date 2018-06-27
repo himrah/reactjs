@@ -366,7 +366,28 @@ ShowEditInfo(){
 
 singlechange(e){
   //this.setState({first_name:e.target.value})
-  this.props.dispatch(Toggle({toggle:e.target.value}))
+  var f = document.forms.namedItem("upform")
+  //formData = new FormData(f)
+  //form.append("form",f)
+  //console.log(f.elements.first_name.value)
+  //console.log(formData)
+  //console.log(e.target.name)
+  this.props.dispatch(User({
+    //first_name:(e.target.name==="first_name")?e.target.value:"",
+    //last_name:(e.target.name==="last_name")?e.target.value:""
+    first_name:f.elements.first_name.value,
+    last_name:f.elements.last_name.value
+  }))
+  /*switch(e.target.name){
+    case 'first_name':this.props.dispatch(User({first_name:e.target.value}));break;
+    case 'last_name':this.props.dispatch(User({last_name:e.target.value}));break;
+    default:break;
+  }*/
+  /*if(e.target.name=="first_name"){
+  this.props.dispatch(User({first_name:e.target.value}))
+  }else{
+    this.props.dispatch(User({last_name:e.target.value}))
+  }*/
   /*this.setState({
     user:{
       ...this.state.user,
@@ -422,7 +443,13 @@ render(){
                           <div className="_about">
                             {this.props.User.first_name}
                           </div>
-                          <input type="text" onChange={this.singlechange.bind(this)} value={this.props.Toggle.toggle}/>
+                          <div className="_about">
+                            {this.props.User.last_name}
+                          </div>
+                          <form onChange={this.singlechange.bind(this)} name="upform" id="upform">
+                          <input type="text" name="first_name" value={this.props.User.first_name?this.props.User.first_name:""} />
+                          <input type="text" name="last_name" value={this.props.User.last_name} />
+                          </form>
                           {/*
                           <div className="_about">
                             {this.state.user.dob}

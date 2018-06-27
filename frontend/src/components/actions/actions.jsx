@@ -43,8 +43,8 @@ export const User = (newstate)=>{
         {
             username:newstate.username,
             user_id : newstate.user_id,
-            first_name:newstate.first_name,
-            last_name:newstate.last_name,
+            first_name:newstate.first_name?newstate.first_name:undefined,
+            last_name:(newstate.last_name)?newstate.last_name:undefined,
             about:newstate.about,
             dob:newstate.dob,
             website:newstate.website,

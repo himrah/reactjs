@@ -28,34 +28,50 @@ const User = (state='',action)=>{
     switch(action.type){
 //        case Change_User: return action.value
         case Change_User:
-        let nstate = {...state}
-        console.log(nstate)
-        return {
+        //let nstate = {...state}
+        //console.log(nstate)
+        //return {
+            
+            //first_name:action.value.first_name,
+            //last_name:action.value.last_name
+            /*User:{
+                ...state.User,
+                first_name:action.value.first_name,
+                last_name:action.value.last_name    
+            }*/
             //...state,
             //first_name:action.value.first_name
-            byname:[...state.byname],
+/*            byname:[...state.byname],
             User:{
                 ...state.User,
                 [action.byname]:action.value
-            }
+            }*/
 
-        }
+        //}
         
-/*        let nstate = {...state}
+        let nstate = {...state}
+        console.log(nstate)
+        console.log(action)
         if(action.value.user_id){
             nstate.user_id = action.value.user_id
         }
         if(action.value.username){
+            
             nstate.username = action.value.username    
         }
         //nstate.username = action.value.username
-        if(action.value.first_name){
+        if(action.value.first_name!==nstate.first_name){
+            console.log(action.value.first_name)
             nstate.first_name = action.value.first_name
         }
         //nstate.first_name = action.value.first_name
         
-        if(action.value.last_name){
+        if(action.value.last_name!==nstate.last_name){
+            
+            console.log(action.value.last_name)
             nstate.last_name = action.value.last_name
+            //nstate.last_name = "abc"
+            //nstate.last_name = (action.value.last_name)?action.value.last_name:undefined
         }
 
         if(action.value.about){
@@ -79,7 +95,7 @@ const User = (state='',action)=>{
         }                
         if(action.value.dob){
             nstate.dob = action.value.dob
-        }        */
+        }
         
         /*nstate.user_id = action.value.user_id
         nstate.last_name = action.value.last_name
@@ -101,7 +117,7 @@ const User = (state='',action)=>{
             instagram:''
         }*/
         //console.log(nstate)
-        //return nstate
+        return nstate
         //return action.value
         
         default: return state
