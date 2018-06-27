@@ -10,7 +10,10 @@ export const Change_User = "User:UpdateUser"
 export const Toggle =(newstate)=> {
     return{
         type:Change_Toggle,
-        value:newstate,
+        value:
+        {
+            toggle:newstate.toggle
+        }
     }
 }
 

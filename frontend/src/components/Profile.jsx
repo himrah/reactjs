@@ -5,12 +5,15 @@ import gql from 'graphql-tag'
 import  { post } from 'axios';
 import {Helmet} from 'react-helmet'
 import './profile.css'
-import { Gallery, User } from "./actions/actions"
+import { Gallery, User,Toggle } from "./actions/actions"
 import { mapStateToProps,mapDispatchToProps } from './others/MapsProps'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {Map,fromJS} from 'immutable'
 import Edit from './profileEdit'
+import fb from './Images/fb.png'
+import instagram from './Images/instagram.png'
+import twitter from './Images/twitter.png'
 
 /*
 mutation abc(
@@ -253,7 +256,7 @@ class Profile extends React.Component{
       console.log(nextProps.data.users)
       //let user = nextProps.data.users;
       console.log(user)
-      this.setState({
+      /*this.setState({
         user:{
           first_name:user.get('firstName'),
           last_name:user.get('lastName'),
@@ -265,15 +268,15 @@ class Profile extends React.Component{
           fb:user.getIn(['profile','fb']),
           instagram:user.getIn(['profile','instagram'])
         }
-      })
+      })*/
       //this.setState({first_name:user.firstName})
       //this.props.dispatch(User({first_name:user.firstName}))
       //console.log(user.getIn(['profile','birthDay']))
-      //this.props.dispatch(
-        //User(
-          //{
-            //user_id:user.get('id'),
-            /*first_name:user.get('firstName'),
+      this.props.dispatch(
+        User(
+          {
+            user_id:user.get('id'),
+            first_name:user.get('firstName'),
             last_name:user.get('lastName'),
             username:user.get('username'),
             about:user.getIn(['profile','about']),
@@ -281,10 +284,10 @@ class Profile extends React.Component{
             website:user.getIn(['profile','website']),
             twitter:user.getIn(['profile','twitter']),
             fb:user.getIn(['profile','fb']),
-            instagram:user.getIn(['profile','instagram'])*/
-          //}
-        //)
-      //)      
+            instagram:user.getIn(['profile','instagram'])
+          }
+        )
+      )      
     }
 }
 
@@ -363,13 +366,13 @@ ShowEditInfo(){
 
 singlechange(e){
   //this.setState({first_name:e.target.value})
-  //this.props.dispatch(User({first_name:e.target.value}))
-  this.setState({
+  this.props.dispatch(Toggle({toggle:e.target.value}))
+  /*this.setState({
     user:{
       ...this.state.user,
       first_name:e.target.value
     }
-  })
+  })*/
 
 
   console.log(e.target.value)
@@ -417,23 +420,27 @@ render(){
                             <span className="_un">(@{data.users.username})</span>
                           </div>
                           <div className="_about">
-                            {this.state.user.about}
+                            {this.props.User.first_name}
                           </div>
+                          <input type="text" onChange={this.singlechange.bind(this)} value={this.props.Toggle.toggle}/>
+                          {/*
                           <div className="_about">
                             {this.state.user.dob}
                           </div>
-                          <div className="_about">
-                            {this.state.user.instagram}
+                          <div className="_about fl_rw">
+                          <img src={instagram} className="logo" />{this.state.user.instagram}
                           </div>                
-                          <div className="_about">
-                            {this.state.user.fb}
+                          <div className="_about fl_rw">
+
+                          <img src={fb} className="logo"/>{this.state.user.fb}
                           </div>                                                    
-                          <div className="_about">
-                            {this.state.user.twitter}
+                          <div className="_about fl_rw">
+                          <img src={twitter} className="logo" />{this.state.user.twitter}
                           </div>
                           <div className="_about">
                             {this.state.user.website}
                           </div>              
+                          */}
                           <button className="edit" onClick={this.ShowEditInfo.bind(this)}>Edit Profile</button>
                       </div>
                   </div>

@@ -36,7 +36,10 @@ export const initialState = {
       grid:3,
       width:'33.3%'
     },
-  Toggle:'none',
+  Toggle:{toggle:'none'},
+  
+  byname:['username','first_name','last_name','dob','about','twitter','website','fb','instagram'],
+  //User:undefined
   User:{
     username:'',
     user_id:'',

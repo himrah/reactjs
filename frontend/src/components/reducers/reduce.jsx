@@ -28,8 +28,20 @@ const User = (state='',action)=>{
     switch(action.type){
 //        case Change_User: return action.value
         case Change_User:
-        
         let nstate = {...state}
+        console.log(nstate)
+        return {
+            //...state,
+            //first_name:action.value.first_name
+            byname:[...state.byname],
+            User:{
+                ...state.User,
+                [action.byname]:action.value
+            }
+
+        }
+        
+/*        let nstate = {...state}
         if(action.value.user_id){
             nstate.user_id = action.value.user_id
         }
@@ -67,7 +79,7 @@ const User = (state='',action)=>{
         }                
         if(action.value.dob){
             nstate.dob = action.value.dob
-        }        
+        }        */
         
         /*nstate.user_id = action.value.user_id
         nstate.last_name = action.value.last_name
@@ -88,8 +100,8 @@ const User = (state='',action)=>{
             fb:'',
             instagram:''
         }*/
-        console.log(nstate)
-        return nstate
+        //console.log(nstate)
+        //return nstate
         //return action.value
         
         default: return state
