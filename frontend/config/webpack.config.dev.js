@@ -23,12 +23,12 @@ const CompressionPlugin = require("compression-webpack-plugin")
 // In development, we always serve from the root. This makes config easier.
 //const publicPath = '/';
 
-//const publicPath = 'http://49fed9cb.ngrok.io/'
-//const publicUrl = "http://49fed9cb.ngrok.io/"
+const publicPath = 'http://073ddf1d.ngrok.io/'
+const publicUrl = "http://073ddf1d.ngrok.io/"
 //const publicPath = `http://${ require("os").hostname()}:3000`
 //const publicUrl = `http://${ require("os").hostname()}:3000`
-const publicPath = 'http://localhost:3000/';
-const publicUrl = 'http://localhost:3000/';
+//const publicPath = 'http://localhost:3000/';
+//const publicUrl = 'http://localhost:3000/';
 // `publicUrl` is just like `publicPath`, but we will provide it to our app
 // as %PUBLIC_URL% in `index.html` and `process.env.PUBLIC_URL` in JavaScript.
 // Omit trailing slash as %PUBLIC_PATH%/xyz looks better than %PUBLIC_PATH%xyz.
@@ -51,8 +51,8 @@ module.exports = {
     // We ship a few polyfills by default:
     require.resolve('./polyfills'),
     
-    require.resolve('webpack-dev-server/client') + '?http://localhost:3000',
-    //require.resolve('webpack-dev-server/client') + '?http://49fed9cb.ngrok.io ',
+    //require.resolve('webpack-dev-server/client') + '?http://localhost:3000',
+    require.resolve('webpack-dev-server/client') + '?http://073ddf1d.ngrok.io',
     //require.resolve('webpack-dev-server/client') + '?http://'+require("os").hostname()+':3000/',
     //'webpack-dev-server/client?http://' + require("os").hostname() + ':9090/',
     require.resolve('webpack/hot/dev-server'),

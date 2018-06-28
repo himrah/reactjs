@@ -51,7 +51,7 @@ const query = gql`query user{
         console.log(this.props.data)
         nextProps.data.loading
         console.log(nextProps.data)
-        if(!this.props.data.loading)  
+        /*if(!this.props.data.loading)  
             {
                 if(!nextProps.data.loading){
                 this.props.dispatch(User({
@@ -61,7 +61,7 @@ const query = gql`query user{
                     user_id:nextProps.data.currentUser.id,
                 }))
             }
-        }
+            }*/
     }
 
     updateInput = (e) => {
@@ -100,6 +100,8 @@ const query = gql`query user{
             console.log(res.data)
             localStorage.setItem('token', res.data.token)
             this.props.data.refetch()
+            alert(res.data.token)
+            window.location.replace("/")
             console.log(this.props.data)
             
 /*            client.query({

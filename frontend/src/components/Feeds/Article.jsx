@@ -196,8 +196,8 @@ class Articles extends React.Component{
         const timeAgo = new TimeAgo('en-US')
         let post = this.props.p.node
         //console.log(this.props)
-        let server = "http://localhost:8000/"
-        //let server = "http://994365fa.ngrok.io/"
+        //let server = "http://localhost:8000/"
+        let server = "http://2b9bcbc6.ngrok.io/"
         let img = server+post.photo
         let prf =server+post.uploadBy.profilePic.profileThumbs
         

@@ -17,7 +17,7 @@ import twitter from './Images/twitter.png'
 import about from './Images/ab.png'
 import user from './Images/user.png'
 import web from './Images/web.png'
-
+import medium from './Images/medium.png'
 /*
 mutation abc(
   $id:ID!,
@@ -189,8 +189,8 @@ class Edits extends React.Component{
 }
 */
 
-const server = "http://localhost:8000/"
-//const server = "http://cf792ff7.ngrok.io/"
+//const server = "http://localhost:8000/"
+const server = "http://2b9bcbc6.ngrok.io/"
 
 class Thumb extends React.Component{
   constructor(props){

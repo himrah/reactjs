@@ -69,32 +69,32 @@ const User = (state='',action)=>{
         if(action.value.last_name!==nstate.last_name){
             
             //console.log(action.value.last_name)
-            nstate.last_name = action.value.last_name
+            nstate.last_name = action.value.last_name?action.value.last_name:""
             //nstate.last_name = "abc"
             //nstate.last_name = (action.value.last_name)?action.value.last_name:undefined
         }
 
         if(action.value.about!==nstate.last_name){
-            nstate.about = action.value.about
+            nstate.about = action.value.about?action.value.about:""
         }
 
         if(action.value.website!==nstate.website){
-            nstate.website = action.value.website
+            nstate.website = action.value.website?action.value.website:""
         }
         
         if(action.value.twitter!==nstate.twitter){
-            nstate.twitter = action.value.twitter
+            nstate.twitter = action.value.twitter?action.value.twitter:""
         }
          
         if(action.value.instagram!==nstate.instagram){
-            nstate.instagram = action.value.instagram
+            nstate.instagram = action.value.instagram?action.value.instagram:""
         }
 
         if(action.value.fb!==nstate.fb){
-            nstate.fb = action.value.fb
+            nstate.fb = action.value.fb?action.value.fb:""
         }                
         if(action.value.dob!==nstate.dob){
-            nstate.dob = action.value.dob
+            nstate.dob = action.value.dob?action.value.dob:""
         }
         
         /*nstate.user_id = action.value.user_id
