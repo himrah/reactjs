@@ -305,6 +305,7 @@ body{
 .container{
     width: 90%;
 }
+
 .form-control{
     margin-top: 5px;
     width: 100%;
@@ -314,9 +315,15 @@ body{
     height:3em;
     border-bottom: 1px solid rgb(226, 219, 223);        
     
-
-    /*        border-bottom: 2px solid rgb(226, 219, 223);*/
 }
+textarea{
+overflow: hidden;
+resize: none;
+margin: auto;
+padding: 0;
+font-family: Arial, Helvetica, sans-serif;
+}
+/*
 .form-control:focus{
     border-color: white;
     outline: 0;
@@ -328,6 +335,23 @@ body{
 .form-control:-moz-placeholder{
     font-size: 10px;
 }
+*/
+.form-control:-moz-placeholder{
+    font-size: 10px;
+    
+}
+.form-control{
+    height: 2.2em;
+    border-bottom: none;
+    outline: rgb(31, 16, 16);
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+.form-control:focus,.form-control:hover{
+    border-bottom: none;
+    border-color: white;
+    outline: 1
+}
+
 
 
 /*    @media screen and (min-width:720px) {

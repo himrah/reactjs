@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {mapStateToProps, mapDispatchToProps} from './others/MapsProps'
 import gql from 'graphql-tag'
 import { User } from "./actions/actions"
+import './profileEdit.css'
 import { graphql, compose } from 'react-apollo'
 
 
@@ -46,15 +47,17 @@ class Edit extends React.Component{
             first_name:user.first_name.value,
             last_name:user.last_name.value,
             about:user.about.value,
-            dob:user.birthDay.value,
+            dob:user.dob.value,
             website:user.website.value,
             twitter:user.twitter.value,
             fb:user.fb.value,
-            instagram:user.insta.value,
+            instagram:user.instagram.value,
           }
         }).then(res=>{
-          console.log(res)
-          this.props.view({show:'none'})
+          if(res.data.updateInfo.status==="Success")
+          {
+            this.props.views({show:'none'})
+          }
         }).catch(err=>{
           console.log(err)
         })
@@ -65,32 +68,32 @@ class Edit extends React.Component{
         let user = this.props.user
         //console.log(user)
         return(
-            <article>
+            <article className="_editform">
             {
               <form onSubmit={this.handlesubmit.bind(this)} onChange={this.handlechange.bind(this)} name="editform">
               <div>
-                First Name : <input type="text" className="input" name="first_name" value={user.first_name} />
+                First Name : <input type="text" className="form-control" name="first_name" value={user.first_name} />
               </div>
               <div>
-                Last Name : <input type="text" className="input" value={user.last_name} name="last_name"/>
+                Last Name : <input type="text" className="form-control" value={user.last_name} name="last_name"/>
               </div>
               <div>
-                Date of Birthday : <input type="date" className="input" value={user.dob} name="dob" />
+                Date of Birthday : <input type="date" className="form-control" value={user.dob} name="dob" />
               </div>
               <div>
-                About : <textarea value={user.about} className="input"  name="about"/>
+                About : <textarea value={user.about} className="form-control"  name="about"/>
               </div>
               <div>
-                website : <input type="text" value={user.website} className="input" name="website" />
+                website : <input type="text" value={user.website} className="form-control" name="website" />
               </div>
               <div>
-               twitter <input type="text" name="twitter" className="input" value={user.twitter} />
+               twitter <input type="text" name="twitter" className="form-control" value={user.twitter} />
               </div>
               <div>
-                Instagram <input type="text" name="instagram" className="input" value={user.instagram} />
+                Instagram <input type="text" name="instagram" className="form-control" value={user.instagram} />
               </div>
               <div>
-                Facebook <input type="text" name="fb" className="input" value={user.fb} />
+                Facebook <input type="text" name="fb" className="form-control" value={user.fb} />
               </div>
             <button type="submit" name="submit" className="edit">Sumit</button>
             </form>

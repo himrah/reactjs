@@ -14,6 +14,9 @@ import Edit from './profileEdit'
 import fb from './Images/fb.png'
 import instagram from './Images/instagram.png'
 import twitter from './Images/twitter.png'
+import about from './Images/ab.png'
+import user from './Images/user.png'
+import web from './Images/web.png'
 
 /*
 mutation abc(
@@ -293,12 +296,16 @@ class Profile extends React.Component{
 
 
   Updateuser(e){
-    console.log(e.target.value)
-    this.setState({
+    //console.log(e.target.value)
+    /*this.setState({
       user:{
         ...this.state.user,
       }
-    })
+    })*/
+    this.setState({
+      edit:e.show
+    })    
+    /*
     switch(e.target.name){
       case 'first_name':this.setState({user:{...this.state.user,first_name:e.target.value}});break;
       case 'last_name':this.setState({user:{...this.state.user,last_name:e.target.value}});break;
@@ -309,7 +316,7 @@ class Profile extends React.Component{
       case 'insta':this.setState({user:{...this.state.user,instagram:e.target.value}});break;
       case 'fb':this.setState({user:{...this.state.user,fb:e.target.value}});break;
       default:break;
-    }
+    }*/
 
 
     /*this.setState({
@@ -441,43 +448,45 @@ render(){
                     <div className="information">
                       <div className="personal">
                           <div className="fl_rw">
-                            {/*<span className="unm">{data.users.firstName + " " +data.users.lastName}</span>
-                            <span className="_un">(@{data.users.username})</span>*/}
-                            <span className="unm">{this.props.User.first_name + " " +this.props.User.last_name}</span>
+                          <img src={user} className="logo" alt="user"/><span className="unm">{this.props.User.first_name + " " +this.props.User.last_name}</span>
                             <span className="_un">(@{this.props.User.username})</span>
                           </div>
-                         {/* <div className="_about">
-                            {this.props.User.first_name}
-                          </div>
-                          <div className="_about">
-                            {this.props.User.last_name}
-                          </div>
-                                
-                          <form onChange={this.singlechange.bind(this)} name="upform" id="upform">
-                          <input type="text" name="first_name" value={this.props.User.first_name?this.props.User.first_name:""} />
-                          <input type="text" name="last_name" value={this.props.User.last_name} />
-                          </form>*/}
-                          
-                          <div className="_about">
-                            {this.props.User.dob}
-                          </div>
-                          <div className="_about fl_rw">
-                          <img src={instagram} className="logo" />{this.props.User.instagram}
-                          </div>                
-                          <div className="_about fl_rw">
+                          {this.props.User.instagram?(
+                            <div className="_about fl_rw">
+                            <img src={instagram} className="logo" alt="instagram"/>{this.props.User.instagram}
+                            </div>
+                          ):(
+                            <span></span>
+                          )
+                          }
 
-                          <img src={fb} className="logo"/>{this.props.User.fb}
-                          </div>                                                    
+                          {this.props.User.fb?(   
+                          <div className="_about fl_rw">  
+                          <img src={fb} className="logo" alt="fb"/>{this.props.User.fb}
+                          </div>):(
+                            <span></span>
+                          )                                       
+                           }
+                           {this.props.User.twitter?(
                           <div className="_about fl_rw">
-                          <img src={twitter} className="logo" />{this.props.User.twitter}
+                          <img src={twitter} className="logo" alt="twitter"/> {this.props.User.twitter}
                           </div>
-                          <div className="_about">
-                            {this.props.User.website}
-                          </div>              
-                          <div className="_about">
-                            {this.props.User.about}
-                          </div>              
+                           ):(
+                             <span></span>
+                           )
+                           }
+                          {this.props.User.website?(
+                          <div className="_about fl_rw">
+                          <img src={web} className="logo" alt="website"/>{this.props.User.website}
+                          </div>
+                          ):(
+                            <span/>
+                          )
+                          }
 
+                          <div className="_about fl_rw">
+                          {/*<img src={about} className="logo" alt="website"/>*/}{this.props.User.about}
+                          </div>              
                           <button className="edit" onClick={this.ShowEditInfo.bind(this)}>Edit Profile</button>
                       </div>
                   </div>
@@ -501,7 +510,7 @@ render(){
 
             </section>
             <section className="edit_info" style={{display:this.state.edit}}>
-              <Edit info={data} mutate = {mutate} user={this.props.User} view={this.singlechange.bind(this)}  viewss={this.Updateuser.bind(this)}/>
+              <Edit info={data} mutate = {mutate} user={this.props.User} view={this.singlechange.bind(this)}  views={this.Updateuser.bind(this)}/>
               </section>
             <section className="slide">
                     <div className="fl_rw sl_sec">

@@ -58,7 +58,8 @@ textarea{
     resize: none;
     max-width: 550px;
     padding: 0;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    /*font-family: Arial, Helvetica, sans-serif;*/
 }
 .comment_box{
     padding-left: 12px; 

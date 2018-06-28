@@ -126,6 +126,8 @@
 
   ._about{
     font-size: 17px;
+    /*font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif*/
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   }
  
   @media (max-width:600px){
@@ -232,4 +234,7 @@ height: 100%;
 }
 .logo{
   width: 20px;
+  height: 20px;
+  padding-right: 5px;
+  padding-bottom: 3px;
 }
