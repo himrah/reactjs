@@ -7,6 +7,7 @@ import TimeAgo from 'javascript-time-ago'
 //import LoadArticle from './LoadArticle'
 import { graphql, compose } from 'react-apollo'
 import gql from 'graphql-tag'
+import {backend_server} from '../../server'
 //import {toggle} from '...'
 
 //import {toggle} from '.../actions'
@@ -197,7 +198,10 @@ class Articles extends React.Component{
         let post = this.props.p.node
         //console.log(this.props)
         //let server = "http://localhost:8000/"
-        let server = "http://2b9bcbc6.ngrok.io/"
+        const server = backend_server
+        console.log(backend_server)
+        console.log(server)
+        //let server = "http://2b9bcbc6.ngrok.io/"
         let img = server+post.photo
         let prf =server+post.uploadBy.profilePic.profileThumbs
         

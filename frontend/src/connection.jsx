@@ -2,9 +2,11 @@ import ApolloClient, { createNetworkInterface } from 'apollo-client'
 //import { ApolloProvider } from 'react-apollo'
 //import 'tachyons'
 import { InMemoryCache } from 'apollo-cache-inmemory';
+import {backend_server} from './server'
 
 //const server='http://localhost:8000/graphql/'
-const server = "http://2b9bcbc6.ngrok.io/graphql/"
+const server = backend_server+'graphql/'
+//const server = "http://2b9bcbc6.ngrok.io/graphql/"
 const networkinterface = createNetworkInterface({
     //uri:'http://localhost:8000/graphql/',
     uri:server,

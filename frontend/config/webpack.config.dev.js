@@ -16,19 +16,20 @@ const getClientEnvironment = require('./env');
 const paths = require('./paths');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const CompressionPlugin = require("compression-webpack-plugin")
-
-
+//import {fronted_server} from '../src/server'
+//const fronted_server  = require('../src/server')
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // In development, we always serve from the root. This makes config easier.
 //const publicPath = '/';
 
-const publicPath = 'http://073ddf1d.ngrok.io/'
-const publicUrl = "http://073ddf1d.ngrok.io/"
+//const publicPath = 'http://073ddf1d.ngrok.io/'
+//const publicUrl = "http://073ddf1d.ngrok.io/"
 //const publicPath = `http://${ require("os").hostname()}:3000`
 //const publicUrl = `http://${ require("os").hostname()}:3000`
-//const publicPath = 'http://localhost:3000/';
-//const publicUrl = 'http://localhost:3000/';
+const fronted_server = "http://localhost:3000/"
+const publicPath = fronted_server;
+const publicUrl = fronted_server;
 // `publicUrl` is just like `publicPath`, but we will provide it to our app
 // as %PUBLIC_URL% in `index.html` and `process.env.PUBLIC_URL` in JavaScript.
 // Omit trailing slash as %PUBLIC_PATH%/xyz looks better than %PUBLIC_PATH%xyz.
@@ -52,7 +53,8 @@ module.exports = {
     require.resolve('./polyfills'),
     
     //require.resolve('webpack-dev-server/client') + '?http://localhost:3000',
-    require.resolve('webpack-dev-server/client') + '?http://073ddf1d.ngrok.io',
+    
+    require.resolve('webpack-dev-server/client') + '?'+fronted_server,
     //require.resolve('webpack-dev-server/client') + '?http://'+require("os").hostname()+':3000/',
     //'webpack-dev-server/client?http://' + require("os").hostname() + ':9090/',
     require.resolve('webpack/hot/dev-server'),

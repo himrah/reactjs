@@ -18,6 +18,7 @@ import about from './Images/ab.png'
 import user from './Images/user.png'
 import web from './Images/web.png'
 import medium from './Images/medium.png'
+import {backend_server} from '../server'
 /*
 mutation abc(
   $id:ID!,
@@ -190,7 +191,8 @@ class Edits extends React.Component{
 */
 
 //const server = "http://localhost:8000/"
-const server = "http://2b9bcbc6.ngrok.io/"
+//const server = "http://2b9bcbc6.ngrok.io/"
+const server = backend_server
 
 class Thumb extends React.Component{
   constructor(props){
@@ -495,8 +497,16 @@ render(){
                       <img style={style} src={ "http://localhost:8000/photos/"+data.users.profilePic.profileThumbs} alt="profile"/>
                       */}
                       <div className="uprf">
-                      <img style={style} src={ server+data.users.profilePic.profileThumbs} alt="profile"/>
-                      <div className="overlay"></div>
+                        <img style={style} src={ server+data.users.profilePic.profileThumbs} alt="profile"/>
+                        <div className="overlay"></div>
+                      </div>
+                      <div className="fls_rw">
+                        <div className="conn">
+                          <span className="income">65</span>
+                        </div>
+                        <div className="conn">
+                          <span className="outgo">98</span>
+                        </div>
                       </div>
                       {
                       /*
