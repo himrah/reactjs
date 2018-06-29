@@ -199,8 +199,8 @@ class Articles extends React.Component{
         //console.log(this.props)
         //let server = "http://localhost:8000/"
         const server = backend_server
-        console.log(backend_server)
-        console.log(server)
+        //console.log(backend_server)
+        //console.log(server)
         //let server = "http://2b9bcbc6.ngrok.io/"
         let img = server+post.photo
         let prf =server+post.uploadBy.profilePic.profileThumbs

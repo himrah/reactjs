@@ -4,6 +4,7 @@ import {mapStateToProps, mapDispatchToProps} from './others/MapsProps'
 import gql from 'graphql-tag'
 import { User } from "./actions/actions"
 import './profileEdit.css'
+import {fromJS} from 'immutable'
 import { graphql, compose } from 'react-apollo'
 
 
@@ -64,36 +65,37 @@ class Edit extends React.Component{
       }
 
     render(){
-        //console.log(this.props)
-        let user = this.props.user
+        console.log(this.props)
+        let users = fromJS(this.props.info.users)
+        //let user = this.props.user
         //console.log(user)
         return(
             <article className="_editform">
             {
               <form onSubmit={this.handlesubmit.bind(this)} onChange={this.handlechange.bind(this)} name="editform">
               <div>
-                First Name : <input type="text" className="form-control" name="first_name" value={user.first_name} />
+                First Name : <input type="text" className="form-control" name="first_name" value={users.get('firstName')} />
               </div>
               <div>
-                Last Name : <input type="text" className="form-control" value={user.last_name} name="last_name"/>
+                Last Name : <input type="text" className="form-control" value={users.get('lastName')} name="last_name"/>
               </div>
               <div>
-                Date of Birthday : <input type="date" className="form-control" value={user.dob} name="dob" />
+                Date of Birthday : <input type="date" className="form-control" value={users.getIn(['profile','birthDay'])} name="dob" />
               </div>
               <div>
-                About : <textarea value={user.about} className="form-control"  name="about"/>
+                About : <textarea value={users.getIn(['profile','about'])} className="form-control"  name="about"/>
               </div>
               <div>
-                website : <input type="text" value={user.website} className="form-control" name="website" />
+                website : <input type="text" value={users.getIn(['profile','website'])} className="form-control" name="website" />
               </div>
               <div>
-               twitter <input type="text" name="twitter" className="form-control" value={user.twitter} />
+               twitter <input type="text" name="twitter" className="form-control" value={users.getIn(['profile','twitter'])} />
               </div>
               <div>
-                Instagram <input type="text" name="instagram" className="form-control" value={user.instagram} />
+                Instagram <input type="text" name="instagram" className="form-control" value={users.getIn(['profile','instagram'])} />
               </div>
               <div>
-                Facebook <input type="text" name="fb" className="form-control" value={user.fb} />
+                Facebook <input type="text" name="fb" className="form-control" value={users.getIn(['profile','fb'])} />
               </div>
             <button type="submit" name="submit" className="edit">Sumit</button>
             </form>

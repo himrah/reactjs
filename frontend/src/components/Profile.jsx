@@ -245,6 +245,7 @@ class Profile extends React.Component{
 
   componentDidMount = () => {
     //console.log(this.props)
+    console.log(this.props)
     this.setState(
       {
         grid:this.props.Gallery.grid,
@@ -254,6 +255,8 @@ class Profile extends React.Component{
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log(this.props)
+    console.log(nextProps)
     if(this.props.data.users!=nextProps.data.users)
     {
       //let user = nextProps.data.users
@@ -277,6 +280,7 @@ class Profile extends React.Component{
       //this.setState({first_name:user.firstName})
       //this.props.dispatch(User({first_name:user.firstName}))
       //console.log(user.getIn(['profile','birthDay']))
+      //console.log(nextProps.data)
       this.props.dispatch(
         User(
           {
@@ -438,6 +442,7 @@ render(){
         }
         //console.log(this.props)
         //console.log(this.state.user.first_name)
+        let users = fromJS(data.users)
         return(
           <main className="main">      
           <Helmet>
@@ -445,69 +450,33 @@ render(){
           </Helmet>  
             <section className="top">
               <div className="profile">
-              <div className="pfile">
+                <div className="pfile">
                   <span className="fl_rw">
                     <div className="information">
                       <div className="personal">
-                          <div className="fl_rw">
-                          <img src={user} className="logo" alt="user"/><span className="unm">{this.props.User.first_name + " " +this.props.User.last_name}</span>
-                            <span className="_un">(@{this.props.User.username})</span>
+                        <div className="fl_rw">
+                          <img src={user} className="logo" alt="user"/><span className="unm">{users.get('firstName') + " " +users.get('lastName')}</span>
+                            <span className="_un">(@{users.get('username')})</span>
+                        </div>
+                        <div className="connection">
+                          <input type="button" className="connect" value="Connect"/>
+                        </div>
+                        <div className="fls_rw">
+                          <div className="conn">
+                            <span className="income">65</span>
                           </div>
-                          {this.props.User.instagram?(
-                            <div className="_about fl_rw">
-                            <img src={instagram} className="logo" alt="instagram"/>{this.props.User.instagram}
-                            </div>
-                          ):(
-                            <span></span>
-                          )
-                          }
-
-                          {this.props.User.fb?(   
-                          <div className="_about fl_rw">  
-                          <img src={fb} className="logo" alt="fb"/>{this.props.User.fb}
-                          </div>):(
-                            <span></span>
-                          )                                       
-                           }
-                           {this.props.User.twitter?(
-                          <div className="_about fl_rw">
-                          <img src={twitter} className="logo" alt="twitter"/> {this.props.User.twitter}
+                         <div className="conn">
+                          <span className="outgo">98</span>
                           </div>
-                           ):(
-                             <span></span>
-                           )
-                           }
-                          {this.props.User.website?(
-                          <div className="_about fl_rw">
-                          <img src={web} className="logo" alt="website"/>{this.props.User.website}
-                          </div>
-                          ):(
-                            <span/>
-                          )
-                          }
-
-                          <div className="_about fl_rw">
-                          {/*<img src={about} className="logo" alt="website"/>*/}{this.props.User.about}
-                          </div>              
-                          <button className="edit" onClick={this.ShowEditInfo.bind(this)}>Edit Profile</button>
+                        </div>
                       </div>
-                  </div>
-                  <div className="container">
-                      {/*}
-                      <img style={style} src={ "http://localhost:8000/photos/"+data.users.profilePic.profileThumbs} alt="profile"/>
-                      */}
+                    </div>
+                    <div className="container">
                       <div className="uprf">
                         <img style={style} src={ server+data.users.profilePic.profileThumbs} alt="profile"/>
                         <div className="overlay"></div>
                       </div>
-                      <div className="fls_rw">
-                        <div className="conn">
-                          <span className="income">65</span>
-                        </div>
-                        <div className="conn">
-                          <span className="outgo">98</span>
-                        </div>
-                      </div>
+
                       {
                       /*
                       <input type="file" className="in" name="profile_pic" onChange={this.onChangePost}/>
@@ -515,10 +484,50 @@ render(){
                       }
                     </div>                  
                   </span>                  
-                  </div>
-              </div>
+                </div>
 
+                <div className="pfile">                
+                  {users.getIn(['profile','instagram'])?(
+                            <div className="_about fl_rw">
+                            <img src={instagram} className="logo" alt="instagram"/>{users.getIn(['profile','instagram'])}
+                            </div>
+                          ):(
+                            <span></span>
+                          )
+                          }
+                          {users.getIn(['profile','fb'])?(   
+                          <div className="_about fl_rw">  
+                          <img src={fb} className="logo" alt="fb"/>{users.getIn(['profile','fb'])}
+                          </div>):(
+                            <span></span>
+                          )                                       
+                           }
+                           {users.getIn(['profile','twitter'])?(
+                          <div className="_about fl_rw">
+                          <img src={twitter} className="logo" alt="twitter"/> {users.getIn(['profile','twitter'])}
+                          </div>
+                           ):(
+                             <span></span>
+                           )
+                           }
+                          {users.getIn(['profile','website'])?(
+                          <div className="_about fl_rw">
+                          <img src={web} className="logo" alt="website"/>{users.getIn(['profile','website'])}
+                          </div>
+                          ):(
+                            <span/>
+                          )
+                          }
+                          <div className="_about fl_rw">
+                          {users.getIn(['profile','about'])}
+                          </div>
+                          <div className="editbtn">
+                          <button className="edit" onClick={this.ShowEditInfo.bind(this)}>Edit Profile</button>
+                          </div>
+                </div>
+              </div>
             </section>
+
             <section className="edit_info" style={{display:this.state.edit}}>
               <Edit info={data} mutate = {mutate} user={this.props.User} view={this.singlechange.bind(this)}  views={this.Updateuser.bind(this)}/>
               </section>
