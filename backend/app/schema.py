@@ -2,7 +2,7 @@ from django.contrib.auth.models import User,Group
 import graphene
 #import graphql_jwt
 from django.db.models import Q
-from .models import Comments,Photos,Profile,Profile_pic, IMG,Interest,ReplyComments,Connection
+from .models import Comments,Photos,Profile,Profile_pic, IMG,Interest,ReplyComments,Connection as Follow
 #from graphene import ObjectType,Node,Schema,List,Field,relay,AbstractType
 from graphene_django.fields import DjangoConnectionField
 from graphene_django.types import DjangoObjectType
@@ -36,6 +36,17 @@ class GetFeeds(graphene.ObjectType):
         return [get_feed(i) for i in self.feeds]
 """
 
+class Connection(graphene.Connection):
+    class Meta:
+        abstract = True
+    total_count = graphene.Int()
+    
+    def resolve_total_count(self,info):
+        return self.length
+        
+graphene.Connection = Connection
+#graphene.Connection
+#graphene.Connection.Meta.
 
 class PhotoType(DjangoObjectType):
     class Meta:
@@ -63,7 +74,30 @@ class ImgType(DjangoObjectType):
 class CommentType(DjangoObjectType):
     class Meta:
         model = Comments
+        filter_fields = {
+            'comment': ['exact', 'icontains', 'istartswith'],
+        }
         interfaces = (graphene.Node, )
+    @classmethod 
+    def get_connection(cls):
+        class Countable_connection(graphene.Connection):
+            total_count = int()
+
+            class Meta:
+                name = '{}Connection'.format(cls._meta.comment)
+                node = cls
+            @staticmethod
+            def resolve_total_count(root, args, context, info):
+                return root.length
+        return Countable_connection        
+
+
+    #connection_type = Connection
+class FollowType(DjangoObjectType):
+    class Meta:
+        model = Follow
+        interfaces = (graphene.Node,)
+    #connection_class = Connection
 
 class UserType(DjangoObjectType):
     class Meta:
@@ -151,9 +185,9 @@ class UpdateInfo(graphene.Mutation):
         #if(u.id == context.context.user.id):
         #    u.first_name = first_name
         #    u.last_name = last_name
-        print(u.id,context.context.user.id)
+        #print(u.id,context.context.user.id)
         if(u.id==context.context.user.id):
-            print("Trre")
+            #print("Trre")
             u.first_name = first_name
             u.last_name = last_name
             p.birth_day = datetime.strptime(dob, "%Y-%m-%d").date()
@@ -256,6 +290,7 @@ class Query(graphene.AbstractType):
 
     all_context = DjangoFilterConnectionField(PhotoNode)
 
+    all_connection = graphene.List(FollowType)
 
     def resolve_all_context(self,info,**kwargs):
         print(info.context.user)
@@ -273,6 +308,8 @@ class Query(graphene.AbstractType):
         #return info.context.user        
         
         
+    def resolve_all_connection(self,info,**kwargs):
+        return Follow.objects.all()
 
     def resolve_all_img(self, info, **kwargs):
         return IMG.objects.all()
@@ -315,8 +352,8 @@ class Query(graphene.AbstractType):
         return Comments.objects.select_related('photo_id').all().order_by('-comment_time')
 
     def resolve_all_users(self, info, **kwargs):
-        return User.objects.select_related('photo_id').all()
-        #return User.objects.all()
+        #return User.objects.select_related('photo_id').all()
+        return User.objects.all()
 
 
     def resolve_all_by_users(self,info,**kwargs):

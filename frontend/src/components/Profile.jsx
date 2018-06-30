@@ -71,6 +71,20 @@ const query = gql`query user($username:String!)
       instagram
       twitter
     }
+    following{
+      edges{
+        node{
+          id
+        }
+      }
+    }
+    follower{
+      edges{
+        node{
+          id
+        }
+      }
+    }
 		profilePic{
       id
       profileOriginal
