@@ -54,7 +54,22 @@ mutation abc(
 
 
 
-
+const qury = gql`query user{
+  currentUser{
+      id
+      username
+      firstName
+      lastName
+      profile{
+        fb
+        instagram
+        website
+        twitter
+        about
+        birthDay
+      }
+  }
+}`
 const query = gql`query user($username:String!)
 {
   users(username:$username){
@@ -457,6 +472,7 @@ render(){
         //console.log(this.props)
         //console.log(this.state.user.first_name)
         let users = fromJS(data.users)
+        console.log(this.props.current)
         return(
           <main className="main">      
           <Helmet>
@@ -535,9 +551,13 @@ render(){
                           <div className="_about fl_rw">
                           {users.getIn(['profile','about'])}
                           </div>
+                          {this.props.current.currentUser===users.get("id")?(
                           <div className="editbtn">
                           <button className="edit" onClick={this.ShowEditInfo.bind(this)}>Edit Profile</button>
-                          </div>
+                          </div>):(
+                            <span></span>
+                          )
+                          }
                 </div>
               </div>
             </section>
@@ -611,6 +631,7 @@ export default compose(
   ),*/
   /*connect(mapStateToProps,mapDispatchToProps),*/
   connect(mapStateToProps),
+  graphql(qury,{name:'current'}),
   graphql(query,queryOptions),
   graphql(updateinfo)
 )(Profile)

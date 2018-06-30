@@ -11,13 +11,21 @@ import { mapStateToProps, mapDispatchToProps } from './others/MapsProps'
 import {connect} from 'react-redux'
 import { User } from './actions/actions';
 //import About from '../About'
-
+import {fromJS} from 'immutable'
 const query = gql`query user{
     currentUser{
-      id
-      username
-      firstName
-      lastName
+        id
+        username
+        firstName
+        lastName
+        profile{
+          fb
+          instagram
+          website
+          twitter
+          about
+          birthDay
+        }
     }
   }`
 
@@ -48,21 +56,37 @@ const query = gql`query user{
        
 
     componentWillReceiveProps(nextProps) {
-        console.log(this.props.data)
-        nextProps.data.loading
-        console.log(nextProps.data)
-        /*if(!this.props.data.loading)  
-            {
-                if(!nextProps.data.loading){
-                this.props.dispatch(User({
-                    username:nextProps.data.currentUser.username,
-                    first_name:nextProps.data.currentUser.firstName,
-                    last_name:nextProps.data.currentUser.lastName,
-                    user_id:nextProps.data.currentUser.id,
-                }))
+        if(nextProps.data.currentUser){
+            console.log(this.props.data)
+            //nextProps.data.loading
+            console.log(nextProps.data)
+                
+            
+            //console.log(user)
+
+            if(this.props.data.currentUser!==nextProps.data.currentUser)
+                {
+                    var user = fromJS(nextProps.data.currentUser)
+                    console.log(user)
+                    this.props.dispatch(User({
+                        //username:nextProps.data.currentUser.username,
+                        //first_name:nextProps.data.currentUser.firstName,
+                        //last_name:nextProps.data.currentUser.lastName,
+                        user_id:user.get("id"),
+                        first_name:user.get('firstName'),
+                        last_name:user.get('lastName'),
+                        username:user.get('username'),
+                        about:user.getIn(['profile','about']),
+                        dob:user.getIn(['profile','birthDay']),
+                        website:user.getIn(['profile','website']),
+                        twitter:user.getIn(['profile','twitter']),
+                        fb:user.getIn(['profile','fb']),
+                        instagram:user.getIn(['profile','instagram'])
+
+                    }))
+               }
             }
-            }*/
-    }
+        }
 
     updateInput = (e) => {
         this.setState({
@@ -102,7 +126,7 @@ const query = gql`query user{
             this.props.data.refetch()
             alert(res.data.token)
             window.location.replace("/")
-            console.log(this.props.data)
+            //console.log(this.props.data)
             
 /*            client.query({
                 query:query
@@ -124,7 +148,7 @@ const query = gql`query user{
     
     }
     render(){
-        console.log(this.props)
+        //console.log(this.props)
         return(
         <main className="main-login">
             <section className="section-login">

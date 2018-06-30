@@ -78,8 +78,8 @@ class P extends Component{
 
 class Container extends Component{
   render() {
-    var token = true
-    //var token=localStorage.getItem('token')
+    //var token = true
+    var token=localStorage.getItem('token')
     //var token=true
     //console.log(localStorage)
     //console.log(token)
