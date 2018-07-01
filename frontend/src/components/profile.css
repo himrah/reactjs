@@ -1,3 +1,7 @@
+@font-face{
+font-family:'Trebuchet MS';
+src: url('../font/trebuc.ttf');
+}
 .container {
     position: relative;
     border-radius: 50%;

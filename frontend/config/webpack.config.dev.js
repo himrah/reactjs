@@ -27,7 +27,8 @@ const CompressionPlugin = require("compression-webpack-plugin")
 //const publicUrl = "http://073ddf1d.ngrok.io/"
 //const publicPath = `http://${ require("os").hostname()}:3000`
 //const publicUrl = `http://${ require("os").hostname()}:3000`
-const fronted_server = "http://localhost:3000/"
+//const fronted_server = "http://localhost:3000/"
+const fronted_server = "http://192.168.43.165:3000/"
 const publicPath = fronted_server;
 const publicUrl = fronted_server;
 // `publicUrl` is just like `publicPath`, but we will provide it to our app
@@ -54,7 +55,7 @@ module.exports = {
     
     //require.resolve('webpack-dev-server/client') + '?http://localhost:3000',
     
-    require.resolve('webpack-dev-server/client') + '?'+fronted_server,
+    require.resolve('webpack-dev-server/client') + '?http://192.168.43.165:3000',
     //require.resolve('webpack-dev-server/client') + '?http://'+require("os").hostname()+':3000/',
     //'webpack-dev-server/client?http://' + require("os").hostname() + ':9090/',
     require.resolve('webpack/hot/dev-server'),

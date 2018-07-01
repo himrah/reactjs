@@ -9,7 +9,7 @@
 }
 @font-face{
     font-family: 'BLKCHCRY';
-    src: url('../font/BLKCHCRY.TTF')
+    src: url('../font/BLKCHCRY.TTF');
 }
 .brand{
     float:left;

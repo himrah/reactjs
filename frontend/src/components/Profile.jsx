@@ -473,7 +473,15 @@ render(){
         //console.log(this.state.user.first_name)
         let users = fromJS(data.users)
         console.log(this.props.current)
-        return(
+        if(!this.props.current.loading && !this.props.data.loading)
+          if(this.props.current.currentUser.id===users.get("id")){
+            var con = false
+          }
+          else{
+            var con = true
+          }
+
+          return(
           <main className="main">      
           <Helmet>
           <title>Profile</title>
@@ -488,9 +496,16 @@ render(){
                           <img src={user} className="logo" alt="user"/><span className="unm">{users.get('firstName') + " " +users.get('lastName')}</span>
                             <span className="_un">(@{users.get('username')})</span>
                         </div>
+                        {con?
+                        (
                         <div className="connection">
                           <input type="button" className="connect" value="Connect"/>
                         </div>
+                        ):(
+                        <span></span>
+                        )
+                        }
+                        
                         <div className="fls_rw">
                           <div className="conn">
                             <span className="income">65</span>
@@ -551,7 +566,7 @@ render(){
                           <div className="_about fl_rw">
                           {users.getIn(['profile','about'])}
                           </div>
-                          {this.props.current.currentUser===users.get("id")?(
+                          {!con?(
                           <div className="editbtn">
                           <button className="edit" onClick={this.ShowEditInfo.bind(this)}>Edit Profile</button>
                           </div>):(

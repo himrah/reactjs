@@ -4,6 +4,7 @@ import React from 'react';
 //import '../static/logincss.css'
 import './logincss.css'
 import {post} from 'axios'
+import axios from 'axios'
 import { graphql, Query, compose } from 'react-apollo'
 import gql from 'graphql-tag'
 import client from '../connection'
@@ -12,6 +13,7 @@ import {connect} from 'react-redux'
 import { User } from './actions/actions';
 //import About from '../About'
 import {fromJS} from 'immutable'
+import {backend_server} from '../server'
 const query = gql`query user{
     currentUser{
         id
@@ -110,38 +112,55 @@ const query = gql`query user{
       body: JSON.stringify({username: this.state.username, password: this.state.password})
 
     })*/
-    var server = "http://localhost:8000/api-token-auth/"
+    
+    //var server = "http://localhost:8000/api-token-auth/"
+    var server = backend_server+"api-token-auth/"
     const config={
         headers: {
-            'Accept': 'application/json, text/plain, */*',
-            'Content-Type': 'application/json'
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
         }
     }
-    post(server,{username: this.state.username, password: this.state.password},config)
+/*    console.log(server)
+    axios({
+        headers:{
+            'Accept': 'application/json',
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'charset':'UTF-08',            
+        },
+        method:'post',
+        url:server,
+        params:{
+            username: this.state.username, 
+            password: this.state.password
+        }
+    }).then(
+        (res)=>{
+            alert(res.data.token)
+        }
+    )
+    .catch(
+        (err)=>err
+    )*/
+    var data={'username':this.state.username, password: this.state.password}
+    //alert(data)
+    post(server,data,config)
     .then(res => {
         if (res.data.token) {
-            
+            //alert(res.data.token)         
             console.log(res.data)
             localStorage.setItem('token', res.data.token)
             this.props.data.refetch()
-            alert(res.data.token)
+            //alert(res.data.token)
             window.location.replace("/")
-            //console.log(this.props.data)
-            
-/*            client.query({
-                query:query
-            }).then(res=>
-            console.log(res))
-            console.log(res.data)
-            //localStorage.setItem('token', res.data.token)
-            //window.location.replace('/')*/
-
         }
           else{
+              alert("username or password")
               console.log('Username or Password is wrong')
           }
         })
       .catch(err => {
+        alert(err.response.status)
         console.log('wrong'+err)
       })
        
