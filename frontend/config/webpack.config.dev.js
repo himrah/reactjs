@@ -27,8 +27,8 @@ const CompressionPlugin = require("compression-webpack-plugin")
 //const publicUrl = "http://073ddf1d.ngrok.io/"
 //const publicPath = `http://${ require("os").hostname()}:3000`
 //const publicUrl = `http://${ require("os").hostname()}:3000`
-//const fronted_server = "http://localhost:3000/"
-const fronted_server = "http://192.168.43.165:3000/"
+const fronted_server = "http://localhost:3000/"
+//const fronted_server = "http://192.168.43.165:5000/"
 const publicPath = fronted_server;
 const publicUrl = fronted_server;
 // `publicUrl` is just like `publicPath`, but we will provide it to our app

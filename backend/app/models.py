@@ -128,7 +128,12 @@ class Photos(models.Model):
         #super(Photos,self).save()
         im = Image.open(self.original_photo)
         output = BytesIO()
-        basewidth = 600
+        #basewidth = 600
+        if im.size[0]<=700:
+            basewidth = im.size[0]
+        else:
+            basewidth = 700   
+
         #img = Image.open('somepic.jpg')
         wpercent = (basewidth/float(im.size[0]))
         hsize = int((float(im.size[1])*float(wpercent)))

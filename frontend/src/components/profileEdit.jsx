@@ -23,7 +23,18 @@ class Edit extends React.Component{
         //this.props.view(e)
         //this.props.dispatch(User({first_name:e.target.value}))
         var f = document.forms.namedItem("editform")
-        this.props.view(f)
+        console.log(this.props)
+        this.props.UpdateUser({
+          first_name:f.elements.first_name.value,
+          last_name:f.elements.last_name.value,
+          dob:f.elements.dob.value,
+          instagram:f.elements.instagram.value,
+          fb:f.elements.fb.value,
+          twitter:f.elements.twitter.value,
+          website:f.elements.website.value,
+          about:f.elements.about.value,
+        })
+        //this.props.view(f)
         //this.props.view(e)
         //this.props.UpdateUser({first_name:e.target.value})
         /*switch(e.target.name){
@@ -66,7 +77,8 @@ class Edit extends React.Component{
 
     render(){
         console.log(this.props)
-        let users = fromJS(this.props.info.users)
+        //let users = fromJS(this.props.info.users)
+        let users = this.props.User
         //let user = this.props.user
         //console.log(user)
         return(
@@ -74,12 +86,13 @@ class Edit extends React.Component{
             {
               <form onSubmit={this.handlesubmit.bind(this)} onChange={this.handlechange.bind(this)} name="editform">
               <div>
-                First Name : <input type="text" className="form-control" name="first_name" value={users.get('firstName')} />
+                First Name : <input type="text" className="form-control" name="first_name" value={users.first_name} />
               </div>
+
               <div>
-                Last Name : <input type="text" className="form-control" value={users.get('lastName')} name="last_name"/>
+                Last Name : <input type="text" className="form-control" value={users.last_name} name="last_name"/>
               </div>
-              <div>
+{/*              <div>
                 Date of Birthday : <input type="date" className="form-control" value={users.getIn(['profile','birthDay'])} name="dob" />
               </div>
               <div>
@@ -96,7 +109,7 @@ class Edit extends React.Component{
               </div>
               <div>
                 Facebook <input type="text" name="fb" className="form-control" value={users.getIn(['profile','fb'])} />
-              </div>
+              </div>*/}
             <button type="submit" name="submit" className="edit">Sumit</button>
             </form>
         

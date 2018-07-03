@@ -27,7 +27,7 @@ from rest_framework_jwt.views import obtain_jwt_token
 from rest_framework_jwt.views import refresh_jwt_token
 from rest_framework_jwt.views import verify_jwt_token
 from rest_framework.authtoken.views import obtain_auth_token
-
+from django.views.generic import TemplateView
 from django.views.decorators.csrf import csrf_exempt
 #import schema
 
@@ -59,7 +59,7 @@ urlpatterns = [
     url(r'^api-token-auth/', obtain_jwt_token),
     url(r'^api-token-refresh/', refresh_jwt_token),
     url(r'^api-token-verify/', verify_jwt_token),    
-
+    #url(r'^',TemplateView.as_view(template_name="index.html"))
 #    url(r'^login',Login,name='login'),
 #    url(r'^logout',Logout,name='logout'),
 #    url(r'^auth',auth,name='auth'),

@@ -290,6 +290,7 @@ class Profile extends React.Component{
     {
       //let user = nextProps.data.users
       let user = fromJS(nextProps.data.users)
+      console.log(user)
       //console.log(nextProps.data.users)
       //let user = nextProps.data.users;
       //console.log(user)
@@ -414,10 +415,12 @@ singlechange(f){
   //console.log(f.elements.first_name.value)
   //console.log(formData)
   //console.log(e.target.name)
+  console.log(f.elements.first_name.value)
+  console.log(this.props)
   this.props.dispatch(User({
     //first_name:(e.target.name==="first_name")?e.target.value:"",
     //last_name:(e.target.name==="last_name")?e.target.value:""
-    first_name:f.elements.first_name.value,
+    first_name:"op",
     last_name:f.elements.last_name.value,
     dob:f.elements.dob.value,
     instagram:f.elements.instagram.value,
@@ -472,7 +475,8 @@ render(){
         //console.log(this.props)
         //console.log(this.state.user.first_name)
         let users = fromJS(data.users)
-        console.log(this.props.current)
+        //let users = this.props.User
+        console.log(this.props)
         if(!this.props.current.loading && !this.props.data.loading)
           if(this.props.current.currentUser.id===users.get("id")){
             var con = false
@@ -493,7 +497,7 @@ render(){
                     <div className="information">
                       <div className="personal">
                         <div className="fl_rw">
-                          <img src={user} className="logo" alt="user"/><span className="unm">{users.get('firstName') + " " +users.get('lastName')}</span>
+                          <img src={user} className="logo" alt="user"/><span className="unm">{users.get("firstName") + " " +users.get("lastName")}</span>
                             <span className="_un">(@{users.get('username')})</span>
                         </div>
                         {con?
@@ -532,7 +536,9 @@ render(){
                 </div>
 
                 <div className="pfile">                
+      
                   {users.getIn(['profile','instagram'])?(
+      
                             <div className="_about fl_rw">
                             <img src={instagram} className="logo" alt="instagram"/>{users.getIn(['profile','instagram'])}
                             </div>
@@ -540,6 +546,8 @@ render(){
                             <span></span>
                           )
                           }
+
+      
                           {users.getIn(['profile','fb'])?(   
                           <div className="_about fl_rw">  
                           <img src={fb} className="logo" alt="fb"/>{users.getIn(['profile','fb'])}
@@ -566,6 +574,7 @@ render(){
                           <div className="_about fl_rw">
                           {users.getIn(['profile','about'])}
                           </div>
+                        
                           {!con?(
                           <div className="editbtn">
                           <button className="edit" onClick={this.ShowEditInfo.bind(this)}>Edit Profile</button>
