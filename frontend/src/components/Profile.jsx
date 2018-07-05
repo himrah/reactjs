@@ -65,6 +65,7 @@ const qury = gql`query user{
         instagram
         website
         twitter
+        gender
         about
         birthDay
       }
@@ -83,6 +84,7 @@ const query = gql`query user($username:String!)
       birthDay
       website
       fb
+      gender
       instagram
       twitter
     }
@@ -475,8 +477,9 @@ render(){
         //console.log(this.props)
         //console.log(this.state.user.first_name)
         let users = fromJS(data.users)
+        let U = this.props.User
         //let users = this.props.User
-        console.log(this.props)
+        console.log(this.props.User)
         if(!this.props.current.loading && !this.props.data.loading)
           if(this.props.current.currentUser.id===users.get("id")){
             var con = false
@@ -497,8 +500,8 @@ render(){
                     <div className="information">
                       <div className="personal">
                         <div className="fl_rw">
-                          <img src={user} className="logo" alt="user"/><span className="unm">{users.get("firstName") + " " +users.get("lastName")}</span>
-                            <span className="_un">(@{users.get('username')})</span>
+                          <img src={user} className="logo" alt="user"/><span className="unm">{U.first_name + " " +U.last_name}</span>
+                            <span className="_un">(@{U.username})</span>
                         </div>
                         {con?
                         (
@@ -537,10 +540,10 @@ render(){
 
                 <div className="pfile">                
       
-                  {users.getIn(['profile','instagram'])?(
+                  {U.instagram?(
       
                             <div className="_about fl_rw">
-                            <img src={instagram} className="logo" alt="instagram"/>{users.getIn(['profile','instagram'])}
+                            <img src={instagram} className="logo" alt="instagram"/>{U.instagram}
                             </div>
                           ):(
                             <span></span>
@@ -548,31 +551,31 @@ render(){
                           }
 
       
-                          {users.getIn(['profile','fb'])?(   
+                          {U.fb?(   
                           <div className="_about fl_rw">  
-                          <img src={fb} className="logo" alt="fb"/>{users.getIn(['profile','fb'])}
+                          <img src={fb} className="logo" alt="fb"/>{U.fb}
                           </div>):(
                             <span></span>
                           )                                       
                            }
-                           {users.getIn(['profile','twitter'])?(
+                           {U.twitter?(
                           <div className="_about fl_rw">
-                          <img src={twitter} className="logo" alt="twitter"/> {users.getIn(['profile','twitter'])}
+                          <img src={twitter} className="logo" alt="twitter"/> {U.twitter}
                           </div>
                            ):(
                              <span></span>
                            )
                            }
-                          {users.getIn(['profile','website'])?(
+                          {U.website?(
                           <div className="_about fl_rw">
-                          <img src={web} className="logo" alt="website"/>{users.getIn(['profile','website'])}
+                          <img src={web} className="logo" alt="website"/>{U.website}
                           </div>
                           ):(
                             <span/>
                           )
                           }
                           <div className="_about fl_rw">
-                          {users.getIn(['profile','about'])}
+                          {U.about}
                           </div>
                         
                           {!con?(

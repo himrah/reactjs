@@ -92,24 +92,24 @@ class Edit extends React.Component{
               <div>
                 Last Name : <input type="text" className="form-control" value={users.last_name} name="last_name"/>
               </div>
-{/*              <div>
-                Date of Birthday : <input type="date" className="form-control" value={users.getIn(['profile','birthDay'])} name="dob" />
+              <div>
+                Instagram <input type="text" name="instagram" className="form-control" value={users.instagram} />
+              </div>              
+              <div>
+                Facebook <input type="text" name="fb" className="form-control" value={users.fb} />
               </div>
               <div>
-                About : <textarea value={users.getIn(['profile','about'])} className="form-control"  name="about"/>
+               twitter <input type="text" name="twitter" className="form-control" value={users.twitter} />
               </div>
               <div>
-                website : <input type="text" value={users.getIn(['profile','website'])} className="form-control" name="website" />
+                website : <input type="text" value={users.website} className="form-control" name="website" />
               </div>
               <div>
-               twitter <input type="text" name="twitter" className="form-control" value={users.getIn(['profile','twitter'])} />
+                Date of Birthday : <input type="date" className="form-control" value={users.dob} name="dob" />
               </div>
               <div>
-                Instagram <input type="text" name="instagram" className="form-control" value={users.getIn(['profile','instagram'])} />
+                About : <textarea value={users.about} className="form-control"  name="about"/>
               </div>
-              <div>
-                Facebook <input type="text" name="fb" className="form-control" value={users.getIn(['profile','fb'])} />
-              </div>*/}
             <button type="submit" name="submit" className="edit">Sumit</button>
             </form>
         

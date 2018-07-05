@@ -25,6 +25,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)
     about = models.TextField(blank=True)
     birth_day = models.DateField(null=True,blank=True)
+    gender = models.CharField(null=True,blank=True,max_length=10)
     fb = models.CharField(blank=True,max_length=30)
     instagram = models.CharField(blank=True,max_length=30)
     twitter = models.CharField(blank=True,max_length=30)
