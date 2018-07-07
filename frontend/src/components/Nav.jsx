@@ -1,6 +1,7 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link, Switch, } from "react-router-dom";
 import './Nav.css';
+import {withRouter} from 'react-router'
 //import Link from 'next/link'
 //import Style from 'react-style-tag'
 //import Main from './Main';
@@ -125,7 +126,7 @@ class Nav extends React.Component{
         //console.log(this.props.toggle)
         return(
             
-                <Router>
+                <Router onUpdate={()=>window.scrollTo(0,0)}>
                     <span className="m_con">  
                         <Helmet>
                             <title>Fasigner</title>
@@ -157,7 +158,7 @@ class Nav extends React.Component{
                             <span className="top_p"><Link to="/login">Login</Link></span>*/}
                         </div>
                     </nav>  
-                <Switch>      
+                      
                 <Route exact path="/" component={Main}/>
                 <Route path="/notify/" component={Interest}/>
                 <Route path="/logout" component={Logout}/>
@@ -165,7 +166,7 @@ class Nav extends React.Component{
                 <Route path="/:userName/create" component={Create}/>
                 <Route path="/:userName" component={Profile}/>
                 <Route path="/registration" component={Registration} />
-                </Switch>
+                
                 <div className="dropdown">
                     <div className="dropdown-content" style={{display:'none'}}>
                             <div>Share External</div>

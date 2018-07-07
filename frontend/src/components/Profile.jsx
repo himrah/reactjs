@@ -481,13 +481,20 @@ render(){
         //let users = this.props.User
         console.log(this.props.User)
         if(!this.props.current.loading && !this.props.data.loading)
-          if(this.props.current.currentUser.id===users.get("id")){
-            var con = false
+        {
+          if(this.props.current.currentUser){ 
+            if(this.props.current.currentUser.id===users.get("id")){
+              var con = false
+            }
+            else{
+              var con = true
+            }
           }
           else{
-            var con = true
+            var newuser = true
           }
-
+        }
+          console.log(con)
           return(
           <main className="main">      
           <Helmet>
@@ -509,7 +516,11 @@ render(){
                           <input type="button" className="connect" value="Connect"/>
                         </div>
                         ):(
-                        <span></span>
+                          newuser?(
+                          <input type="button" className="connect" value="Connected"/>
+                          ):(
+                          <span/>
+                          )  
                         )
                         }
                         
@@ -549,8 +560,6 @@ render(){
                             <span></span>
                           )
                           }
-
-      
                           {U.fb?(   
                           <div className="_about fl_rw">  
                           <img src={fb} className="logo" alt="fb"/>{U.fb}
