@@ -7,6 +7,7 @@
 export const Change_Gallery = "gallery:UpdateGallery"
 export const Change_Toggle = "gallery:UpdateToggle"
 export const Change_User = "User:UpdateUser"
+export const Change_pos = "Position:Change"
 export const Toggle =(newstate)=> {
     return{
         type:Change_Toggle,
@@ -17,6 +18,15 @@ export const Toggle =(newstate)=> {
     }
 }
 
+export const Position = (newstate)=>{
+    return{
+        type:Change_pos,
+        value:
+        {
+            article:newstate.article
+        }
+    }
+}
 export const Gallery =(newstate)=> {
     return{
         type:Change_Gallery,

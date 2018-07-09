@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Link, Switch, } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link, Switch,Redirect } from "react-router-dom"; 
 import './Nav.css';
 import {withRouter} from 'react-router'
 //import Link from 'next/link'
@@ -20,6 +20,8 @@ import Loadable from 'react-loadable'
 //import $ from 'jquery'
 import Loading from '../loading'
 import Create from './Create'
+import createBrowserHistory from 'history/createBrowserHistory'
+import history from 'history'
 //import Main from './Main'
 //import { Comb } from './Comb';
 
@@ -122,11 +124,19 @@ class Nav extends React.Component{
             'maxWidth':'20px',
             'minWidth':'20px'
         }
+        const customHistory = createBrowserHistory()
         console.log(this.props)
         //console.log(this.props.toggle)
+
+        const location={
+            pathname:'/ajay',
+            state:{fromDashboard:true}
+        }
+
+
         return(
             
-                <Router onUpdate={()=>window.scrollTo(0,0)}>
+                <Router history={customHistory}>
                     <span className="m_con">  
                         <Helmet>
                             <title>Fasigner</title>
@@ -142,7 +152,13 @@ class Nav extends React.Component{
                             <div className="profile_info _on_top">         
                             {/*<span className="top_p"><Link to='/'><span className="homeT"></span></Link></span>*/}
                             
-                            <span className="top_p"><Link to='/ajay'><img className="logo" style={style} src={profile} alt="sdf"  /> </Link></span>
+                        {/*<span className="top_p"><Link to='/ajay'><img className="logo" style={style} src={profile} alt="sdf"  /> </Link></span>*/}
+                            
+                            <span className="top_p">
+                            <Link to={location}><img className="logo" style={style} src={profile} alt="sdf"  /> </Link>
+                            
+                            
+                            </span>
                             <span className="top_p"><Link to="/message"><img src={msg} alt="sdf" className="logo" style={style} /> </Link></span>
                             <span className="top_p"><Link to="/notify/"><img src={notify} alt="sdf" className="logo" style={style} /> </Link></span>
                             <span className="top_p"><Link to="#" onClick={this.logout} ><img src={logout} alt="sdf" className="logo" style={style} /> </Link></span>
@@ -158,15 +174,19 @@ class Nav extends React.Component{
                             <span className="top_p"><Link to="/login">Login</Link></span>*/}
                         </div>
                     </nav>  
-                      
+                <Switch history={customHistory}>      
                 <Route exact path="/" component={Main}/>
                 <Route path="/notify/" component={Interest}/>
                 <Route path="/logout" component={Logout}/>
                 <Route path="/message/" component={Msg}/>
                 <Route path="/:userName/create" component={Create}/>
-                <Route path="/:userName" component={Profile}/>
-                <Route path="/registration" component={Registration} />
                 
+                <Route path="/:userName" component={Profile}/>
+
+
+
+                <Route path="/registration" component={Registration} />
+                </Switch>
                 <div className="dropdown">
                     <div className="dropdown-content" style={{display:'none'}}>
                             <div>Share External</div>

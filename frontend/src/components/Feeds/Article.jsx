@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Link } from "react-router-dom"
 import './article.css'
 import TimeAgo from 'javascript-time-ago'
 //import LoadArticle from './LoadArticle'
+import {Position} from '../actions/actions'
 import { graphql, compose } from 'react-apollo'
 import gql from 'graphql-tag'
 import {backend_server} from '../../server'
@@ -191,7 +192,6 @@ class Articles extends React.Component{
             console.log("update",store.getState())
         })
     }*/
-
     render(){
         TimeAgo.locale(en)
         const timeAgo = new TimeAgo('en-US')
@@ -309,8 +309,36 @@ class Article extends React.Component{
         this.state = {
             hasNextPage :true,
             cursor : '',
+            location:0
             //uid : localStorage.token
         }
+    }
+    changeposition(){
+        //console.log(window.scrollY)
+        //this.setState({location:window.scrollY})
+        this.props.UpdatePosition(
+            Position(
+                {
+                    article:window.scrollY
+                }
+            )
+        )
+        //console.log(this.state.location)
+        //console.log(e)
+        //console.log(window.scrollY)
+        /*if(e==0){
+            e+=1;
+            this.setState({location:e})
+        }
+        else{
+            this.setState({location:e})
+        }*/
+    }
+    componentDidMount(){
+        //window.scrollTo(0,1975.3333740234375)
+        console.log(this.props.Position.article)
+        window.scrollTo(0,this.props.Position.article);
+        window.addEventListener("scroll",this.changeposition.bind(this))
     }
     updateStat(pageInfo){
         this.setState({hasNextPage:pageInfo.hasNextPage,cursor:pageInfo.endCursor})
@@ -423,12 +451,14 @@ class Article extends React.Component{
        //var item=[]
        //item.push(photos.map(p=><Articles key={p.id} p={p} m={mu} />))
        //console.log(photos)
+       //console.log(window.scrollY)
        
         return(
-
+                
                 <div>
                  {/* {photos.map(p=><Articles key={p.node.id} p={p} m={mu}/>)}*/}
-
+                {/*this.changeposition(window.scrollY)*/}
+                
                 {<InfiniteScroll
                     //pageStart = {0}
                     //next = {this.loadMore}

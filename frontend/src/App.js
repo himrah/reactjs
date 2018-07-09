@@ -38,7 +38,7 @@ export const initialState = {
     },
   Toggle:{toggle:'none'},
   
-  byname:['username','first_name','last_name','dob','about','twitter','website','fb','instagram'],
+  //byname:['username','first_name','last_name','dob','about','twitter','website','fb','instagram'],
   //User:undefined
   User:{
     username:'',
@@ -51,6 +51,9 @@ export const initialState = {
     twitter:'',
     fb:'',
     instagram:'',
+  },
+  Position:{
+    article:0
   }
 }
 const store = createStore(allreducer,initialState,window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
