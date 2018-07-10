@@ -316,12 +316,12 @@ class Article extends React.Component{
     changeposition(){
         //console.log(window.scrollY)
         //this.setState({location:window.scrollY})
+        console.log(this.props)
         this.props.UpdatePosition(
-            Position(
+            
                 {
                     article:window.scrollY
                 }
-            )
         )
         //console.log(this.state.location)
         //console.log(e)
