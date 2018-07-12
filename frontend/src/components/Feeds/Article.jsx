@@ -336,9 +336,14 @@ class Article extends React.Component{
     }
     componentDidMount(){
         //window.scrollTo(0,1975.3333740234375)
-        console.log(this.props.Position.article)
+        /*console.log(this.props.Position.article)
         window.scrollTo(0,this.props.Position.article);
-        window.addEventListener("scroll",this.changeposition.bind(this))
+        console.log(window.scrollY)
+        if(window.scrollY!==0){
+        if(this.props.Position.article)
+          {  window.addEventListener("scroll",this.changeposition.bind(this))
+          }
+    }*/
     }
     updateStat(pageInfo){
         this.setState({hasNextPage:pageInfo.hasNextPage,cursor:pageInfo.endCursor})

@@ -136,7 +136,7 @@ class Nav extends React.Component{
 
         return(
             
-                <Router history={customHistory}>
+                <Router ignoreScrollBehavior>
                     <span className="m_con">  
                         <Helmet>
                             <title>Fasigner</title>
@@ -173,20 +173,28 @@ class Nav extends React.Component{
         {/*                    <span className="top_p"><Link to="/logout">Logout</Link></span>
                             <span className="top_p"><Link to="/login">Login</Link></span>*/}
                         </div>
-                    </nav>  
-                <Switch history={customHistory}>      
-                <Route exact path="/" component={Main}/>
-                <Route path="/notify/" component={Interest}/>
-                <Route path="/logout" component={Logout}/>
-                <Route path="/message/" component={Msg}/>
-                <Route path="/:userName/create" component={Create}/>
+                    </nav> 
+
+                <Switch>            
+                <Route name="home" exact path="/" component={Main} />
+                <Route name="messaging" path="/message/" component={Msg} />
+                <Route name="profile" path="/:userName/" component={Profile} />
+                </Switch>
                 
-                <Route path="/:userName" component={Profile}/>
-
-
-
+                
+                {/*
+                <Switch ignoreScrollBehavior>      
+                <Route name="home" exact path="/" component={Main} />
+                <Route name="notification" path="/notify/" component={Interest}/>
+                <Route name="logout" path="/logout" component={Logout}/>
+                <Route name="messaging" path="/message/" component={Msg}/>
+                <Route name="creating" path="/:userName/create" component={Create}/>
+                <Route name="profile" path="/:userName" component={Profile}/>
                 <Route path="/registration" component={Registration} />
                 </Switch>
+
+
+                */}
                 <div className="dropdown">
                     <div className="dropdown-content" style={{display:'none'}}>
                             <div>Share External</div>

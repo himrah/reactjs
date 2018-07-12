@@ -53,7 +53,7 @@ export const initialState = {
     instagram:'',
   },
   Position:{
-    article:0
+    article:1
   }
 }
 const store = createStore(allreducer,initialState,window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
