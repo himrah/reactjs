@@ -120,7 +120,7 @@
   },
   "devDependencies": {
     "compression-webpack-plugin": "^1.1.11",
-    "webpack-bundle-analyzer": "^2.11.1",
+    "webpack-bundle-analyzer": "^3.3.2",
     "webpack-bundle-tracker": "^0.2.1",
     "webpack-cli": "^2.1.3"
   }
